@@ -1,11 +1,11 @@
-# D&D 5e OGL Character Sheet
+# D&D 5e Spell Better Wizard's Spellbook
 
 ![Latest Release Download Count](https://img.shields.io/badge/dynamic/json?label=Downloads@latest&query=assets%5B1%5D.download_count&url=https%3A%2F%2Fapi.github.com%2Frepos%2FElfFriend-DnD%2Ffoundryvtt-5eOGLCharacterSheet%2Freleases%2Flatest)
 ![Forge Installs](https://img.shields.io/badge/dynamic/json?label=Forge%20Installs&query=package.installs&suffix=%25&url=https%3A%2F%2Fforge-vtt.com%2Fapi%2Fbazaar%2Fpackage%2F5e-ogl-character-sheet&colorB=4aa94a)
 ![Foundry Core Compatible Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2FElfFriend-DnD%2Ffoundryvtt-5eOGLCharacterSheet%2Fmaster%2Fsrc%2Fmodule.json&label=Foundry%20Version&query=$.compatibleCoreVersion&colorB=orange)
 [![ko-fi](https://img.shields.io/badge/-buy%20me%20a%20coke-%23FF5E5B)](https://ko-fi.com/elffriend)
 
-A classic layout for a 5e Character Sheet, heavily inspired by the Official 5e Character Sheet and the Roll20 default 5e Sheet. This sheet is chaotic and packed with information all on one screen, but it does have the advantage of having some muscle memory if you're coming from either pen and paper or Roll20.
+A freely-forked version of https://github.com/ElfFriend-DnD/foundryvtt-5eOGLCharacterSheet, itself heavily inspired by the Official 5e Character Sheet and the Roll20 default 5e Sheet. This sheet is chaotic and packed with information all on one screen, but it does have the advantage of having some muscle memory if you're coming from either pen and paper or Roll20.
 
 ## Installation
 
@@ -68,6 +68,8 @@ I'm honestly not sure how well this will play with modules that affect character
 - The inventory section is very tight, and some items with uses or charges will probably display wierd.
 
 ## Acknowledgements
+
+Forked from https://github.com/ElfFriend-DnD/foundryvtt-5eOGLCharacterSheet . Their Acknowledgements included below:
 
 Obviously almost all of the layout decisions here are pretty directly ripped from the Roll20 OGL Character Sheet, and by proxy the WOTC official 5e Sheet.
 
