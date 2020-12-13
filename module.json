@@ -1,7 +1,7 @@
 {
 	"name": "spell-better",
-	"title": "Spetzel's Spell Better Wizard's Spellbook",
-	"description": "All the flexibility you as a Wizard need with your Spellbook!",
+	"title": "Spetzel's Spell Better Spellbook for Wizards (and other lesser casters)",
+	"description": "All the flexibility you as a Wizard need with your Spellbook! And useful features for other prepared spell casters (Druids, Clerics, and Paladins)",
 	"systems": ["dnd5e"],
 	"version": "0.5.0",
 	"author": "Spetzel#0103",

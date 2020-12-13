@@ -305,7 +305,7 @@ Hooks.once('init', async function () {
 
 //FIXME: Register SpellBetter Sheet - not a real solution, since we will want to pop up Spell Better independent of the Actor Sheet
 Actors.registerSheet('dnd5e', SpellBetterCharacterSheet, {
-  label: 'OGL Character Sheet',
+  label: 'Spell Better Sheet',
   types: ['character'],
   makeDefault: false,
 });
