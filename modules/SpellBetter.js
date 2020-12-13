@@ -1,23 +1,23 @@
-import { log, getActivationType, getWeaponRelevantAbility } from './helpers';
+import { log, getActivationType, getWeaponRelevantAbility } from './helpers.js';
 import { registerSettings } from './settings.js';
 import { preloadTemplates } from './preloadTemplates.js';
 import { MODULE_ID, SPELL_BETTER } from './constants.js';
 
-import ActorSheet5eCharacter from '../../systems/dnd5e/module/actor/sheets/character.js';
+import ActorSheet5eCharacter from '../../../systems/dnd5e/module/actor/sheets/character.js';
 
-Handlebars.registerHelper('spell-better-sheet-path', (relativePath) => {
+Handlebars.registerHelper('ogl5e-sheet-path', (relativePath) => {
   return `modules/${MODULE_ID}/${relativePath}`;
 });
 
-Handlebars.registerHelper('spell-better-sheet-safeVal', (value, fallback) => {
+Handlebars.registerHelper('ogl5e-sheet-safeVal', (value, fallback) => {
   return new Handlebars.SafeString(value || fallback);
 });
 
-Handlebars.registerHelper('spell-better-sheet-add', (value, toAdd) => {
+Handlebars.registerHelper('ogl5e-sheet-add', (value, toAdd) => {
   return new Handlebars.SafeString(String(value + toAdd));
 });
 
-Handlebars.registerHelper('spell-better-sheet-isEmpty',(input) => {
+Handlebars.registerHelper('ogl5e-sheet-isEmpty',(input) => {
   if (!input) {
     return true;
   }
@@ -44,7 +44,7 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     const options = super.defaultOptions;
 
     mergeObject(options, {
-      classes: ['dnd5e', 'sheet', 'actor', 'character', 'spell-better-sheet'],
+      classes: ['dnd5e', 'sheet', 'actor', 'character', 'ogl5e-sheet'],
       height: 680,
       width: 830,
     });

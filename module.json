@@ -12,10 +12,10 @@
 		}
 	],
 	"esmodules": [
-		"SpellBetter.js"
+		"modules/SpellBetter.js"
 	],
 	"styles": [
-		"spell-better.css"
+		"styles/spell-better.css"
 	],
 	"languages": [
 		{

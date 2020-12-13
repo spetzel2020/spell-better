@@ -1,4 +1,4 @@
-import { MySettings, MODULE_ID } from './constants.js';
+import { SPELL_BETTER, MODULE_ID } from './constants.js';
 
 export const registerSettings = function () {
   CONFIG[MODULE_ID] = { debug: false };
