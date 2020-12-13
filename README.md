@@ -1,9 +1,15 @@
 # Spetzel's Spell Better Wizard's Spellbook
 
 ![Foundry Core Compatible Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2FElfFriend-DnD%2Ffoundryvtt-5eOGLCharacterSheet%2Fmaster%2Fsrc%2Fmodule.json&label=Foundry%20Version&query=$.compatibleCoreVersion&colorB=orange)
-[![ko-fi](https://img.shields.io/badge/-buy%20me%20a%20coke-%23FF5E5B)](https://ko-fi.com/elffriend)
+[![ko-fi](https://img.shields.io/badge/-buy%20me%20a%20coffee-%23FF5E5B)](https://ko-fi.com/spetzel)
 
-A freely-forked version of https://github.com/ElfFriend-DnD/foundryvtt-5eOGLCharacterSheet, itself heavily inspired by the Official 5e Character Sheet and the Roll20 default 5e Sheet. This sheet is chaotic and packed with information all on one screen, but it does have the advantage of having some muscle memory if you're coming from either pen and paper or Roll20.
+A freely-forked version of https://github.com/ElfFriend-DnD/foundryvtt-5eOGLCharacterSheet, itself "heavily inspired by the Official 5e Character Sheet and the Roll20 default 5e Sheet. This sheet is chaotic and packed with information all on one screen, but it does have the advantage of having some muscle memory if you're coming from either pen and paper or Roll20."
+
+The focus of Spell Better is on a flexible spellbook sheet for Wizards, with:
+- grouping, filtering, and sorting
+- "saved" groups of spells (for example, traveling vs. dungeoneering, wanted vs. known)
+- rituals
+- clearer available spell slots
 
 ## Installation
 
@@ -42,28 +48,7 @@ This sheet respects the 5e System setting: "Disable Experience Tracking"
 
 ### Compatibility
 
-I'm honestly not sure how well this will play with modules that affect character sheets, I'll try to test as many as possible but if somethign is obviously breaking please create and issue here and I'll see what I can do.
-
-| **Name**                                                                                         |       Works        | Notes                                                                                            |
-| ------------------------------------------------------------------------------------------------ | :----------------: | ------------------------------------------------------------------------------------------------ |
-| [Better Rolls 5e](https://github.com/RedReign/FoundryVTT-BetterRolls5e)                          |        :x:         | Have not successfully integrated yet.                                                            |
-| [Midi-QOL](https://gitlab.com/tposney/midi-qol)                                                  | :heavy_check_mark: | Works out of the box for roll replacement, Inventory item buttons don't seem to append correctly |
-| [Minor QOL](https://gitlab.com/tposney/minor-qol)                                                |         --         | Deprecated in favor of Midi-QOL. Won't support.                                                  |
-| [5e-Sheet Resources Plus](https://github.com/ardittristan/5eSheet-resourcesPlus)                 | :heavy_check_mark: | It's not pretty but it does work.                                                                |
-| [Variant Encumbrance](https://github.com/VanirDev/VariantEncumbrance)                            |        :x:         | Default encumberance bar removed, Speed css overrides will break things.                         |
-| [FoundryVTT Magic Items](https://gitlab.com/riccisi/foundryvtt-magic-items)                      |        :x:         | Have not successfully integrated yet.                                                            |
-| [D&D5e Dark Mode](https://github.com/Stryxin/dnd5edark-foundryvtt)                               | :heavy_check_mark: | Respects foundry-wide dark mode and is "usable."                                                 |
-| [Favourite Item Tab](https://github.com/syl3r86/favtab)                                          | :heavy_check_mark: | Inventory overhauls make this particular module a wierd one to use here.                         |
-| [Inventory+](https://github.com/syl3r86/inventory-plus)                                          |        :x:         | Inventory overhaul removed the "Inventory" Tab                                                   |
-| [Illandril's Character Sheet Lockdown](https://github.com/illandril/FoundryVTT-sheet5e-lockdown) |        :x:         | Doesn't seem to work with any sheet but the 5e stock sheet.                                      |
-| [Crash's 5e Downtime Tracking](https://github.com/crash1115/5e-training)                         | :heavy_check_mark: | Works well.                                                                                      |
-| [Ethck's 5e Downtime Tracking](https://github.com/Ethck/Ethck-s-Downtime-Tracking)               | :heavy_check_mark: | Works well.                                                                                      |
-| [Skill Customization for D&D5E](https://github.com/schultzcole/FVTT-Skill-Customization-5e)      |        :x:         | Inputs do not appear.                                                                            |
-
-## Known Issues
-
-- The To Hit/Save DC column is probably going to respond poorly to unconventional weapon builds. Stuff like the Hexblade or Bladesinger.
-- The inventory section is very tight, and some items with uses or charges will probably display wierd.
+See Compatibility for https://github.com/ElfFriend-DnD/foundryvtt-5eOGLCharacterSheet
 
 ## Acknowledgements
 
