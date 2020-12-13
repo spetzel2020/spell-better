@@ -1,0 +1,12 @@
+{
+  "SPELL_BETTER.HitDC": "Hit / DC",
+
+  "SPELL_BETTER.limitActionsToCantrips": "Limit Actions to Cantrips",
+  "SPELL_BETTER.limitActionsToCantripsHint": "Instead of showing all spells that deal damage in the Actions area, limit it to only cantrips.",
+
+  "SPELL_BETTER.showIconsOnInventoryList": "Add Icons to Inventory.",
+  "SPELL_BETTER.showIconsOnInventoryListHint": "Add the icons to the items on the inventory list.",
+
+  "SPELL_BETTER.expandedLimited": "Use Expanded Sheet as Limited",
+  "SPELL_BETTER.expandedLimitedHint": "Show the full character sheet for users who have the Limited permission for a given Actor."
+}

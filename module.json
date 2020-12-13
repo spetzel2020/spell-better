@@ -1,0 +1,58 @@
+{
+	"name": "spell-better",
+	"title": "Spetzel's Spell Better Wizard's Spellbook",
+	"description": "All the flexibility you as a Wizard need with your Spellbook!",
+	"systems": ["dnd5e"],
+	"version": "0.5.0",
+	"author": "Spetzel#0103",
+	"authors": [
+		{
+			"name": "Spetzel#0103",
+			"url": "https://github.com/spetzel2020"
+		}
+	],
+	"esmodules": [
+		"SpellBetter.js"
+	],
+	"styles": [
+		"spell-better.css"
+	],
+	"languages": [
+		{
+			"lang": "en",
+			"name": "English",
+			"path": "lang/en.json"
+		}
+	],
+	"media": [
+		{
+			"type": "cover",
+			"link": "https://raw.githubusercontent.com/spetzel2020/spell-better/master/readme-img/cover-image.png"
+		},
+		{
+			"type": "screenshot",
+			"link": "https://raw.githubusercontent.com/spetzel2020/spell-better/master/readme-img/main-top.png"
+		},
+		{
+			"type": "screenshot",
+			"link": "https://raw.githubusercontent.com/spetzel2020/spell-better/master/readme-img/main-bottom.png"
+		},
+		{
+			"type": "screenshot",
+			"link": "https://raw.githubusercontent.com/spetzel2020/spell-better/master/readme-img/spellbook.png"
+		},
+		{
+			"type": "screenshot",
+			"link": "https://raw.githubusercontent.com/spetzel2020/spell-better/master/readme-img/biography.png"
+		}
+	],
+	"minimumCoreVersion": "0.7.6",
+	"compatibleCoreVersion": "0.7.8",
+	"minimumSystemVersion": 0.99,
+    "readme": "https://github.com/spetzel2020/spell-better/blob/master/README.md",
+     "bugs": "https://github.com/spetzel2020/spell-better/issues",
+    "changelog": "https://github.com/spetzel2020/quick-encounters/blob/master/CHANGELOG.md",
+	"download": "https://github.com/spetzel2020/spell-better/releases/download/latest/spell-better.zip",
+	"manifest": "https://github.com/spetzel2020/spell-better/releases/download/latest/module.json",
+	"url": "https://github.com/spetzel2020/spell-better"
+}
