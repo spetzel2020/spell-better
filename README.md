@@ -1,12 +1,12 @@
-# Spetzel's Spell Better Spellbook for Wizards and lesser prepared-spell casters
+# Spetzel's Spell Better Spellbook for Wizards and lesser casters
 
 ![Foundry Core Compatible Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2FElfFriend-DnD%2Ffoundryvtt-5eOGLCharacterSheet%2Fmaster%2Fsrc%2Fmodule.json&label=Foundry%20Version&query=$.compatibleCoreVersion&colorB=orange)
 [![ko-fi](https://img.shields.io/badge/-buy%20me%20a%20coffee-%23FF5E5B)](https://ko-fi.com/spetzel)
 
 A freely-forked version of https://github.com/ElfFriend-DnD/foundryvtt-5eOGLCharacterSheet, itself "heavily inspired by the Official 5e Character Sheet and the Roll20 default 5e Sheet. This sheet is chaotic and packed with information all on one screen, but it does have the advantage of having some muscle memory if you're coming from either pen and paper or Roll20."
 
-The focus of Spell Better is on a flexible spellbook sheet for Wizards, with:
-- grouping, filtering, and sorting
+Spell Better gives Wizards (and other prepared-spell casters like Druids, Clerics, and Paladins) a flexible spellbook for sorting, filtering, and grouping, their spells:
+- grouping, filtering, and sorting by existing tags or your own created ones
 - "saved" groups of spells (for example, traveling vs. dungeoneering, wanted vs. known)
 - rituals
 - clearer available spell slots
