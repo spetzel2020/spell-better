@@ -16,7 +16,7 @@ The focus of Spell Better is on a flexible spellbook sheet for Wizards, with:
 Module JSON:
 
 ```
-https://github.com/ElfFriend-DnD/foundryvtt-5eOGLCharacterSheet/releases/latest/download/module.json
+https://github.com/spetzel2020/spell-better/releases/download/latest/module.json
 ```
 
 ## Gallery
