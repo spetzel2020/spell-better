@@ -102,6 +102,26 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
   getData() {
     const sheetData = super.getData();
 
+    //Spell Better 0.5.0: Further filter by any spell label element
+    //MUTATES spellbook
+    try {
+      // MUTATES sheetData
+      const spellFilters = sheetData.filters.spellbook;
+      sheetData?.spellbook.forEach((sbi, index) => {
+        sheetData.spellbook[index].spells = sbi.spells.filter(({ labels }) => {
+            //include this spell if the spellFilters are ALL present in labels
+            for (const filter of spellFilters) {
+                if (!Object.values(labels).includes(filter)) return false;
+            }
+            return true;
+        });
+
+
+      });
+    } catch (e) {
+      log(true, 'error trying to modify activation labels', e);
+    }
+
     // within each activation time, we want to display: Items which do damange, Spells which do damage, Features
     // MUTATED
     const actionsData = {
