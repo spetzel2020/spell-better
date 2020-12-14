@@ -856,6 +856,15 @@
   display: flex;
   align-content: center;
 }
+.dnd5e.sheet.actor.character.ogl5e-sheet .filter-set {
+  display: flex;
+  align-content: center;
+  place-content: center;
+  place-items: center;
+  line-height: normal;
+  margin: 0;
+  flex: 0 1 auto;
+}
 .dnd5e.sheet.actor.character.ogl5e-sheet .tab > :not(:last-child) {
   margin-bottom: 5px;
 }
