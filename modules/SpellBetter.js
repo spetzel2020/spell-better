@@ -101,12 +101,14 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
 
   getData() {
     const sheetData = super.getData();
-
+    const castingFilters = ["action","bonus","reaction","concentration","ritual","prepared"];
     //Spell Better 0.5.0: Further filter by any spell label element
     //MUTATES spellbook
+    
     try {
       // MUTATES sheetData
-      const spellFilters = sheetData.filters.spellbook;
+      //0.5.0f Don't filter on the Spell casting filters (has already been done)
+      const spellFilters = Array.from(sheetData.filters.spellbook).filter(filter => !castingFilters.includes(filter));
       sheetData?.spellbook.forEach((sbi, index) => {
         sheetData.spellbook[index].spells = sbi.spells.filter(({ labels }) => {
             //include this spell if the spellFilters are ALL present in labels
