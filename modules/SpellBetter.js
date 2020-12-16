@@ -117,14 +117,27 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     try {
       // MUTATES sheetData
       //0.5.0f Don't filter on the Spell casting filters (has already been done)
+      //0.5.0j: Filters are ORd within each filter set and ANDd together across filter sets
       const spellFilters = Array.from(sheetData.filters.spellbook).filter(filter => !castingFilters.includes(filter));
       sheetData?.spellbook.forEach((sbi, index) => {
         sheetData.spellbook[index].spells = sbi.spells.filter(({ labels }) => {
-            //include this spell if the spellFilters are ALL present in labels
-            for (const filter of spellFilters) {
-                if (!Object.values(labels).includes(filter)) return false;
+            let includeSpell = true;
+            for (const [filterSet, elements] of Object.entries(SPELL_BETTER.filters)) {
+                const filters = elements.map(e => e.filter);
+                const filterSetFilters = spellFilters.filter(f => filters.includes(f));
+                let includedInFilterSet = true; //if no filters in this set are enabled, then ignore
+                if (filterSetFilters.length) {
+                    //include if any of this set's filters are present
+                    includedInFilterSet = false;
+                    for (const filter of filterSetFilters) {
+                        includedInFilterSet = (Object.values(labels).includes(filter));
+                        if (includedInFilterSet) break;
+                    }
+                }
+                includeSpell = includeSpell && includedInFilterSet;
+                if (!includeSpell) break;
             }
-            return true;
+            return includeSpell;
         });
       });
     } catch (e) {

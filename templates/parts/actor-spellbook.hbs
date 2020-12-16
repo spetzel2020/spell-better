@@ -45,21 +45,21 @@
   <ul class="filter-list flexrow" data-filter="spellbook">
     <li class="filter-set "><h4>{{localize "SPELL_BETTER.DurationOr"}}:</h4></li>
     {{#each filters.choices.durations as |fd|}}
-        <li class="filter-item tag" data-filter="{{fd.filter}}">{{localize fd.label}}</li>
+        <li class="filter-item tag" data-filter="{{fd.filter}}">{{localize fd.name}}</li>
     {{/each}}          
   </ul>
     <ul class="filter-list flexrow" data-filter="spellbook">    
     <li class="filter-set "><h4>{{localize "SPELL_BETTER.LevelOr"}}:</h4></li>
     {{#each filters.choices.levels as |fl|}}
         <li class="filter-item tag" data-filter="{{fl.filter}}">
-            {{localize fl.label}} {{#if @index}}{{#with (lookup ../spellbook @index)}} {{slots}}/{{uses}} {{/with}}{{/if}}
+            {{localize fl.name}} {{#if @index}}{{#with (lookup ../spellbook @index)}} {{slots}}/{{uses}} {{/with}}{{/if}}
         </li>
     {{/each}}       
   </ul>
   <ul class="filter-list flexrow" data-filter="spellbook">    
     <li class="filter-set "><h4>{{localize "SPELL_BETTER.SchoolOr"}}:</h4></li>
     {{#each filters.choices.schools as |fs|}}
-        <li class="filter-item tag" data-filter="{{fs.filter}}">{{localize fs.label}}</li>
+        <li class="filter-item tag" data-filter="{{fs.filter}}">{{localize fs.name}}</li>
     {{/each}}        
   </ul>
 </div>
