@@ -50,16 +50,11 @@
   </ul>
     <ul class="filter-list flexrow" data-filter="spellbook">    
     <li class="filter-set "><h4>{{localize "SPELL_BETTER.LevelOr"}}:</h4></li>
-    <li class="filter-item tag" data-filter="Cantrip">{{localize "DND5E.SpellLevel0"}}</li>
-    <li class="filter-item tag" data-filter="1st Level">{{localize "SPELL_BETTER.SpellLevel1"}} {{spellbook.[1].slots}}/{{spellbook.[1].uses}}</li>
-    <li class="filter-item tag" data-filter="2nd Level">{{localize "SPELL_BETTER.SpellLevel2"}}  {{spellbook.[2].slots}}/{{spellbook.[2].uses}}</li>
-    <li class="filter-item tag" data-filter="3rd Level">{{localize "SPELL_BETTER.SpellLevel3"}}  {{spellbook.[3].slots}}/{{spellbook.[3].uses}}</li>
-    <li class="filter-item tag" data-filter="4th Level">{{localize "SPELL_BETTER.SpellLevel4"}}  {{spellbook.[4].slots}}/{{spellbook.[4].uses}}</li>
-    <li class="filter-item tag" data-filter="5th Level">{{localize "SPELL_BETTER.SpellLevel5"}} {{spellbook.[5].slots}}/{{spellbook.[5].uses}}</li> 
-    <li class="filter-item tag" data-filter="6th Level">{{localize "SPELL_BETTER.SpellLevel6"}}  {{spellbook.[6].slots}}/{{spellbook.[6].uses}}</li>
-    <li class="filter-item tag" data-filter="7th Level">{{localize "SPELL_BETTER.SpellLevel7"}} {{spellbook.[7].slots}}/{{spellbook.[7].uses}}</li>       
-    <li class="filter-item tag" data-filter="8th Level">{{localize "SPELL_BETTER.SpellLevel8"}} {{spellbook.[8].slots}}/{{spellbook.[8].uses}}</li>
-    <li class="filter-item tag" data-filter="9th Level">{{localize "SPELL_BETTER.SpellLevel9"}} {{spellbook.[9].slots}}/{{spellbook.[9].uses}}</li>       
+    {{#each filters.choices.levels as |fl|}}
+        <li class="filter-item tag" data-filter="{{fl.filter}}">
+            {{localize fl.label}} {{#if @index}}{{#with (lookup ../spellbook @index)}} {{slots}}/{{uses}} {{/with}}{{/if}}
+        </li>
+    {{/each}}       
   </ul>
   <ul class="filter-list flexrow" data-filter="spellbook">    
     <li class="filter-set "><h4>{{localize "SPELL_BETTER.SchoolOr"}}:</h4></li>

@@ -23,6 +23,17 @@ export const SPELL_BETTER = {
             {filter: "Necromancy", label: "DND5E.SchoolNec"},
             {filter: "Transmutation", label: "DND5E.SchoolTrs"}
         ],
-        levels : ["1st Level","2nd Level","3rd Level","4th Level","5th Level","6th Level","7th Level","8th Level","9th Level"]
+        levels : [
+            {filter: "Cantrip", label: "DND5E.SpellLevel0"},
+            {filter: "1st Level", label: "SPELL_BETTER.SpellLevel1"},
+            {filter: "2nd Level", label: "SPELL_BETTER.SpellLevel2"},
+            {filter: "3rd Level", label: "SPELL_BETTER.SpellLevel3"},
+            {filter: "4th Level", label: "SPELL_BETTER.SpellLevel4"},
+            {filter: "5th Level", label: "SPELL_BETTER.SpellLevel5"},
+            {filter: "6th Level", label: "SPELL_BETTER.SpellLevel6"},
+            {filter: "7th Level", label: "SPELL_BETTER.SpellLevel7"},
+            {filter: "8th Level", label: "SPELL_BETTER.SpellLevel8"},
+            {filter: "9th Level",  label: "SPELL_BETTER.SpellLevel9"}
+        ]
     }
 }
