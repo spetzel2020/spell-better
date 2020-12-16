@@ -1,3 +1,9 @@
+/*
+10-Dec-2020     0.5.0: Forked from Calego/foundryVTT_5eOGL sheet
+15-Dec-2020     0.5.0: Make filter sets ORs
+
+*/
+
 import { log, getActivationType, getWeaponRelevantAbility } from './helpers.js';
 import { registerSettings } from './settings.js';
 import { preloadTemplates } from './preloadTemplates.js';
@@ -105,6 +111,9 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     //Spell Better 0.5.0: Further filter by any spell label element
     //MUTATES spellbook
     
+    //This is purely for Handlebars to generate the right output
+    sheetData.filters.choices = SPELL_BETTER.filters;
+
     try {
       // MUTATES sheetData
       //0.5.0f Don't filter on the Spell casting filters (has already been done)
@@ -117,8 +126,6 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
             }
             return true;
         });
-
-
       });
     } catch (e) {
       log(true, 'error trying to modify activation labels', e);

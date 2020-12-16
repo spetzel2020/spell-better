@@ -34,7 +34,7 @@
 
 <div class="inventory-filters spellbook-filters flexcol">
   <ul class="filter-list flexrow" data-filter="spellbook">
-    <li class="filter-set "><h4>{{localize "DND5E.SpellCastingHeader"}}:</h4></li>
+    <li class="filter-set "><h4>{{localize "SPELL_BETTER.CastingAnd"}}:</h4></li>
     <li class="filter-item tag" data-filter="action">{{localize "DND5E.Action"}}</li>
     <li class="filter-item tag" data-filter="bonus">{{localize "DND5E.BonusAction"}}</li>
     <li class="filter-item tag" data-filter="reaction">{{localize "DND5E.Reaction"}}</li>
@@ -43,35 +43,29 @@
     <li class="filter-item tag" data-filter="prepared">{{localize "DND5E.Prepared"}}{{#if preparedSpells}}({{preparedSpells}}){{/if}}</li>
   </ul>
   <ul class="filter-list flexrow" data-filter="spellbook">
-    <li class="filter-set "><h4>{{localize "DND5E.Duration"}}:</h4></li>
-    <li class="filter-item tag" data-filter="Instantaneous">{{localize "DND5E.TimeInst"}}</li>
-    <li class="filter-item tag" data-filter="1 Rounds">1 {{localize "DND5E.TimeRound"}}</li>    
-    <li class="filter-item tag" data-filter="1 Minutes">1 {{localize "DND5E.TimeMinute"}}</li>
-    <li class="filter-item tag" data-filter="10 Minutes">10 {{localize "DND5E.TimeMinute"}}</li>
+    <li class="filter-set "><h4>{{localize "SPELL_BETTER.DurationOr"}}:</h4></li>
+    {{#each filters.choices.durations as |fd|}}
+        <li class="filter-item tag" data-filter="{{fd.filter}}">{{localize fd.label}}</li>
+    {{/each}}          
   </ul>
     <ul class="filter-list flexrow" data-filter="spellbook">    
-    <li class="filter-set "><h4>{{localize "DND5E.Level"}}:</h4></li>
+    <li class="filter-set "><h4>{{localize "SPELL_BETTER.LevelOr"}}:</h4></li>
     <li class="filter-item tag" data-filter="Cantrip">{{localize "DND5E.SpellLevel0"}}</li>
-    <li class="filter-item tag" data-filter="1st Level">{{localize "DND5E.SpellLevel1"}} {{spellbook.[1].slots}}/{{spellbook.[1].uses}}</li>
-    <li class="filter-item tag" data-filter="2nd Level">{{localize "DND5E.SpellLevel2"}}  {{spellbook.[2].slots}}/{{spellbook.[2].uses}}</li>
-    <li class="filter-item tag" data-filter="3rd Level">{{localize "DND5E.SpellLevel3"}}  {{spellbook.[3].slots}}/{{spellbook.[3].uses}}</li>
-    <li class="filter-item tag" data-filter="4th Level">{{localize "DND5E.SpellLevel4"}}  {{spellbook.[4].slots}}/{{spellbook.[4].uses}}</li>
-    <li class="filter-item tag" data-filter="5th Level">{{localize "DND5E.SpellLevel5"}} {{spellbook.[5].slots}}/{{spellbook.[5].uses}}</li> 
-    <li class="filter-item tag" data-filter="6th Level">{{localize "DND5E.SpellLevel6"}}  {{spellbook.[6].slots}}/{{spellbook.[6].uses}}</li>
-    <li class="filter-item tag" data-filter="7th Level">{{localize "DND5E.SpellLevel7"}} {{spellbook.[7].slots}}/{{spellbook.[7].uses}}</li>       
-    <li class="filter-item tag" data-filter="8th Level">{{localize "DND5E.SpellLevel8"}} {{spellbook.[8].slots}}/{{spellbook.[8].uses}}</li>
-    <li class="filter-item tag" data-filter="9th Level">{{localize "DND5E.SpellLevel9"}} {{spellbook.[9].slots}}/{{spellbook.[9].uses}}</li>       
+    <li class="filter-item tag" data-filter="1st Level">{{localize "SPELL_BETTER.SpellLevel1"}} {{spellbook.[1].slots}}/{{spellbook.[1].uses}}</li>
+    <li class="filter-item tag" data-filter="2nd Level">{{localize "SPELL_BETTER.SpellLevel2"}}  {{spellbook.[2].slots}}/{{spellbook.[2].uses}}</li>
+    <li class="filter-item tag" data-filter="3rd Level">{{localize "SPELL_BETTER.SpellLevel3"}}  {{spellbook.[3].slots}}/{{spellbook.[3].uses}}</li>
+    <li class="filter-item tag" data-filter="4th Level">{{localize "SPELL_BETTER.SpellLevel4"}}  {{spellbook.[4].slots}}/{{spellbook.[4].uses}}</li>
+    <li class="filter-item tag" data-filter="5th Level">{{localize "SPELL_BETTER.SpellLevel5"}} {{spellbook.[5].slots}}/{{spellbook.[5].uses}}</li> 
+    <li class="filter-item tag" data-filter="6th Level">{{localize "SPELL_BETTER.SpellLevel6"}}  {{spellbook.[6].slots}}/{{spellbook.[6].uses}}</li>
+    <li class="filter-item tag" data-filter="7th Level">{{localize "SPELL_BETTER.SpellLevel7"}} {{spellbook.[7].slots}}/{{spellbook.[7].uses}}</li>       
+    <li class="filter-item tag" data-filter="8th Level">{{localize "SPELL_BETTER.SpellLevel8"}} {{spellbook.[8].slots}}/{{spellbook.[8].uses}}</li>
+    <li class="filter-item tag" data-filter="9th Level">{{localize "SPELL_BETTER.SpellLevel9"}} {{spellbook.[9].slots}}/{{spellbook.[9].uses}}</li>       
   </ul>
   <ul class="filter-list flexrow" data-filter="spellbook">    
-    <li class="filter-set "><h4>{{localize "DND5E.SpellSchool"}}:</h4></li>
-    <li class="filter-item tag" data-filter="Abjuration">{{localize "DND5E.SchoolAbj"}}</li>
-    <li class="filter-item tag" data-filter="Conjuration">{{localize "DND5E.SchoolCon"}}</li>
-    <li class="filter-item tag" data-filter="Divination">{{localize "DND5E.SchoolDiv"}}</li>
-    <li class="filter-item tag" data-filter="Enchantment">{{localize "DND5E.SchoolEnc"}}</li>
-    <li class="filter-item tag" data-filter="Evocation">{{localize "DND5E.SchoolEvo"}}</li>
-    <li class="filter-item tag" data-filter="Illusion">{{localize "DND5E.SchoolIll"}}</li> 
-    <li class="filter-item tag" data-filter="Necromancy">{{localize "DND5E.SchoolNec"}}</li>
-    <li class="filter-item tag" data-filter="Transmutation">{{localize "DND5E.SchoolTrs"}}</li>       
+    <li class="filter-set "><h4>{{localize "SPELL_BETTER.SchoolOr"}}:</h4></li>
+    {{#each filters.choices.schools as |fs|}}
+        <li class="filter-item tag" data-filter="{{fs.filter}}">{{localize fs.label}}</li>
+    {{/each}}        
   </ul>
 </div>
 
