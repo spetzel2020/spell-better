@@ -1,10 +1,10 @@
 /*
 10-Dec-2020     0.5.0: Forked from Calego/foundryVTT_5eOGL sheet
 15-Dec-2020     0.5.0: Make filter sets ORs
-
+16-Dec-2020     0.5.0: Add To Hit and Damage "pop-up" buttons to allow continued damage rerolls from sheet
 */
 
-import { log, getActivationType, getWeaponRelevantAbility } from './helpers.js';
+import { log, getActivationType, getWeaponRelevantAbility, hasAttack, hasDamage } from './helpers.js';
 import { registerSettings } from './settings.js';
 import { preloadTemplates } from './preloadTemplates.js';
 import { MODULE_ID, SPELL_BETTER } from './constants.js';
@@ -197,7 +197,20 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     try {
       // digest all prepared spells and populate the actionsData appropriate categories
       // MUTATES actionsData
-      sheetData?.spellbook.forEach(({ spells, label }) => {
+      sheetData?.spellbook.forEach(({ spells, label }, iLevel) => {
+        //Spell Better 0.5.0 For Spellbook tab:  Add "pop-up" buttons next to each spell for To Hit and Damage 
+        // adding info that damage and attacks are possible; h/t to module favtab
+        //(NOte this has overlap with the below calculations but those are just for the front-page Actions section)
+        for (const [iSpell, spell] of spells.entries()) {
+            if (hasAttack(spell)) {
+                sheetData.spellbook[iLevel].spells[iSpell].hasAttack = true;
+            }
+            if (hasDamage(spell)) {
+                sheetData.spellbook[iLevel].spells[iSpell].hasDamage = true;
+            }
+        }//end for spells in each level
+
+
         // if the user only wants cantrips here, no nothing if the label does not include "Cantrip"
         if (game.settings.get(MODULE_ID, SPELL_BETTER.limitActionsToCantrips)) {
           // brittle

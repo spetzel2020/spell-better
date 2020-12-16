@@ -1,9 +1,23 @@
+/*
+16-Dec-2020     Added hasAttack and hasDamage (copies of systems/dnd53/module/item/sheet.js#ItemSheet5e.hasAttack)
+
+*/
+
 import { MODULE_ID } from "./constants.js";
 export function log(force, ...args) {
     if (force || CONFIG[MODULE_ID].debug === true) {
         console.log(MODULE_ID, '|', ...args);
     }
 }
+
+export function hasAttack(spell) {
+    return ["mwak", "rwak", "msak", "rsak"].includes(spell?.data?.actionType);
+}
+export function hasDamage(spell) {
+    return (spell?.data?.damage?.parts.length > 0);
+}
+
+
 export function getActivationType(activationType) {
     switch (activationType) {
         case 'action':

@@ -125,6 +125,8 @@
       <div class="item-name flexrow rollable">
         <div class="item-image" style="background-image: url({{item.img}})"></div>
         <h4>{{item.name}}</h4>
+        {{#if item.hasAttack}} <span class="tag rollable attack" title="Roll Attack"><i class="ra ra-sword"></i></span> {{/if}}
+         {{#if item.hasDamage}} <span class="tag rollable damage" title="Roll Damage"><i class="fas fa-tint"></i></span> {{/if}}
         {{#if item.data.uses.per }}
         <div class="item-detail spell-uses">Uses {{item.data.uses.value}} / {{item.data.uses.max}}</div>
         {{/if}}
