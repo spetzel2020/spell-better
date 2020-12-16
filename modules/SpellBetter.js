@@ -2,6 +2,8 @@
 10-Dec-2020     0.5.0: Forked from Calego/foundryVTT_5eOGL sheet
 15-Dec-2020     0.5.0: Make filter sets ORs
 16-Dec-2020     0.5.0: Add To Hit and Damage "pop-up" buttons to allow continued damage rerolls from sheet
+                Override _filterItems so that spells get filtered here only
+                Move abbreviated activation labels and setting of Ritual, Concentration, and Prepared labels fr filters
 */
 
 import { log, getActivationType, getWeaponRelevantAbility, hasAttack, hasDamage } from './helpers.js';
@@ -103,22 +105,80 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
       .find('.item-quantity input')
       .click((ev) => ev.target.select())
       .change(this._onQuantityChange.bind(this));
+
+    //Spell Damage and To Hit shortcuts
+        html.find('.spellAttack').click(ev => {
+        let itemId = ev.currentTarget.closest(".item").dataset.itemId;
+        let item = this.actor.getOwnedItem(itemId);
+        item.rollAttack();
+    })
+    html.find('.spellDamage').click(ev => {
+        let itemId = ev.currentTarget.closest(".item").dataset.itemId;
+        let item = this.actor.getOwnedItem(itemId);
+        item.rollDamage();
+    })
+  }
+
+  //Spell Better 0.5.0 - Have to override _filterItems because it only does activation.type as an AND
+    /**
+   * Determine whether an Owned Item will be shown based on the current set of filters
+   * @override
+   * @return {boolean}
+   * @private
+   */
+  _filterItems(items, filters) {
+    //If these are spells, leave them out of the filter and then add them back
+    const spells = items.filter(item => item.type === "spell");
+    const itemsWithoutSpells = items.filter(item => item.type !== "spell");
+    return super._filterItems(itemsWithoutSpells, filters).concat(spells);
   }
 
   getData() {
     const sheetData = super.getData();
-    const castingFilters = ["action","bonus","reaction","concentration","ritual","prepared"];
     //Spell Better 0.5.0: Further filter by any spell label element
     //MUTATES spellbook
     
     //This is purely for Handlebars to generate the right output
     sheetData.filters.choices = SPELL_BETTER.filters;
 
+    //To make filtering easier we decorate each spell with labels here for Activation type and Other (Concentration, Prepared, Ritual)
+    try {
+      // MUTATES sheetData
+      sheetData?.spellbook.forEach(({ spells }) => {
+        spells.forEach((spell) => {
+            //1 Action, Reaction, Bonus, Minute, Hour etc.
+            const newActivationLabel = spell.labels.activation
+                .split(' ')
+                .map((string, index) => {
+                // ASSUMPTION: First "part" of the split string is the number
+                if (index === 0) {
+                    return string;
+                }
+                // ASSUMPTION: Everything after that we can safely abbreviate to be just the first character
+                return string.substr(0, 1);
+                })
+                .join(' ');
+
+            spell.labels.activationAbbrev = newActivationLabel;
+
+            //Logic and data source copied from ActorSheet5e._filterItems()
+            //Need one for each because these are AND conditions
+            if (spell.data?.components?.ritual) {spell.labels.ritual = "ritual";}
+            if (spell.data?.components?.concentration) {spell.labels.concentration = "concentration";}
+            if (spell.data.level === 0 || ["innate", "always"].includes(spell.data.preparation.mode) || (spell.data.preparation.prepared)) {
+                spell.labels.prepared = "prepared";
+            }
+        });
+      });
+    } catch (e) {
+      log(true, 'error trying to modify activation labels', e);
+    }
+
     try {
       // MUTATES sheetData
       //0.5.0f Don't filter on the Spell casting filters (has already been done)
       //0.5.0j: Filters are ORd within each filter set and ANDd together across filter sets
-      const spellFilters = Array.from(sheetData.filters.spellbook).filter(filter => !castingFilters.includes(filter));
+      const spellFilters = Array.from(sheetData.filters.spellbook);
       sheetData?.spellbook.forEach((sbi, index) => {
         sheetData.spellbook[index].spells = sbi.spells.filter(({ labels }) => {
             let includeSpell = true;

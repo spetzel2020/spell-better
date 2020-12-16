@@ -6,6 +6,17 @@ export const SPELL_BETTER = {
     showIconsOnInventoryList : 'show-icons-on-inventory-list',
     expandedLimited : 'expanded-limited',
     filters :  {
+        castingTimes : [
+            {filter : "1 Action", name: "DND5E.Action"},         
+            {filter : "1 Bonus Action", name: "DND5E.BonusAction"},      
+            {filter : "1 Reaction", name: "DND5E.Reaction"},                      
+            {filter: "1 M", name: "SPELL_BETTER._1Minute"},
+            {filter: "10 M",name: "SPELL_BETTER._10Minutes"},
+            {filter: "1 H", name: "SPELL_BETTER._1Hour"}
+        ],
+        otherConcentration : [{filter: "concentration",name: "DND5E.Concentration"}],
+        otherRitual : [{filter: "ritual",name: "DND5E.Ritual"}],
+        otherPrepared : [{filter: "prepared",name: "DND5E.Prepared"}],                
         durations : [
             {filter : "Instantaneous", name: "DND5E.TimeInst"},                         
             {filter: "1 Rounds",name: "SPELL_BETTER._1Round"},

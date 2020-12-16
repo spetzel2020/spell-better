@@ -34,11 +34,14 @@
 
 <div class="inventory-filters spellbook-filters flexcol">
   <ul class="filter-list flexrow" data-filter="spellbook">
-    <li class="filter-set "><h4>{{localize "SPELL_BETTER.CastingAnd"}}:</h4></li>
-    <li class="filter-item tag" data-filter="action">{{localize "DND5E.Action"}}</li>
-    <li class="filter-item tag" data-filter="bonus">{{localize "DND5E.BonusAction"}}</li>
-    <li class="filter-item tag" data-filter="reaction">{{localize "DND5E.Reaction"}}</li>
-    <li class="filter-item tag" data-filter="concentration">{{localize "DND5E.AbbreviationConc"}}</li>
+    <li class="filter-set "><h4>{{localize "SPELL_BETTER.CastingTime"}}:</h4></li>
+    {{#each filters.choices.castingTimes as |fct|}}
+        <li class="filter-item tag" data-filter="{{fct.filter}}">{{localize fct.name}}</li>
+    {{/each}} 
+  </ul>
+  <ul class="filter-list flexrow" data-filter="spellbook">
+    <li class="filter-set "><h4>{{localize "SPELL_BETTER.OtherAnd"}}:</h4></li>
+    <li class="filter-item tag" data-filter="concentration">{{localize "DND5E.Concentration"}}</li>
     <li class="filter-item tag" data-filter="ritual">{{localize "DND5E.Ritual"}}</li>
     <li class="filter-item tag" data-filter="prepared">{{localize "DND5E.Prepared"}}{{#if preparedSpells}}({{preparedSpells}}){{/if}}</li>
   </ul>
@@ -125,8 +128,8 @@
       <div class="item-name flexrow rollable">
         <div class="item-image" style="background-image: url({{item.img}})"></div>
         <h4>{{item.name}}</h4>
-        {{#if item.hasAttack}} <span class="tag rollable attack" title="Roll Attack"><i class="ra ra-sword"></i></span> {{/if}}
-         {{#if item.hasDamage}} <span class="tag rollable damage" title="Roll Damage"><i class="fas fa-tint"></i></span> {{/if}}
+        {{#if item.hasAttack}} <span class="tag rollable spellAttack" title="Roll Attack"><i class="ra ra-sword"></i></span> {{/if}}
+         {{#if item.hasDamage}} <span class="tag rollable spellDamage" title="Roll Damage"><i class="fas fa-tint"></i></span> {{/if}}
         {{#if item.data.uses.per }}
         <div class="item-detail spell-uses">Uses {{item.data.uses.value}} / {{item.data.uses.max}}</div>
         {{/if}}
