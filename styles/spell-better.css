@@ -845,6 +845,19 @@
   color: inherit;
   border-bottom-color: var(--highlight);
 }
+.dnd5e.sheet.actor.character.ogl5e-sheet .item-name .item-shortcuts {
+    flex: 0 0 auto;
+}
+
+.dnd5e.sheet.actor.character.ogl5e-sheet .item-name .item-shortcuts .tag {
+    font-size:20px;
+    width: 25px;
+    height: 25px;
+    align-self: center;
+    line-height: 25px;
+}
+
+
 .dnd5e.sheet.actor.character.ogl5e-sheet .filter-list {
   line-height: normal;
 }

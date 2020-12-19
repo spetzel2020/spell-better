@@ -55,7 +55,7 @@
     <li class="filter-set "><h4>{{localize "SPELL_BETTER.LevelOr"}}:</h4></li>
     {{#each filters.choices.levels as |fl|}}
         <li class="filter-item tag" data-filter="{{fl.filter}}">
-            {{localize fl.name}} {{#if @index}}{{#with (lookup ../spellbook @index)}} {{slots}}/{{uses}} {{/with}}{{/if}}
+            {{localize fl.name}} {{#if @index}}{{#with (lookup ../spellbook @index)}} {{uses}}/{{slots}} {{/with}}{{/if}}
         </li>
     {{/each}}       
   </ul>
@@ -127,9 +127,11 @@
     <li class="item flexrow" data-item-id="{{item._id}}">
       <div class="item-name flexrow rollable">
         <div class="item-image" style="background-image: url({{item.img}})"></div>
+        <div class="item-shortcuts flexrow">
+            {{#if item.hasAttack}} <span class="tag rollable spellAttack" title="Roll Attack"><i class="ra ra-sword"></i></span> {{/if}}
+            {{#if item.hasDamage}} <span class="tag rollable spellDamage" title="Roll Damage"><i class="fas fa-tint"></i></span> {{/if}}
+        </div>
         <h4>{{item.name}}</h4>
-        {{#if item.hasAttack}} <span class="tag rollable spellAttack" title="Roll Attack"><i class="ra ra-sword"></i></span> {{/if}}
-         {{#if item.hasDamage}} <span class="tag rollable spellDamage" title="Roll Damage"><i class="fas fa-tint"></i></span> {{/if}}
         {{#if item.data.uses.per }}
         <div class="item-detail spell-uses">Uses {{item.data.uses.value}} / {{item.data.uses.max}}</div>
         {{/if}}

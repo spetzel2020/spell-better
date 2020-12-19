@@ -117,6 +117,15 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
         let item = this.actor.getOwnedItem(itemId);
         item.rollDamage();
     })
+
+    //HIde the shortcuts until you hover
+    html.find('.item-shortcuts').hide();
+
+    html.find('.item').hover(evIn => {
+        $(evIn.target).parents('.item').find('.item-shortcuts').show();
+    }, evOut => {
+        $(evOut.target).parents('.item').find('.item-shortcuts').hide();
+    });
   }
 
   //Spell Better 0.5.0 - Have to override _filterItems because it only does activation.type as an AND
