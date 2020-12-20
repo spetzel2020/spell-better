@@ -43,7 +43,13 @@
     <li class="filter-set "><h4>{{localize "SPELL_BETTER.OtherAnd"}}:</h4></li>
     <li class="filter-item tag" data-filter="concentration">{{localize "DND5E.Concentration"}}</li>
     <li class="filter-item tag" data-filter="ritual">{{localize "DND5E.Ritual"}}</li>
-    <li class="filter-item tag" data-filter="prepared">{{localize "DND5E.Prepared"}}{{#if preparedSpells}}({{preparedSpells}}){{/if}}</li>
+    <li class="filter-item tag" data-filter="prepared">{{localize "DND5E.Prepared"}}
+        {{#if preparedSpells}}({{preparedSpells}}/
+            {{#with (lookup data.abilities data.attributes.spellcasting)}}
+                {{numberFormat (ogl5e-sheet-add mod ../data.details.level) decimals=0}}
+            {{/with}}
+        {{/if}}
+    </li>
   </ul>
   <ul class="filter-list flexrow" data-filter="spellbook">
     <li class="filter-set "><h4>{{localize "SPELL_BETTER.DurationOr"}}:</h4></li>
