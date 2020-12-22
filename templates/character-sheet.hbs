@@ -1,6 +1,6 @@
 <form class="{{cssClass}} flexcol" autocomplete="off">
 
-  {{> (ogl5e-sheet-path "templates/parts/sheet-header.hbs")}}
+  {{> (spell-better-sheet-path "templates/parts/sheet-header.hbs")}}
 
   <main class="sheet-body">
 
@@ -13,7 +13,7 @@
             {{#each data.abilities as |ability id|}}
             <li class="ability" data-ability="{{id}}">
               <div class="ability-outline">
-                {{> (ogl5e-sheet-path "assets/strength.hbs")}}
+                {{> (spell-better-sheet-path "assets/strength.hbs")}}
               </div>
               <h4 class="ability-name box-title rollable">{{ability.label}}</h4>
               <input class="ability-score" name="data.abilities.{{id}}.value" type="text" value="{{ability.value}}"
@@ -25,15 +25,15 @@
             {{/each}}
           </ul>
 
-          {{> (ogl5e-sheet-path "templates/parts/actor-skills.hbs")}}
+          {{> (spell-better-sheet-path "templates/parts/actor-skills.hbs")}}
         </div>
 
-        {{> (ogl5e-sheet-path "templates/parts/actor-traits.hbs")}}
+        {{> (spell-better-sheet-path "templates/parts/actor-traits.hbs")}}
       </div>
 
       <div class="flexcol sheet-body-column">
         {{!-- Health, Armor, Initiative, Speed, Exhaustion --}}
-        {{> (ogl5e-sheet-path "templates/parts/actor-health-armor.hbs")}}
+        {{> (spell-better-sheet-path "templates/parts/actor-health-armor.hbs")}}
 
         {{!-- Attacks & Spellcasting --}}
         <section class="actions flexcol">
@@ -45,23 +45,23 @@
             </li>
 
             {{!-- Actions --}}
-            {{> (ogl5e-sheet-path "templates/parts/actor-actions-list.hbs")  items=actionsData.action label=(localize "DND5E.Action") }}
+            {{> (spell-better-sheet-path "templates/parts/actor-actions-list.hbs")  items=actionsData.action label=(localize "DND5E.Action") }}
 
             {{!-- Bonus Actions --}}
-            {{> (ogl5e-sheet-path "templates/parts/actor-actions-list.hbs")  items=actionsData.bonus label=(localize "DND5E.BonusAction") }}
+            {{> (spell-better-sheet-path "templates/parts/actor-actions-list.hbs")  items=actionsData.bonus label=(localize "DND5E.BonusAction") }}
 
             {{!-- Reactions --}}
-            {{> (ogl5e-sheet-path "templates/parts/actor-actions-list.hbs")  items=actionsData.reaction label=(localize "DND5E.Reaction") }}
+            {{> (spell-better-sheet-path "templates/parts/actor-actions-list.hbs")  items=actionsData.reaction label=(localize "DND5E.Reaction") }}
 
             {{!-- Special --}}
-            {{> (ogl5e-sheet-path "templates/parts/actor-actions-list.hbs")  items=actionsData.special label=(localize "DND5E.Special") }}
+            {{> (spell-better-sheet-path "templates/parts/actor-actions-list.hbs")  items=actionsData.special label=(localize "DND5E.Special") }}
 
           </ol>
         </section>
 
         {{!-- Inventory --}}
         <section class="inventory flexrow">
-          {{> (ogl5e-sheet-path "templates/parts/actor-inventory.hbs") sections=inventory}}
+          {{> (spell-better-sheet-path "templates/parts/actor-inventory.hbs") sections=inventory}}
         </section>
 
       </div>
@@ -123,7 +123,7 @@
 
         {{!-- Features --}}
         <section class="features flexcol" data-group="primary" data-tab="features">
-          {{> (ogl5e-sheet-path "templates/parts/actor-features.hbs") sections=features}}
+          {{> (spell-better-sheet-path "templates/parts/actor-features.hbs") sections=features}}
         </section>
       </div>
 
@@ -131,7 +131,7 @@
 
     {{!-- Spellbook Tab --}}
     <article class="tab spellbook flexcol" data-group="primary" data-tab="spellbook">
-      {{> (ogl5e-sheet-path "templates/parts/actor-spellbook.hbs")}}
+      {{> (spell-better-sheet-path "templates/parts/actor-spellbook.hbs")}}
     </article>
 
 

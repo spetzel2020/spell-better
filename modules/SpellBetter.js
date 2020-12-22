@@ -4,6 +4,7 @@
 16-Dec-2020     0.5.0: Add To Hit and Damage "pop-up" buttons to allow continued damage rerolls from sheet
                 Override _filterItems so that spells get filtered here only
                 Move abbreviated activation labels and setting of Ritual, Concentration, and Prepared labels fr filters
+21-Dec-2020     0.5.0: Add a Print option to the header buttons                
 */
 
 import { log, getActivationType, getWeaponRelevantAbility, hasAttack, hasDamage } from './helpers.js';
@@ -13,7 +14,7 @@ import { MODULE_ID, SPELL_BETTER } from './constants.js';
 
 import ActorSheet5eCharacter from '../../../systems/dnd5e/module/actor/sheets/character.js';
 
-Handlebars.registerHelper('ogl5e-sheet-path', (relativePath) => {
+Handlebars.registerHelper('spell-better-sheet-path', (relativePath) => {
   return `modules/${MODULE_ID}/${relativePath}`;
 });
 
@@ -52,7 +53,7 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     const options = super.defaultOptions;
 
     mergeObject(options, {
-      classes: ['dnd5e', 'sheet', 'actor', 'character', 'ogl5e-sheet'],
+      classes: ['dnd5e', 'sheet', 'actor', 'character', 'spell-better-sheet'],
       height: 680,
       width: 830,
     });
@@ -87,6 +88,51 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     event.target.value = quantity;
     return item.update({ 'data.quantity': quantity });
   }
+
+      /** @override */
+    _getHeaderButtons() {
+        let buttons = super._getHeaderButtons();
+        let printButton = buttons.findIndex(button => button.label === game.i18n.localize("Close"));
+
+        buttons.unshift({
+            label: "SPELL_BETTER.Print",
+            class: "entry-image",
+            icon: "fas fa-print",
+            onclick: ev => {
+                const bodyCopy = this.element[0].parentElement.cloneNode(true);//.find("article.spellbook");
+                if (!bodyCopy) return;
+                //Now remove all elements except this Actor sheet (but keep styles etc)
+                const uuid = this.element[0].id;
+                const actorCopy = $(bodyCopy).find("#"+uuid);
+                SpellBetterCharacterSheet.removeAllChildrenExcept(bodyCopy, uuid);
+
+                this.printContent(bodyCopy)
+            }
+        })
+
+        return buttons;
+    }
+
+    static removeAllChildrenExcept(parent, exceptId) {
+        //
+        while (parent.childNodes.length > 1) {
+            if (parent.firstChild.id !== exceptId) {
+                parent.removeChild(parent.firstChild);
+            }
+        }
+}
+
+    async printContent(bodyCopy) {
+        const printableContent = bodyCopy.outerHTML;
+        const printWindow = window.open("", "Print_Content", 'scrollbars=1,width=900,height=900,top=' + (screen.height - 700) / 2 + ',left=' + (screen.width - 700) / 2);
+        if (!printWindow) return false;
+        printWindow.document.write(printableContent);
+        printWindow.document.close();
+        printWindow.focus();
+        //printWindow.print();
+        //printWindow.close();
+        return false;
+    }
 
   /**
    * Activate event listeners using the prepared sheet HTML
