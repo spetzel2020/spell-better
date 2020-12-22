@@ -1046,19 +1046,16 @@
   flex: 0 auto;
 }
 
-
+/* Makes PopOuted OGL Character Sheet Spellbook tab print with multiple pages. */
 @media print {
-    body {
-        display: inline;
-        overflow: visible !important;
+    .app {
+         max-height: unset !important;
     }
-    body > div {
-         max-height: unset;
-        overflow: visible !important;
+    .window-content {
+        display: block;
     }
-    svg {
-        width: "20px" !important; 
-        height: "20px" !important;
+    .window-content > form {
+        display: block;
     }
     section, form, div:not(.item-image){
         overflow: auto !important;
