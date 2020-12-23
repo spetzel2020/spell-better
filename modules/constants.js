@@ -46,5 +46,12 @@ export const SPELL_BETTER = {
             {filter: "8th Level", name: "SPELL_BETTER.SpellLevel8"},
             {filter: "9th Level",  name: "SPELL_BETTER.SpellLevel9"}
         ]
+    },
+    standardCategories : { 
+         //spell is catch-all category - may also want to include levels?
+        spell: { label: "SPELL_BETTER.Category.Spellbook", canCreate: true, canPrepare: true, dataset: {type: "spell", level: 0, preparation : {mode: "prepared"}},
+                order: 1000, prop: "spell1", slots: "4", uses: "0;", usesSlots: true, type: "spell",  collapsed: false },
+        wanted: { label: "SPELL_BETTER.Category.Wanted",canCreate: true, canPrepare: true, dataset: {type: "spell", level: 0, preparation : {mode: "prepared"}},
+                order: 2000, prop: "spell1", slots: "4", uses: "0", usesSlots: true, type: "wanted",  collapsed: false }
     }
 }

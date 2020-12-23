@@ -1,9 +1,9 @@
 {
 	"name": "spell-better",
-	"title": "Spetzel's Spell Better Spellbook for Wizards (and other lesser casters)",
-	"description": "All the flexibility you as a Wizard need with your Spellbook! And useful features for other prepared spell casters (Druids, Clerics, and Paladins)",
+	"title": "Spetzel's Spell Better for Wizards (and other lesser casters)",
+	"description": "The ultimate detachable spellbook for Wizards and other lesser prepared-spell casters (Druids, Clerics, Paladins). All the flexibility you as a Wizard need with your Spellbook!<ul><li>Filter your spell list by level, school, usage, duration, concentration, and ritual</ul>",
 	"systems": ["dnd5e"],
-	"version": "0.5.0",
+	"version": "0.5.1",
 	"author": "Spetzel#0103",
 	"authors": [
 		{
@@ -12,7 +12,7 @@
 		}
 	],
 	"esmodules": [
-		"modules/SpellBetter.js"
+		"modules/SpellBetter.js", "modules/Inventory+ForSpells.js"
 	],
 	"styles": [
 		"styles/spell-better.css"
@@ -47,7 +47,7 @@
 		}
 	],
 	"minimumCoreVersion": "0.7.6",
-	"compatibleCoreVersion": "0.7.8",
+	"compatibleCoreVersion": "0.7.9",
 	"minimumSystemVersion": 0.99,
     "readme": "https://github.com/spetzel2020/spell-better/blob/master/README.md",
      "bugs": "https://github.com/spetzel2020/spell-better/issues",

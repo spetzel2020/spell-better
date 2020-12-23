@@ -4,16 +4,20 @@
 16-Dec-2020     0.5.0: Add To Hit and Damage "pop-up" buttons to allow continued damage rerolls from sheet
                 Override _filterItems so that spells get filtered here only
                 Move abbreviated activation labels and setting of Ritual, Concentration, and Prepared labels fr filters
-21-Dec-2020     0.5.0: Add a Print option to the header buttons                
+21-Dec-2020     0.5.0: Add a Print option to the header buttons  
+22-Dec-2020     0.5.1: Incorporate a copied/mangled Inventory+  and implement its category and drag-and-drop tools              
 */
 
 import { log, getActivationType, getWeaponRelevantAbility, hasAttack, hasDamage } from './helpers.js';
 import { registerSettings } from './settings.js';
 import { preloadTemplates } from './preloadTemplates.js';
 import { MODULE_ID, SPELL_BETTER } from './constants.js';
+import {InventoryPlusForSpells} from './Inventory+ForSpells.js';
 
 import ActorSheet5eCharacter from '../../../systems/dnd5e/module/actor/sheets/character.js';
 
+
+/* HANDLEBARS HELPERS */
 Handlebars.registerHelper('spell-better-sheet-path', (relativePath) => {
   return `modules/${MODULE_ID}/${relativePath}`;
 });
@@ -89,7 +93,7 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     return item.update({ 'data.quantity': quantity });
   }
 
-      /** @override */
+    /** @override */
     _getHeaderButtons() {
         let buttons = super._getHeaderButtons();
         let printButton = buttons.findIndex(button => button.label === game.i18n.localize("Close"));
@@ -134,7 +138,8 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
         return false;
     }
 
-  /**
+  /** 
+   * @override 
    * Activate event listeners using the prepared sheet HTML
    * @param html {HTML}   The prepared HTML object ready to be rendered into the DOM
    */
@@ -164,13 +169,39 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
         item.rollDamage();
     })
 
-    //HIde the shortcuts until you hover
+    //Hide the shortcuts until you hover
     html.find('.item-shortcuts').hide();
 
     html.find('.item').hover(evIn => {
         $(evIn.target).parents('.item').find('.item-shortcuts').show();
     }, evOut => {
         $(evOut.target).parents('.item').find('.item-shortcuts').hide();
+    });
+
+    //Pop-up custom category dialog
+//FIXME: Should be pushed into Inventory+ForSpells    
+    html.find(".custom-category").click(async ev => {
+        let template = await renderTemplate('modules/spell-better/templates/categoryDialog.hbs', {});
+        let d = new Dialog({
+            title: "Creating new Inventory Category",
+            content: template,
+            buttons: {
+                accept: {
+                    icon: '<i class="fas fa-check"></i>',
+                    label: "Accept",
+                    callback: async html => {
+                        let input = html.find('input');
+                        this.createCategory(input);
+                    }
+                },
+                cancel: {
+                    icon: '<i class="fas fa-times"></i>',
+                    label: "Cancel"
+                }
+            },
+            default: "accept",
+        });
+        d.render(true);
     });
   }
 
@@ -231,7 +262,6 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
 
     try {
       // MUTATES sheetData
-      //0.5.0f Don't filter on the Spell casting filters (has already been done)
       //0.5.0j: Filters are ORd within each filter set and ANDd together across filter sets
       const spellFilters = Array.from(sheetData.filters.spellbook);
       sheetData?.spellbook.forEach((sbi, index) => {
@@ -447,6 +477,12 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     } catch (e) {
       log(true, 'error trying to migrate description to appearance', e);
     }
+
+    //0.5.1: Now that spells have been appropriately filtered and munged, add categories
+    if (!this.inventoryPlusForSpells) {
+        this.inventoryPlusForSpells = new InventoryPlusForSpells(this.actor);
+    }
+    sheetData.spellbook = this.inventoryPlusForSpells.categorizeSpells(sheetData?.spellbook);
 
     return sheetData;
   }

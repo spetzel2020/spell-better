@@ -30,5 +30,8 @@
   "SPELL_BETTER.SpellLevel8" : "8th",
   "SPELL_BETTER.SpellLevel9" : "9th" ,
   "SPELL_BETTER.Experience" : "Experience"     ,
-  "SPELL_BETTER.Print" : "Print"        
+  "SPELL_BETTER.Print" : "Print"   ,
+  "SPELL_BETTER.Category.Spellbook" : "Spellbook",
+  "SPELL_BETTER.Category.Wanted" : "Wanted"     ,
+  "SPELL_BETTER.AddCustomCategory.LINK" : "Add Custom Category"
 }

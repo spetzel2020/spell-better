@@ -73,6 +73,8 @@
   </ul>
 </div>
 
+<a class="custom-category"><i class="fas fa-plus"></i>{{localize "SPELL_BETTER.AddCustomCategory.LINK"}}</a>
+
 <ol class="inventory-list items-list">
   <li class="flexrow items-header spellbook-header">
     <div class="item-name flexrow">
@@ -93,7 +95,7 @@
 
   {{#each spellbook as |section|}}
   <li class="sub-header spellbook-header">
-    <h4>{{section.label}}</h4>
+    <h4>{{localize section.label}}</h4>
 
     {{#if section.usesSlots}}
     <div class="spell-slots">
@@ -134,7 +136,7 @@
       <div class="item-name flexrow rollable">
         <div class="item-image" style="background-image: url({{item.img}})"></div>
         <div class="item-shortcuts flexrow">
-            {{#if item.hasAttack}} <span class="tag rollable spellAttack" title="Roll Attack"><i class="ra ra-sword"></i></span> {{/if}}
+            {{#if item.hasAttack}} <span class="tag rollable spellAttack" title="Roll Attack"><i class="fas fa-bullseye"></i></span> {{/if}}
             {{#if item.hasDamage}} <span class="tag rollable spellDamage" title="Roll Damage"><i class="fas fa-tint"></i></span> {{/if}}
         </div>
         <h4>{{item.name}}</h4>
