@@ -122,8 +122,7 @@
 
             <div class="spell-controls">
                 {{#if section.canCreate}}
-                    <a class="spell-control item-create" title="{{localize 'DND5E.SpellCreate'}}"
-                        {{#each section.dataset as |v k|}}data-{{k}}="{{v}}" {{/each}}>
+                    <a class="spell-control spell-create" title="{{localize 'DND5E.SpellCreate'}}" data-category="{{@key}}">
                         <i class="fas fa-plus"></i> {{localize "DND5E.Add"}}
                     </a>
                 {{/if}}

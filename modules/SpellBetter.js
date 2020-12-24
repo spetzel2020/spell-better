@@ -94,6 +94,24 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     return item.update({ 'data.quantity': quantity });
   }
 
+    /**
+     * Override onItemCreate with creating a new spell not from the header information but from the category
+     */
+    _onSpellCreate(event) {
+        event.preventDefault();
+        const header = event.currentTarget;
+        const category = header.dataset.category;
+        const templateItemData = this.inventoryPlusForSpells.getTemplateItemData(category);
+        const type = "spell";
+        const itemData = {
+            name: game.i18n.format("DND5E.ItemNew", {type: type.capitalize()}),
+            type: type,
+            data: duplicate(templateItemData)
+        };
+        delete itemData.data["type"];
+        return this.actor.createEmbeddedEntity("OwnedItem", itemData);
+    }       
+
     /** @override */
     _getHeaderButtons() {
         let buttons = super._getHeaderButtons();
@@ -178,6 +196,9 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     }, evOut => {
         $(evOut.target).parents('.item').find('.item-shortcuts').hide();
     });
+
+    //Replace Item create for spells
+     html.find('.spell-create').click(this._onSpellCreate.bind(this));
 
     //Pop-up custom category dialog
 //FIXME: Should call Inventory+ForSPells for Dialog

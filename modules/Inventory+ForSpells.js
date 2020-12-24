@@ -336,6 +336,11 @@ export class InventoryPlusForSpells {
         return categories;
     }
 
+    getTemplateItemData(category) {
+        const customCategory = this.customCategories[category];
+        return customCategory?.templateItemData;
+    }
+
     createCategory(inputs) {
         let newCategory = {}
 
