@@ -274,13 +274,14 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
       log(true, 'error trying to modify activation labels', e);
     }
 
+    //FILTERING: Filter overall spell list here to reduce what we have to work with
     try {
         // MUTATES sheetData
         //0.5.0j: Filters are ORd within each filter set and ANDd together across filter sets
         const spellFilters = Array.from(sheetData.filters.spellbook);
         sheetData?.spellbook.forEach((sbi, index) => {
             //Not really InventoryPlus, but fits the filtering and categorization
-            sheetData.spellbook[index].spells = InventoryPlusForSpells(sbi.spells, spellFilters);
+            sheetData.spellbook[index].spells = InventoryPlusForSpells.filterSpells(sbi.spells, spellFilters);
         
         });
     } catch (e) {
