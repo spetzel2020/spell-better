@@ -88,7 +88,7 @@
         <div class="spell-target">{{localize "DND5E.SpellTarget"}} / {{localize "DND5E.Range"}}</div>
         <div class="spell-school">{{localize "DND5E.SpellSchool"}}</div>
 
-        <div class="item-controls">
+        <div class="spell-controls">
         </div>
     </li>
 
@@ -120,9 +120,9 @@
 
             <hr />
 
-            <div class="item-controls">
+            <div class="spell-controls">
                 {{#if section.canCreate}}
-                    <a class="item-control item-create" title="{{localize 'DND5E.SpellCreate'}}"
+                    <a class="spell-control spell-create" title="{{localize 'DND5E.SpellCreate'}}"
                         {{#each section.dataset as |v k|}}data-{{k}}="{{v}}" {{/each}}>
                         <i class="fas fa-plus"></i> {{localize "DND5E.Add"}}
                     </a>
@@ -170,11 +170,10 @@
                     {{#if ../../owner}}
                         <div class="item-controls">
                             {{#if section.canPrepare}}
-                            <a class="item-control item-toggle {{item.toggleClass}}" title="{{item.toggleTitle}}"><i
-                                class="fas fa-sun"></i></a>
+                            <a class="spell-control item-toggle {{item.toggleClass}}" title="{{item.toggleTitle}}"><i class="fas fa-sun"></i></a>
                             {{/if}}
-                            <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-                            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                            <a class="spell-control item-edit" title="{{localize 'SPELL_BETTER.EditSpell'}}"><i class="fas fa-edit"></i></a>
+                            <a class="spell-control item-delete" title="{{localize 'SPELL_BETTER.DeleteSpell'}}"><i class="fas fa-trash"></i></a>
                         </div>
                     {{/if}}
                     </li>
@@ -187,9 +186,9 @@
                 <p class="notes">{{localize "DND5E.FilterNoSpells"}}</p>
             </li>
             {{else}}
-            <li class="item flexrow items-header spellbook-header spellbook-empty">
-                <div class="item-controls">
-                <a class="item-control item-create" title="{{localize 'DND5E.SpellCreate'}}" data-type="spell"
+            <li class="item flexrow spellbook-header spellbook-empty">
+                <div class="spell-controls">
+                <a class="spell-control item-create" title="{{localize 'DND5E.SpellCreate'}}" data-type="spell"
                     data-level="{{lvl}}"><i class="fas fa-plus"></i> {{localize "DND5E.SpellAdd"}}</a>
                 </div>
             </li>

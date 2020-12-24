@@ -33,5 +33,7 @@
   "SPELL_BETTER.Print" : "Print"   ,
   "SPELL_BETTER.Category.Spellbook" : "Spellbook",
   "SPELL_BETTER.Category.Wanted" : "Wanted"     ,
-  "SPELL_BETTER.AddCustomCategory.LINK" : "Add Custom Category"
+  "SPELL_BETTER.AddCustomCategory.LINK" : "Add Custom Category",
+  "SPELL_BETTER.EditSpell" : "Edit Spell",
+  "SPELL_BETTER.DeleteSpell" : "Delete Spell"
 }
