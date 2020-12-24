@@ -1,34 +1,32 @@
 <div class="spellcasting-ability">
-  <div>
-    <label>{{localize "DND5E.SpellDC"}} </label>
-    <span>{{data.attributes.spelldc}}</span>
-  </div>
-
-  <div>
-    <label>{{localize "DND5E.ItemTypeSpell"}} {{localize "DND5E.Attack"}}</label>
-    <span>
-      {{#with (lookup data.abilities data.attributes.spellcasting)}}
-      {{numberFormat (ogl5e-sheet-add mod ../data.attributes.prof) decimals=0 sign=true}}
-      {{/with}}
-    </span>
-  </div>
-
-  <div>
-    {{#if isNPC}}
-        <label>{{localize "DND5E.Level"}}</label>
-        <input class="spellcasting-level" type="text" name="data.details.spellLevel" value="{{data.details.spellLevel}}" data-dtype="Number" placeholder="0" />
-    {{else}}
-        <label>{{localize "DND5E.SpellAbility"}}</label>
-    {{/if}}
-    <select name="data.attributes.spellcasting" data-type="String">
-        {{#select data.attributes.spellcasting}}
-        <option value="">{{localize "DND5E.None"}}</option>
-        {{#each data.abilities as |abl a|}}
-        <option value="{{a}}">{{abl.label}}</option>
-        {{/each}}
-        {{/select}}
-    </select>
-  </div>
+    <div>
+        {{#if isNPC}}
+            <label>{{localize "DND5E.Level"}}</label>
+            <input class="spellcasting-level" type="text" name="data.details.spellLevel" value="{{data.details.spellLevel}}" data-dtype="Number" placeholder="0" />
+        {{else}}
+            <label>{{localize "DND5E.SpellAbility"}}</label>
+        {{/if}}
+        <select name="data.attributes.spellcasting" data-type="String">
+            {{#select data.attributes.spellcasting}}
+            <option value="">{{localize "DND5E.None"}}</option>
+            {{#each data.abilities as |abl a|}}
+            <option value="{{a}}">{{abl.label}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+    </div>
+    <div>
+        <label>{{localize "DND5E.ItemTypeSpell"}} {{localize "DND5E.Attack"}}</label>
+        <span>
+            {{#with (lookup data.abilities data.attributes.spellcasting)}}
+            {{numberFormat (ogl5e-sheet-add mod ../data.attributes.prof) decimals=0 sign=true}}
+            {{/with}}
+        </span>
+    </div>
+    <div>
+        <label>{{localize "DND5E.SpellDC"}}</label>
+        <span>{{data.attributes.spelldc}}</span>
+    </div>
 </div>
 
 <div class="inventory-filters spellbook-filters flexcol">
@@ -93,11 +91,11 @@
     </li>
 
     {{#each spellbook as |section|}}
-        <li class="sub-header spellbook-header">
+        <li class="sub-header spellbook-header" data-category="{{@key}}">
             {{#if section.isCollapsed}}
-                <a class="toggle-collapse" data-category="{{@key}}"><i class="fas fa-caret-right"></i></a>
+                <a class="toggle-collapse"><i class="fas fa-caret-right"></i></a>
             {{else}}
-                <a class="toggle-collapse" data-category="{{@key}}"><i class="fas fa-caret-down"></i></a>
+                <a class="toggle-collapse"><i class="fas fa-caret-down"></i></a>
             {{/if}}
             <h4>{{localize section.label}}</h4>
 

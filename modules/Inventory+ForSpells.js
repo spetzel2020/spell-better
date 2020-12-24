@@ -86,12 +86,7 @@ export class InventoryPlusForSpells {
                 return oldOnDropItem.bind(this)(event, data);
             }
 
-            // droping item outside inventory list
-            let targetLi = $(event.target).parents('li')[0];
-            if (targetLi === undefined || targetLi.className === undefined) {
-                return oldOnDropItem.bind(this)(event, data);
-            }
-
+  
             // doing actual stuff!!!
             let id = data.data._id;
             let dropedItem = this.object.getOwnedItem(id);

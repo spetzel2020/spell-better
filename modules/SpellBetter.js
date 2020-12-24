@@ -105,12 +105,42 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
         const newSpellData =  await this.actor.createEmbeddedEntity("OwnedItem", templateItemData);
         const newSpell = this.actor.getOwnedItem(newSpellData?._id);
 //FIXME: Yuck - is there a batched way of doing this with update?
-        if (newSpell) {
+        if (newSpell && templateFlags) {
             for (const [flagKey, flagValue] of Object.entries(templateFlags)) {
                 await newSpell.setFlag(MODULE_ID,flagKey, flagValue);
             }
         }
-    }       
+    }   
+    
+    /**
+     * @override
+     * _onDropItem: Note where dropped to see if you have to apply category info
+     */
+    async _onDropItem(event, data) {
+        //Copied from core _onDropItem()
+        if ( !this.actor.owner ) return false;
+        const item = await Item.fromDropData(data);
+        const itemData = duplicate(item.data);
+
+        let targetLi = $(event.target).closest(".sub-header")[0];
+        // dropping item outside category list
+        if (targetLi === undefined || targetLi.className === undefined) {
+            return super._onDropItem(event, data);
+        }
+
+        const category = targetLi.dataset?.category;
+        const {templateItemData, templateFlags} = this.inventoryPlusForSpells.getTemplateItemData(category);
+        //Ignore the templateItemData; just apply the flags
+        if (templateFlags) {mergeObject(itemData, {flags : {"spell-better" : templateFlags}})};
+
+        // Handle item sorting within the same Actor
+        const actor = this.actor;
+        let sameActor = (data.actorId === actor._id) || (actor.isToken && (data.tokenId === actor.token.id));
+        if (sameActor) return this._onSortItem(event, itemData);
+
+        // Create the owned item
+        return this._onDropItemCreate(itemData);
+    }
 
     /** @override */
     _getHeaderButtons() {
@@ -227,7 +257,8 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     });
 
     //Attach listeners to toggle category collapsed/shown - loop through
-    const categoryHeaders = html.find(".toggle-collapse");
+    const categoryHeaders = html.find(".sub-header");
+//FIXME: For a brand-new sheet, this may be null; use a singleton call to do this
     const inventoryPlusForSpells = this.inventoryPlusForSpells;
     for (const header of categoryHeaders) {
         const el = $(header);
