@@ -275,32 +275,16 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     }
 
     try {
-      // MUTATES sheetData
-      //0.5.0j: Filters are ORd within each filter set and ANDd together across filter sets
-      const spellFilters = Array.from(sheetData.filters.spellbook);
-      sheetData?.spellbook.forEach((sbi, index) => {
-        sheetData.spellbook[index].spells = sbi.spells.filter(({ labels }) => {
-            let includeSpell = true;
-            for (const [filterSet, elements] of Object.entries(SPELL_BETTER.filters)) {
-                const filters = elements.map(e => e.filter);
-                const filterSetFilters = spellFilters.filter(f => filters.includes(f));
-                let includedInFilterSet = true; //if no filters in this set are enabled, then ignore
-                if (filterSetFilters.length) {
-                    //include if any of this set's filters are present
-                    includedInFilterSet = false;
-                    for (const filter of filterSetFilters) {
-                        includedInFilterSet = (Object.values(labels).includes(filter));
-                        if (includedInFilterSet) break;
-                    }
-                }
-                includeSpell = includeSpell && includedInFilterSet;
-                if (!includeSpell) break;
-            }
-            return includeSpell;
+        // MUTATES sheetData
+        //0.5.0j: Filters are ORd within each filter set and ANDd together across filter sets
+        const spellFilters = Array.from(sheetData.filters.spellbook);
+        sheetData?.spellbook.forEach((sbi, index) => {
+            //Not really InventoryPlus, but fits the filtering and categorization
+            sheetData.spellbook[index].spells = InventoryPlusForSpells(sbi.spells, spellFilters);
+        
         });
-      });
     } catch (e) {
-      log(true, 'error trying to modify activation labels', e);
+        log(true, 'error trying to filter spells', e);
     }
 
     // within each activation time, we want to display: Items which do damange, Spells which do damage, Features

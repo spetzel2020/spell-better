@@ -21,7 +21,10 @@ export class InventoryPlusForSpells {
         if (!actorCategories) {
             this.customCategories = SPELL_BETTER.standardCategories;
         } else {
+
             this.customCategories = duplicate(actorCategories);
+//FIXME
+            this.customCategories = SPELL_BETTER.standardCategories;
             this.applySortKey();
         }
     }
@@ -290,34 +293,47 @@ export class InventoryPlusForSpells {
         }
     }
 
-    categorizeSpells(spellbook) {
-        let sections = duplicate(this.customCategories);
-//FIXME: This really looks like it could be refactored to be simpler
-        for (let id in sections) {
-            sections[id].spells = [];
-        }
-
-        //Rebuild the categories in use from the spells themselves - 
-        //FIXME: Should be able to use a Set to build this, or start with the category list and then filter into it
-//FIXME: Should use Category filter definition to do this generally
-        for (let section of spellbook) {
-            for (let spell of section.spells) {
-                let category = this.getSpellCategory(spell);
-                if (sections[category] === undefined) {
-                    category = spell.type + spell.data.level;
+    static filterSpells(spells, spellFilters) {
+        return spells.filter(({ labels }) => {
+            let includeSpell = true;
+            //Not currently using filterSet, but rather relying on the filter match with label being unique
+            for (const [filterSet, elements] of Object.entries(SPELL_BETTER.filters)) {
+                const filters = elements.map(e => e.filter);    //elements includes names for sheet display
+                const filterSetFilters = spellFilters.filter(f => filters.includes(f));
+                let includedInFilterSet = true; //if no filters in this set are enabled, then ignore
+                if (filterSetFilters.length) {
+                    //include if any of this set's filters are present
+                    includedInFilterSet = false;
+                    for (const filter of filterSetFilters) {
+                        includedInFilterSet = (Object.values(labels).includes(filter));
+                        if (includedInFilterSet) break;
+                    }
                 }
-                sections[category].spells.push(spell);
+                includeSpell = includeSpell && includedInFilterSet;
+                if (!includeSpell) break;
             }
-        }
+            return includeSpell;
+        });
+    }
 
-        // sort spells within sections
-        for (let id in sections) {
-            let section = sections[id];
-            section.spells.sort((a, b) => {
+    categorizeSpells(spellbook) {
+        let categories = duplicate(this.customCategories);
+
+        //Categorize spells for display; the same spell could appear in MULTIPLE areas
+        //TODO: Would probably be more efficient to make the outer loop the spells and the inner loop the categories, since most spells will be in one category        
+        for (const [category, value] of Object.entries(categories) ) {
+            categories[category].spells = [];
+            const filters = value.filterSets.map(e => e.filter);
+            for (const section of spellbook) {
+                const filteredSpells = InventoryPlusForSpells.filterSpells(section.spells, filters);
+                categories[category].spells.push(...filteredSpells);
+            }
+            //Now sort spells within categories - should make this configurable
+            categories[category].spells.sort((a, b) => {
                 return a.sort - b.sort;
             });
         }
-        return sections;
+        return categories;
     }
 
     createCategory(inputs) {
@@ -495,7 +511,7 @@ export class InventoryPlusForSpells {
         await this.actor.setFlag(MODULE_ID, "categories", null);
         await this.actor.setFlag(MODULE_ID, 'categories', this.customCategories);
     }
-}
+}//end InventoryPlusForSpells
 
 
 //FIXME: Deprecated
