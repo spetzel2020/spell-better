@@ -295,11 +295,14 @@ export class InventoryPlusForSpells {
             sections[id].spells = [];
         }
 
+        //Rebuild the categories in use from the spells themselves - 
+        //FIXME: Should be able to use a Set to build this, or start with the category list and then filter into it
+//FIXME: Should use Category filter definition to do this generally
         for (let section of spellbook) {
             for (let spell of section.spells) {
                 let category = this.getSpellCategory(spell);
                 if (sections[category] === undefined) {
-                    category = spell.type;
+                    category = spell.type + spell.data.level;
                 }
                 sections[category].spells.push(spell);
             }
@@ -429,10 +432,10 @@ export class InventoryPlusForSpells {
         return id;
     }
 
-    getSpellCategory(item) {
-        let category = getProperty(item, 'flags.spell-better.category');
+    getSpellCategory(spell) {
+        let category = getProperty(spell, 'flags.spell-better.category');
         if (category === undefined || this.customCategories[category] === undefined) {
-            category = item.type;
+            category = spell.type + spell.data.level;
         }
         return category;
     }
