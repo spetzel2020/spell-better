@@ -1,7 +1,8 @@
 /*
 22-Dec-2020     0.5.1: Incorporate Inventory+ (Felix Müller aka syl3r86) and implement its category and drag-and-drop tools  
                 Have to copy code because overrides are too difficult
-23-Dec-2020     0.5.1: - Have to null out flags.spell-better during development                 
+23-Dec-2020     0.5.1: - Have to null out flags.spell-better during development     
+24-Dec-2020     0.5.1i: filterSpells(): loops over legal filterSets in the passed spell filters            
 */
 
 import {SpellBetterCharacterSheet} from "./SpellBetter.js";
@@ -293,15 +294,15 @@ export class InventoryPlusForSpells {
         }
     }
 
-    static filterSpells(spells, spellFilters) {
+    static filterSpells(spells, appliedFilterSets) {
         return spells.filter(({ labels }) => {
             let includeSpell = true;
-            //Not currently using filterSet, but rather relying on the filter match with label being unique
-            for (const [filterSet, elements] of Object.entries(SPELL_BETTER.filters)) {
-                const filters = elements.map(e => e.filter);    //elements includes names for sheet display
-                const filterSetFilters = spellFilters.filter(f => filters.includes(f));
+            //0.5.1i: Instead of working off SPELL_BETTER.filters, just use the available filterSets
+            for (const filterSet of Object.keys(SPELL_BETTER.filters)) {
+                const appliedFilterSet = appliedFilterSets.find(afs => afs.filterSet === filterSet);  //make sure it's allowable
+                const filterSetFilters = appliedFilterSet?.filters;
                 let includedInFilterSet = true; //if no filters in this set are enabled, then ignore
-                if (filterSetFilters.length) {
+                if (filterSetFilters?.length) {
                     //include if any of this set's filters are present
                     includedInFilterSet = false;
                     for (const filter of filterSetFilters) {
@@ -323,9 +324,8 @@ export class InventoryPlusForSpells {
         //TODO: Would probably be more efficient to make the outer loop the spells and the inner loop the categories, since most spells will be in one category        
         for (const [category, value] of Object.entries(categories) ) {
             categories[category].spells = [];
-            const filters = value.filterSets.map(e => e.filter);
             for (const section of spellbook) {
-                const filteredSpells = InventoryPlusForSpells.filterSpells(section.spells, filters);
+                const filteredSpells = InventoryPlusForSpells.filterSpells(section.spells, value.filterSets);
                 categories[category].spells.push(...filteredSpells);
             }
             //Now sort spells within categories - should make this configurable

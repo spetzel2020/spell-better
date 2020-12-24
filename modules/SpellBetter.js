@@ -278,10 +278,18 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     try {
         // MUTATES sheetData
         //0.5.0j: Filters are ORd within each filter set and ANDd together across filter sets
-        const spellFilters = Array.from(sheetData.filters.spellbook);
+        //Have to reconstruct the filterSets because the standard sheet only gives us a set of tags
+        let appliedFilterSets = [];
+        const taggedFilters = Array.from(sheetData.filters.spellbook);
+        for (const [filterSet, filters] of Object.entries(sheetData.filters.choices)) {
+            const appliedFilters = filters.map(f => f.filter).filter(f => taggedFilters.includes(f));
+            if (appliedFilters.length) {
+                appliedFilterSets.push({filterSet, filters: appliedFilters});
+            }
+        }
         sheetData?.spellbook.forEach((sbi, index) => {
             //Not really InventoryPlus, but fits the filtering and categorization
-            sheetData.spellbook[index].spells = InventoryPlusForSpells.filterSpells(sbi.spells, spellFilters);
+            sheetData.spellbook[index].spells = InventoryPlusForSpells.filterSpells(sbi.spells, appliedFilterSets);
         
         });
     } catch (e) {
