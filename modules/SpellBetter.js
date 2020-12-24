@@ -6,7 +6,7 @@
                 Move abbreviated activation labels and setting of Ritual, Concentration, and Prepared labels fr filters
 21-Dec-2020     0.5.0: Add a Print option to the header buttons  
 22-Dec-2020     0.5.1: Incorporate a copied/mangled Inventory+  and implement its category and drag-and-drop tools        
-23-Dec-2020     0.5.1c: Add drag/drop as per Inventory+      
+23-Dec-2020     0.5.1c: Attach listeners to toggle category collapsed/shown - loop through    
 */
 
 import { log, getActivationType, getWeaponRelevantAbility, hasAttack, hasDamage } from './helpers.js';
@@ -180,7 +180,7 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     });
 
     //Pop-up custom category dialog
-//FIXME: Should be pushed into Inventory+ForSpells    
+//FIXME: Should call Inventory+ForSPells for Dialog
     html.find(".custom-category").click(async ev => {
         let template = await renderTemplate('modules/spell-better/templates/categoryDialog.hbs', {});
         let d = new Dialog({
@@ -204,6 +204,19 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
         });
         d.render(true);
     });
+
+    //Attach listeners to toggle category collapsed/shown - loop through
+    const categoryHeaders = html.find(".toggle-collapse");
+    const inventoryPlusForSpells = this.inventoryPlusForSpells;
+    for (const header of categoryHeaders) {
+        const el = $(header);
+        const category = el[0].dataset.category;
+
+        el.click(async ev => {
+            inventoryPlusForSpells.customCategories[category].isCollapsed = !inventoryPlusForSpells.customCategories[category].isCollapsed;
+            inventoryPlusForSpells.saveCategories();
+        });
+    }
   }
 
   //Spell Better 0.5.0 - Have to override _filterItems because it only does activation.type as an AND

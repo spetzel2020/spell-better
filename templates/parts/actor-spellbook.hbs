@@ -95,9 +95,9 @@
     {{#each spellbook as |section|}}
         <li class="sub-header spellbook-header">
             {{#if section.isCollapsed}}
-                <a class="toggle-collapse"><i class="fas fa-caret-right"></i></a>
+                <a class="toggle-collapse" data-category="{{@key}}"><i class="fas fa-caret-right"></i></a>
             {{else}}
-                <a class="toggle-collapse"><i class="fas fa-caret-down"></i></a>
+                <a class="toggle-collapse" data-category="{{@key}}"><i class="fas fa-caret-down"></i></a>
             {{/if}}
             <h4>{{localize section.label}}</h4>
 
