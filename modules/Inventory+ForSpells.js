@@ -2,7 +2,8 @@
 22-Dec-2020     0.5.1: Incorporate Inventory+ (Felix Müller aka syl3r86) and implement its category and drag-and-drop tools  
                 Have to copy code because overrides are too difficult
 23-Dec-2020     0.5.1: - Have to null out flags.spell-better during development     
-24-Dec-2020     0.5.1i: filterSpells(): loops over legal filterSets in the passed spell filters            
+24-Dec-2020     0.5.1i: filterSpells(): loops over legal filterSets in the passed spell filters    
+                0.5.1k: Check the flags as well for inclusion     
 */
 
 import {SpellBetterCharacterSheet} from "./SpellBetter.js";
@@ -295,7 +296,7 @@ export class InventoryPlusForSpells {
     }
 
     static filterSpells(spells, appliedFilterSets) {
-        return spells.filter(({ labels }) => {
+        return spells.filter(({ labels , flags}) => {
             let includeSpell = true;
             //0.5.1i: Instead of working off SPELL_BETTER.filters, just use the available filterSets
             for (const filterSet of Object.keys(SPELL_BETTER.filters)) {
@@ -306,8 +307,14 @@ export class InventoryPlusForSpells {
                     //include if any of this set's filters are present
                     includedInFilterSet = false;
                     for (const filter of filterSetFilters) {
-                        includedInFilterSet = (Object.values(labels).includes(filter));
+                        includedInFilterSet = Object.values(labels).includes(filter);
                         if (includedInFilterSet) break;
+                        //0.5.1 Check the flags as well, but here we check the filterSet name as well
+                        if (flags && flags[MODULE_ID]) {
+                            const flagForFilterSet = flags[MODULE_ID][filterSet];
+                            includedInFilterSet = (flagForFilterSet === filter);
+                            if (includedInFilterSet) break;
+                        }
                     }
                 }
                 includeSpell = includeSpell && includedInFilterSet;
@@ -338,7 +345,13 @@ export class InventoryPlusForSpells {
 
     getTemplateItemData(category) {
         const customCategory = this.customCategories[category];
-        return customCategory?.templateItemData;
+        let templateItemData = {name: game.i18n.localize(customCategory?.label), type: "spell" }
+        let templateItemDataData = duplicate(customCategory?.templateItemData);
+        if (templateItemDataData) {
+            mergeObject(templateItemData, {data: templateItemDataData});
+        }
+        const templateFlags = customCategory?.templateFlags;
+        return {templateItemData, templateFlags};
     }
 
     createCategory(inputs) {
@@ -517,14 +530,3 @@ export class InventoryPlusForSpells {
         await this.actor.setFlag(MODULE_ID, 'categories', this.customCategories);
     }
 }//end InventoryPlusForSpells
-
-
-//FIXME: Deprecated
-Hooks.on('ready', () => {
-    //InventoryPlusForSpells.replaceGetData();
-});
-
-//FIXME: Deprecated
-Hooks.on(`renderSpellBetterCharacterSheet`, (app, html, data) => {
-    //app.inventoryPlusForSpells.addInventoryFunctions(html);
-});

@@ -97,19 +97,19 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     /**
      * Override onItemCreate with creating a new spell not from the header information but from the category
      */
-    _onSpellCreate(event) {
+    async _onSpellCreate(event) {
         event.preventDefault();
         const header = event.currentTarget;
         const category = header.dataset.category;
-        const templateItemData = this.inventoryPlusForSpells.getTemplateItemData(category);
-        const type = "spell";
-        const itemData = {
-            name: game.i18n.format("DND5E.ItemNew", {type: type.capitalize()}),
-            type: type,
-            data: duplicate(templateItemData)
-        };
-        delete itemData.data["type"];
-        return this.actor.createEmbeddedEntity("OwnedItem", itemData);
+        const {templateItemData, templateFlags} = this.inventoryPlusForSpells.getTemplateItemData(category);
+        const newSpellData =  await this.actor.createEmbeddedEntity("OwnedItem", templateItemData);
+        const newSpell = this.actor.getOwnedItem(newSpellData?._id);
+//FIXME: Yuck - is there a batched way of doing this with update?
+        if (newSpell) {
+            for (const [flagKey, flagValue] of Object.entries(templateFlags)) {
+                await newSpell.setFlag(MODULE_ID,flagKey, flagValue);
+            }
+        }
     }       
 
     /** @override */
