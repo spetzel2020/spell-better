@@ -5,7 +5,8 @@
                 Override _filterItems so that spells get filtered here only
                 Move abbreviated activation labels and setting of Ritual, Concentration, and Prepared labels fr filters
 21-Dec-2020     0.5.0: Add a Print option to the header buttons  
-22-Dec-2020     0.5.1: Incorporate a copied/mangled Inventory+  and implement its category and drag-and-drop tools              
+22-Dec-2020     0.5.1: Incorporate a copied/mangled Inventory+  and implement its category and drag-and-drop tools        
+23-Dec-2020     0.5.1c: Add drag/drop as per Inventory+      
 */
 
 import { log, getActivationType, getWeaponRelevantAbility, hasAttack, hasDamage } from './helpers.js';
