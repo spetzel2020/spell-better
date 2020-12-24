@@ -1,6 +1,7 @@
 /*
 22-Dec-2020     0.5.1: Incorporate Inventory+ (Felix Müller aka syl3r86) and implement its category and drag-and-drop tools  
                 Have to copy code because overrides are too difficult
+23-Dec-2020     0.5.1: - Have to null out flags.spell-better during development                 
 */
 
 import {SpellBetterCharacterSheet} from "./SpellBetter.js";
@@ -16,6 +17,7 @@ export class InventoryPlusForSpells {
     initCategories() {
         //Standard categories that cannot be deleted
         let actorCategories = this.actor.getFlag(MODULE_ID, 'categories');
+      
         if (!actorCategories) {
             this.customCategories = SPELL_BETTER.standardCategories;
         } else {
@@ -350,7 +352,7 @@ export class InventoryPlusForSpells {
         for (let item of this.actor.spells) {
             let type = this.getSpellCategory(item.data);
             if (type === catType) {
-                //await item.unsetFlag('inventory-plus', 'category');
+                //await item.unsetFlag("spell-better", 'category');
                 changedItems.push({
                     _id: item.id,
                     '-=flags.inventory-plus':null
@@ -361,7 +363,7 @@ export class InventoryPlusForSpells {
 
         delete this.customCategories[catType];
         let deleteKey = `-=${catType}`
-        this.actor.setFlag('inventory-plus', 'categories', { [deleteKey]:null });
+        this.actor.setFlag("spell-better", 'categories', { [deleteKey]:null });
     }
 
     changeCategoryOrder(movedType, up) {
@@ -489,6 +491,8 @@ export class InventoryPlusForSpells {
 
     async saveCategories() {
         //this.actor.update({ 'flags.inventory-plus.categories': this.customCategories }).then(() => { console.log(this.actor.data.flags) });
+//FiXME: Need to null it during development, because if you change the format it remembers the old extraneous info        
+        await this.actor.setFlag(MODULE_ID, "categories", null);
         await this.actor.setFlag(MODULE_ID, 'categories', this.customCategories);
     }
 }

@@ -481,6 +481,7 @@
       "sheetClass": "dnd5e.SpellBetterCharacterSheet"
     },
     "PC Importer": "0.6.5",
+	"spell-better" : {},
     "inventory-plus": {
       "categorys": {
         "weapon": {
