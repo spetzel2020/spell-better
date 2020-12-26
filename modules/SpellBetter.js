@@ -129,9 +129,14 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
         }
 
         const category = targetLi.dataset?.category;
-        const {templateItemData, templateFlags} = this.inventoryPlusForSpells.getTemplateItemData(category);
-        //Ignore the templateItemData; just apply the flags
-        if (templateFlags) {mergeObject(itemData, {flags : {"spell-better" : templateFlags}})};
+        const templateFlags = this.inventoryPlusForSpells.getTemplateItemData(category)?.templateFlags;
+        //If the flags are different than current (because we're dropping in a different category) then update them first
+        //(This allows the default sorting to work if we are dropping from within)
+        if ((itemData.flags && itemData.flags[MODULE_ID]) || templateFlags) {
+            if (!itemData.flags) {itemData.flags = {}}
+            itemData.flags[MODULE_ID] = templateFlags ?? null;  //turn undefined into null
+            await this.actor.updateEmbeddedEntity("OwnedItem", itemData);
+        }
 
         // Handle item sorting within the same Actor
         const actor = this.actor;
@@ -162,7 +167,6 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
                 this.printContent(bodyCopy)
             }
         })
-
         return buttons;
     }
 
