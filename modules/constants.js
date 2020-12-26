@@ -5,7 +5,7 @@ export const SPELL_BETTER = {
     limitActionsToCantrips : 'limit-actions-to-cantrips',
     showIconsOnInventoryList : 'show-icons-on-inventory-list',
     expandedLimited : 'expanded-limited',
-    filters :  {
+    labelFilterSets :  {
         castingTimes : [
             {filter : "1 Action", name: "DND5E.Action"},         
             {filter : "1 Bonus Action", name: "DND5E.BonusAction"},      
@@ -45,8 +45,7 @@ export const SPELL_BETTER = {
             {filter: "7th Level", name: "SPELL_BETTER.SpellLevel7"},
             {filter: "8th Level", name: "SPELL_BETTER.SpellLevel8"},
             {filter: "9th Level",  name: "SPELL_BETTER.SpellLevel9"}
-        ],
-        category : []
+        ]
     },
     standardCategories : { 
         //.prop is needed for now for display
@@ -54,56 +53,65 @@ export const SPELL_BETTER = {
         spell0: { label: "DND5E.SpellLevel0", canCreate: true, canPrepare: false, 
                 templateItemData: {level: 0},
                 filterSets: [
-                    {filterSet : "levels", filters: ["Cantrip"]}
+                    {filterSet : "levels", filters: ["Cantrip"]},
+                    {filterSet : "category", filters: []}
                 ],
                 order: 0, prop: "spell0", slots: "&infin;", uses: "&infin;", usesSlots: false, type: "spell",  isCollapsed: true },
         spell1: { label: "SPELL_BETTER.SpellLevel1", canCreate: true, canPrepare: true, 
                 templateItemData: {level: 1},
                 filterSets: [
-                    {filterSet : "levels", filters: ["1st Level"]}
+                    {filterSet : "levels", filters: ["1st Level"]},
+                    {filterSet : "category", filters: []}
                 ],
 //FIXME: Slots, canCreate etc etc is all hard-coded right now, but somehow we need to use the actual values from the sections                
                 order: 10, prop: "spell1", slots: "4", uses: "4", usesSlots: true, type: "spell",  isCollapsed: false },     
         spell2: { label: "SPELL_BETTER.SpellLevel2", canCreate: true, canPrepare: true, 
                 templateItemData: {level: 2},
                 filterSets: [
-                    {filterSet : "levels", filters: ["2nd Level"]}
+                    {filterSet : "levels", filters: ["2nd Level"]},
+                    {filterSet : "category", filters: []}
                 ],                
                 order: 20, prop: "spell2", slots: "3", uses: "3", usesSlots: true, type: "spell",  isCollapsed: false },
         spell3: { label: "SPELL_BETTER.SpellLevel3", canCreate: true, canPrepare: true, 
                 templateItemData: {level: 3},
                 filterSets: [
-                    {filterSet : "levels", filters: ["3rd Level"]}
+                    {filterSet : "levels", filters: ["3rd Level"]},
+                    {filterSet : "category", filters: []}
                 ],                
                 order: 30, prop: "spell3", slots: "3", uses: "3", usesSlots: true, type: "spell",  isCollapsed: false },
         spell4: { label: "SPELL_BETTER.SpellLevel4", canCreate: true, canPrepare: true, 
                 templateItemData: {level: 4},
                 filterSets: [
-                    {filterSet : "levels", filters: ["4th Level"]}
+                    {filterSet : "levels", filters: ["4th Level"]},
+                    {filterSet : "category", filters: []}
                 ],                
                 order: 40, prop: "spell4", slots: "0", uses: "0", usesSlots: true, type: "spell",  isCollapsed: false },
         spell5: { label: "SPELL_BETTER.SpellLevel5", canCreate: true, canPrepare: true, 
                 templateItemData: {level: 5},
                 filterSets: [
-                    {filterSet : "levels", filters: ["5th Level"]}
+                    {filterSet : "levels", filters: ["5th Level"]},
+                    {filterSet : "category", filters: []}
                 ],                
                 order: 50, prop: "spell5", slots: "0", uses: "0", usesSlots: true, type: "spell",  isCollapsed: false },
         spell6: { label: "SPELL_BETTER.SpellLevel6", canCreate: true, canPrepare: true, 
                 templateItemData: {level: 6},
                 filterSets: [
-                    {filterSet : "levels", filters: ["6th Level"]}
+                    {filterSet : "levels", filters: ["6th Level"]},
+                    {filterSet : "category", filters: []}
                 ],                
                 order: 60, prop: "spell6", slots: "0", uses: "0", usesSlots: true, type: "spell",  isCollapsed: false },
         spell7: { label: "SPELL_BETTER.SpellLevel7", canCreate: true, canPrepare: true, 
                 templateItemData: {level: 7},
                 filterSets: [
-                    {filterSet : "levels", filters: ["7th Level"]}
+                    {filterSet : "levels", filters: ["7th Level"]},
+                    {filterSet : "category", filters: []}
                 ],                
                 order: 70, prop: "spell7", slots: "0", uses: "0", usesSlots: true, type: "spell",  isCollapsed: false },
         spell8: { label: "SPELL_BETTER.SpellLevel8", canCreate: true, canPrepare: true, 
                 templateItemData: {level: 8},
                 filterSets: [
-                    {filterSet : "levels", filters: ["8th Level"]}
+                    {filterSet : "levels", filters: ["8th Level"]},
+                    {filterSet : "category", filters: []}
                 ],                
                 order: 80, prop: "spell8", slots: "0", uses: "0", usesSlots: true, type: "spell",  isCollapsed: false },  
         spell9: { label: "SPELL_BETTER.SpellLevel9", canCreate: true, canPrepare: true, 

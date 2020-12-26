@@ -290,8 +290,9 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     //Spell Better 0.5.0: Further filter by any spell label element
     //MUTATES spellbook
     
-    //This is purely for Handlebars to generate the right output
-    sheetData.filters.choices = SPELL_BETTER.filters;
+    //This is purely for Handlebars to generate the right output - the filter tags at the top of the page
+    //FIXME: May want to add the list of custom tags
+    sheetData.filters.choices = SPELL_BETTER.labelFilterSets;
 
     //To make filtering easier we decorate each spell with labels here for Activation type and Other (Concentration, Prepared, Ritual)
     try {

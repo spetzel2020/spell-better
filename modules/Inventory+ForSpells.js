@@ -294,26 +294,30 @@ export class InventoryPlusForSpells {
         return spells.filter(({ labels , flags}) => {
             let includeSpell = true;
             //0.5.1i: Instead of working off SPELL_BETTER.filters, just use the available filterSets
-            for (const appliedFilterSet of appliedFilterSets) {
-                const {filterSet : filterSet, filters: filterSetFilters} = appliedFilterSet;
-                let includedInFilterSet = true;
-                if (filterSetFilters?.length) {
-                    //include iff any of this set's filters are present
-                    includedInFilterSet = false;
-                    for (const filter of filterSetFilters) {
-                        includedInFilterSet = Object.values(labels).includes(filter);
-                        if (includedInFilterSet) break;
-                        //0.5.1 Check the flags as well, but here we check the filterSet name as well
-                        if (flags && flags[MODULE_ID]) {
-                            const flagForFilterSet = flags[MODULE_ID][filterSet];
-                            includedInFilterSet = (flagForFilterSet === filter);
-                            if (includedInFilterSet) break;
-                        }
-                    }
-                }
-                includeSpell = includeSpell && includedInFilterSet;
+            //LabelFilters are gainst standard things (levels, schools...) that are in the labels
+            const labelFilterSets = Object.keys(SPELL_BETTER.labelFilterSets);
+            const appliedLabelFilterSets = appliedFilterSets.filter(afs => labelFilterSets.includes(afs.filterSet));
+            for (const afs of appliedLabelFilterSets) {
+                const matches = afs.filters?.filter(f =>  Object.values(labels).includes(f));
+                includeSpell = includeSpell && (matches.length > 0);
                 if (!includeSpell) break;
-            }
+            }//end for labelFilters
+
+            //Apply the flagFilters only if the spell is already included
+            if (includeSpell && flags && flags[MODULE_ID]) {
+                const appliedFlagFilterSets =  appliedFilterSets.filter(afs => !labelFilterSets.includes(afs));
+                for (const afs of appliedFlagFilterSets) {
+                //0.5.1: Just a single flag per flag label for now
+                    const flagForFilterSet = flags[MODULE_ID][afs.filterSet];
+                    //Possibilities:
+                    //flagForFilterSet is null => INCLUDE
+                    //flagForFilterSet exists and is included in afs.filters => INCLUDE
+                    //flagForFilterSet exists and afs.filters is [] or doesn't include the flag => EXCLUDE
+                    const includedInFilterSet = !flagForFilterSet || (!afs.filters?.length && afs.filters.includes(flagForFilterSet));
+                    includeSpell = includeSpell && includedInFilterSet;
+                    if (!includeSpell) break;
+                }//end for flagFilters
+            }//end for there are flags
             return includeSpell;
         });
     }
