@@ -109,7 +109,8 @@ export const SPELL_BETTER = {
         spell9: { label: "SPELL_BETTER.SpellLevel9", canCreate: true, canPrepare: true, 
                 templateItemData: {level: 9},
                 filterSets: [
-                    {filterSet : "levels", filters: ["9th Level"]}
+                    {filterSet : "levels", filters: ["9th Level"]},
+                    {filterSet : "category", filters: []}
                 ],                
                 order: 90, prop: "spell8", slots: "0", uses: "0", usesSlots: true, type: "spell",  isCollapsed: false },                                                                                                                                          
         wanted: { label: "SPELL_BETTER.Category.Wanted",canCreate: true, canPrepare: true, 
@@ -117,6 +118,11 @@ export const SPELL_BETTER = {
                 filterSets: [
                     {filterSet : "category", filters: ["wanted"]}
                 ],                
-                order: 1000, prop: "spell1", slots: "&infin;", uses: "&infin;", usesSlots: false, type: "spell",  isCollapsed: true }
+                order: 1000, prop: "spell1", slots: "&infin;", uses: "&infin;", usesSlots: false, type: "spell",  isCollapsed: true },
+        //ALL category to make sure setting a flag doesn't hide a spell completely                
+        all:    {label: "SPELL_BETTER.Category.All", canCreate: true, canPrepare: true, 
+                templateItemData: {level: 9},
+                filterSets: [],                
+                order: 9000, prop: "spell1", slots: "&infin;", uses: "&infin;", usesSlots: false, type: "spell",  isCollapsed: true }
     }
 }

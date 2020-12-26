@@ -294,12 +294,11 @@ export class InventoryPlusForSpells {
         return spells.filter(({ labels , flags}) => {
             let includeSpell = true;
             //0.5.1i: Instead of working off SPELL_BETTER.filters, just use the available filterSets
-            for (const filterSet of Object.keys(SPELL_BETTER.filters)) {
-                const appliedFilterSet = appliedFilterSets.find(afs => afs.filterSet === filterSet);  //make sure it's allowable
-                const filterSetFilters = appliedFilterSet?.filters;
-                let includedInFilterSet = true; //if no filters in this set are enabled, then ignore
+            for (const appliedFilterSet of appliedFilterSets) {
+                const {filterSet : filterSet, filters: filterSetFilters} = appliedFilterSet;
+                let includedInFilterSet = true;
                 if (filterSetFilters?.length) {
-                    //include if any of this set's filters are present
+                    //include iff any of this set's filters are present
                     includedInFilterSet = false;
                     for (const filter of filterSetFilters) {
                         includedInFilterSet = Object.values(labels).includes(filter);
