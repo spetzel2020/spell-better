@@ -1,4 +1,5 @@
 export const MODULE_ID = 'spell-better';
+export const MODULE_VERSION = "0.5.1";
 
 //SPell Better 0.5.0: The filter lists have to be spelled out to match what is in the internal labels
 export const SPELL_BETTER = {
@@ -47,6 +48,9 @@ export const SPELL_BETTER = {
             {filter: "9th Level",  name: "SPELL_BETTER.SpellLevel9"}
         ]
     },
+    categoriesVersion_key : "categoriesVersion",
+    categoriesVersion : MODULE_VERSION, 
+    categories_key : "categories",
     standardCategories : { 
         //.prop is needed for now for display
 //FIXME: For now, we are completely overriding the custom categories every time you restart        

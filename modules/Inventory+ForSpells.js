@@ -18,12 +18,14 @@ export class InventoryPlusForSpells {
 
     initCategories() {
         //Standard categories that cannot be deleted
-        let actorCategories = this.actor.getFlag(MODULE_ID, 'categories');
-      
+        let actorCategories = this.actor.getFlag(MODULE_ID, SPELL_BETTER.categories_key);
+        
         if (!actorCategories) {
             this.customCategories = SPELL_BETTER.standardCategories;
+            this.categoriesVersion = SPELL_BETTER.categoriesVersion;
         } else {
             this.customCategories = duplicate(actorCategories);
+            this.categoriesVersion = this.actor.getFlag(MODULE_ID, SPELL_BETTER.categoriesVersion_key);
 //FIXME: Sometimes we have to recreate the categories - how do we do this when we have a new version
 //Should probably save the version with spell-better flags
             //this.customCategories = SPELL_BETTER.standardCategories;
@@ -400,7 +402,7 @@ export class InventoryPlusForSpells {
 
         delete this.customCategories[catType];
         let deleteKey = `-=${catType}`
-        this.actor.setFlag("spell-better", 'categories', { [deleteKey]:null });
+        this.actor.setFlag(MODULE_ID,  SPELL_BETTER.categories_key, { [deleteKey]:null });
     }
 
     changeCategoryOrder(movedType, up) {
@@ -529,7 +531,9 @@ export class InventoryPlusForSpells {
     async saveCategories() {
         //this.actor.update({ 'flags.inventory-plus.categories': this.customCategories }).then(() => { console.log(this.actor.data.flags) });
 //FiXME: Need to null it during development, because if you change the format it remembers the old extraneous info        
-        await this.actor.setFlag(MODULE_ID, "categories", null);
-        await this.actor.setFlag(MODULE_ID, 'categories', this.customCategories);
+        await this.actor.setFlag(MODULE_ID, SPELL_BETTER.categories_key, null);
+        await this.actor.setFlag(MODULE_ID,  SPELL_BETTER.categories_key, this.customCategories);
+        //0.5.1s: Save the categoryVersion (which means we need to do any upgrading on read)
+        await this.actor.setFlag(MODULE_ID, SPELL_BETTER.categoriesVersion_key, this.categoriesVersion);
     }
 }//end InventoryPlusForSpells

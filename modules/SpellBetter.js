@@ -14,7 +14,7 @@
 import { log, getActivationType, getWeaponRelevantAbility, hasAttack, hasDamage } from './helpers.js';
 import { registerSettings } from './settings.js';
 import { preloadTemplates } from './preloadTemplates.js';
-import { MODULE_ID, SPELL_BETTER } from './constants.js';
+import { MODULE_ID, MODULE_VERSION, SPELL_BETTER } from './constants.js';
 import {InventoryPlusForSpells} from './Inventory+ForSpells.js';
 
 import ActorSheet5eCharacter from '../../../systems/dnd5e/module/actor/sheets/character.js';
@@ -271,11 +271,12 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     for (const header of categoryHeaders) {
         const el = $(header);
         const category = el[0].dataset.category;
-
-        el.click(async ev => {
-            inventoryPlusForSpells.customCategories[category].isCollapsed = !inventoryPlusForSpells.customCategories[category].isCollapsed;
-            inventoryPlusForSpells.saveCategories();
-        });
+        if (category) {
+            el.click(async ev => {
+                inventoryPlusForSpells.customCategories[category].isCollapsed = !inventoryPlusForSpells.customCategories[category].isCollapsed;
+                inventoryPlusForSpells.saveCategories();
+            });
+        }
     }
   }
 
