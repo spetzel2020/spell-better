@@ -4,6 +4,7 @@
 23-Dec-2020     0.5.1: - Have to null out flags.spell-better during development     
 24-Dec-2020     0.5.1i: filterSpells(): loops over legal filterSets in the passed spell filters    
                 0.5.1k: Check the flags as well for inclusion     
+27-Dec-2020     0.5.1s: categorizeSpells: Copy over slots etc from real sections                
 */
 
 import {SpellBetterCharacterSheet} from "./SpellBetter.js";
@@ -339,11 +340,24 @@ export class InventoryPlusForSpells {
             for (const section of spellbook) {
                 const filteredSpells = InventoryPlusForSpells.filterSpells(section.spells, value.filterSets);
                 categories[category].spells.push(...filteredSpells);
+
+                //Copy the standard level-based stats over
+                if (section.prop && (section.prop === value.prop)) {
+                    const levelStats = {
+                        canCreate : section.canCreate,
+                        canPrepare : section.canPrepare,
+                        slots: section.slots,
+                        uses: section.uses,
+                        usesSlots: section.usesSlots
+                    }
+                    mergeObject(categories[category], levelStats);
+                }
             }
             //Now sort spells within categories - should make this configurable
             categories[category].spells.sort((a, b) => {
                 return a.sort - b.sort;
             });
+
         }
         return categories;
     }
