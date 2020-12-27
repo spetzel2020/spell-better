@@ -120,7 +120,14 @@ export const SPELL_BETTER = {
                     {filterSet : "levels", filters: ["9th Level"]},
                     {filterSet : "category", filters: []}
                 ],                
-                order: 90, prop: "spell8", slots: "0", uses: "0", usesSlots: true, type: "spell",  isCollapsed: false },                                                                                                                                          
+                order: 90, prop: "spell8", slots: "0", uses: "0", usesSlots: true, type: "spell",  isCollapsed: false },     
+        wanted3: { label: "Wanted 3rd Level",canCreate: true, canPrepare: true, 
+                templateItemData: {level: 3}, templateFlags: {"category": "wanted"},
+                filterSets: [
+                    {filterSet : "levels", filters: ["3rd Level"]},
+                    {filterSet : "category", filters: ["wanted"]}
+                ],                
+                order: 1000, prop: "spell1", slots: "&infin;", uses: "&infin;", usesSlots: false, type: "spell",  isCollapsed: true },                                                                                                                                     
         wanted: { label: "SPELL_BETTER.Category.Wanted",canCreate: true, canPrepare: true, 
                 templateItemData: {level: 9}, templateFlags: {"category": "wanted"},
                 filterSets: [

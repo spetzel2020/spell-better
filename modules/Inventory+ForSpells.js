@@ -23,10 +23,10 @@ export class InventoryPlusForSpells {
         if (!actorCategories) {
             this.customCategories = SPELL_BETTER.standardCategories;
         } else {
-
             this.customCategories = duplicate(actorCategories);
-//FIXME
-            this.customCategories = SPELL_BETTER.standardCategories;
+//FIXME: Sometimes we have to recreate the categories - how do we do this when we have a new version
+//Should probably save the version with spell-better flags
+            //this.customCategories = SPELL_BETTER.standardCategories;
             this.applySortKey();
         }
     }

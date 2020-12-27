@@ -7,6 +7,8 @@
 21-Dec-2020     0.5.0: Add a Print option to the header buttons  
 22-Dec-2020     0.5.1: Incorporate a copied/mangled Inventory+  and implement its category and drag-and-drop tools        
 23-Dec-2020     0.5.1c: Attach listeners to toggle category collapsed/shown - loop through    
+26-Dec-2020     0.5.1p: _onDropItem(): If flags are different (because of different category) then udpate them first
+                0.5.1q: Check both sub-header and item-list parents (because the header and the list are in parallel trees)
 */
 
 import { log, getActivationType, getWeaponRelevantAbility, hasAttack, hasDamage } from './helpers.js';
@@ -122,7 +124,9 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
         const item = await Item.fromDropData(data);
         const itemData = duplicate(item.data);
 
-        let targetLi = $(event.target).closest(".sub-header")[0];
+        //Check if you dropped it on the header, or on the list inside the header
+        let targetLi = $(event.target).closest("li.sub-header")[0] ?? $(event.target).closest("ol.item-list")[0];
+  
         // dropping item outside category list
         if (targetLi === undefined || targetLi.className === undefined) {
             return super._onDropItem(event, data);

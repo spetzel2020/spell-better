@@ -128,7 +128,7 @@
             </div>
         </li>
         {{#unless section.isCollapsed}}
-            <ol class="item-list">
+            <ol class="item-list"  data-category="{{@key}}">
                 {{#each section.spells as |item i|}}
                     <li class="item flexrow" data-item-id="{{item._id}}">
                     <div class="item-name flexrow rollable">
