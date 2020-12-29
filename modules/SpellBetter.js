@@ -240,29 +240,8 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
      html.find('.spell-create').click(this._onSpellCreate.bind(this));
 
     //Pop-up custom category dialog
-//FIXME: Should call Inventory+ForSPells for Dialog
     html.find(".custom-category").click(async ev => {
-        let template = await renderTemplate('modules/spell-better/templates/categoryDialog.hbs', {});
-        let d = new Dialog({
-            title: "Creating new Inventory Category",
-            content: template,
-            buttons: {
-                accept: {
-                    icon: '<i class="fas fa-check"></i>',
-                    label: "Accept",
-                    callback: async html => {
-                        let input = html.find('input');
-                        this.createCategory(input);
-                    }
-                },
-                cancel: {
-                    icon: '<i class="fas fa-times"></i>',
-                    label: "Cancel"
-                }
-            },
-            default: "accept",
-        });
-        d.render(true);
+       this.inventoryPlusForSpells?.createNewCategoryDialog();
     });
 
     //Attach listeners to toggle category collapsed/shown - loop through

@@ -35,6 +35,11 @@
   "SPELL_BETTER.Category.Wanted" : "Wanted" ,
   "SPELL_BETTER.Category.All" : "All",
   "SPELL_BETTER.AddCustomCategory.LINK" : "Add Custom Category",
+  "SPELL_BETTER.NewCategory.TITLE" : "Create New Spell Category",
+  "SPELL_BETTER.NewCategory.NAME" : "Category Name",
+    "SPELL_BETTER.NewCategory.FilterSet.LABEL" : "Filter Set",  
+  "SPELL_BETTER.NewCategory.UseCategory.NAME" : "Filter by category",
+  "SPELL_BETTER.NewCategory.UseCategory.HINT" : "Apply this category to any spell you move to/create in this category so it will only show up here",      
   "SPELL_BETTER.EditSpell" : "Edit Spell",
   "SPELL_BETTER.DeleteSpell" : "Delete Spell"
 }

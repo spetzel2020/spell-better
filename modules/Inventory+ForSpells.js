@@ -47,251 +47,6 @@ export class InventoryPlusForSpells {
         }
         this.customCategories = sortedCategories;
     }
-    
-/* Incorporated directly into SpellBetterCharacterSheet.getData()    
-    static replaceGetData() {
-        let oldGetData = SpellBetterCharacterSheet.prototype.getData;
-
-        SpellBetterCharacterSheet.prototype.getData = function () {
-            let app = this;
-            let actor = this.actor;
-
-            let data = oldGetData.bind(this)();
-            let newInventory = InventoryPlusForSpells.processInventory(app, actor, data.inventory);
-            data.inventory = newInventory;
-
-            data.data.attributes.encumbrance.value = InventoryPlusForSpells.calculateWeight(data.inventory, actor.data.data.currency);
-            data.data.attributes.encumbrance.pct = data.data.attributes.encumbrance.value / data.data.attributes.encumbrance.max * 100;
-            return data;
-        }
-    }
-*/    
-
-    replaceOnDrop() {
-        if (this.oldOnDrop === undefined) {
-            this.oldOnDrop = SpellBetterCharacterSheet.prototype._onDrop;
-        }
-        let oldOnDrop = this.oldOnDrop;
-        SpellBetterCharacterSheet.prototype._onDrop = async function (event) {
-            // TODO: implement category drag'n'drop
-            return oldOnDrop.bind(this)(event);
-        }
-    }
-
-    replaceOnDropItem() {
-        if (this.oldOnDropItem === undefined) {
-            this.oldOnDropItem = SpellBetterCharacterSheet.prototype._onDropItem;
-        }
-        let oldOnDropItem = this.oldOnDropItem;
-        SpellBetterCharacterSheet.prototype._onDropItem = async function (event, data) {
-            // dropping new item
-            if (data.actorId !== this.object.id || data.data === undefined) {
-                return oldOnDropItem.bind(this)(event, data);
-            }
-
-  
-            // doing actual stuff!!!
-            let id = data.data._id;
-            let dropedItem = this.object.getOwnedItem(id);
-            
-            let targetType = '';
-            let targetCss = InventoryPlusForSpells.getCSSName("sub-header");
-            if (targetLi.className.trim().indexOf(targetCss) !== -1) {
-                targetType = $(targetLi).find('.item-control')[0].dataset.type;
-            } else if (targetLi.className.trim().indexOf('item') !== -1) {
-                let itemId = targetLi.dataset.itemId;
-                let item = this.object.getOwnedItem(itemId);
-                targetType = this.inventoryPlusForSpells.getSpellCategory(item.data);
-            }
-
-            // changing item list
-            let itemType = this.inventoryPlusForSpells.getSpellCategory(data.data);
-            if (itemType !== targetType) {
-                let categoryWeight = this.inventoryPlusForSpells.getCategoryItemWeight(targetType);
-                let itemWeight = dropedItem.data.totalWeight;
-                let maxWeight = Number(this.inventoryPlusForSpells.customCategories[targetType].maxWeight ? this.inventoryPlus.customCategories[targetType].maxWeight : 0);
-
-                if (maxWeight == NaN || maxWeight <= 0 || maxWeight >= (categoryWeight + itemWeight)) {
-                    await dropedItem.update({ 'flags.inventory-plus.category': targetType });
-                    itemType = targetType;
-                } else {
-                    ui.notifications.warn("Item exceedes category's max weight");
-                    return;
-                }
-            }
-
-            // reordering items
-
-            // Get the drag source and its siblings
-            let source = dropedItem;
-            let siblings = this.object.spells.filter(i => {
-                let type = this.inventoryPlusForSpells.getSpellCategory(i.data);
-                return (type === itemType) && (i.data._id !== source.data._id)
-            });
-            // Get the drop target
-            let dropTarget = event.target.closest(".item");
-            let targetId = dropTarget ? dropTarget.dataset.itemId : null;
-            let target = siblings.find(s => s.data._id === targetId);
-
-            // Perform the sort
-            let sortUpdates = SortingHelpers.performIntegerSort(dropedItem, { target: target, siblings });
-            let updateData = sortUpdates.map(u => {
-                let update = u.update;
-                update._id = u.target.data._id;
-                return update;
-            });
-
-            // Perform the update
-            this.object.updateEmbeddedEntity("OwnedItem", updateData);
-        }
-    }
-
-/* FIXME: Deprecated. Incorporated into constructor
-    
-    static processInventory(app, actor, inventory) {
-
-        if (app.inventoryPlusForSpells === undefined) {
-            app.inventoryPlusForSpells = new InventoryPlusForSpells();
-            app.inventoryPlusForSpells.init(actor);
-        }
-        return app.inventoryPlusForSpells.prepareInventory(inventory);
-    }
-
-
-    init(actor) {
-        this.actor = actor;
-        this.initCategories();
-        //this.replaceOnDrop();
-        this.replaceOnDropItem();
-    }
-*/
-
-
-    addInventoryFunctions(html) {
-        /*
-         *  create custom category 
-         */
-        let addCategoryBtn = $('<a class="custom-category"><i class="fas fa-plus"></i> Add Custom Category</a>').click(async ev => {
-            let template = await renderTemplate('modules/inventory-plus/templates/categoryDialog.hbs', {});
-            let d = new Dialog({
-                title: "Creating new Inventory Category",
-                content: template,
-                buttons: {
-                    accept: {
-                        icon: '<i class="fas fa-check"></i>',
-                        label: "Accept",
-                        callback: async html => {
-                            let input = html.find('input');
-                            this.createCategory(input);
-                        }
-                    },
-                    cancle: {
-                        icon: '<i class="fas fa-times"></i>',
-                        label: "Cancel"
-                    }
-                },
-                default: "accept",
-            });
-            d.render(true);
-        });
-        html.find('.inventory-list .spells-list').prepend(addCategoryBtn);
-
-        /*
-         *  add removal function
-         */
-
-        let createBtns = html.find('.inventory-list .item-controls .item-create');
-        for (let createBtn of createBtns) {
-            let type = createBtn.dataset.type;
-            if (['weapon', 'equipment', 'consumable', 'tool', 'backpack', 'loot'].indexOf(type) === -1) {
-                let parent = createBtn.parentNode;
-                let removeCategoryBtn = $(`<a class="item-control remove-category" title="Delete Category" data-type="${type}"><i class="fas fa-minus"></i> Del.</a>`);
-                removeCategoryBtn.click(ev => this.removeCategory(ev));
-                parent.innerHTML = '';
-                $(parent).append(removeCategoryBtn);
-            }
-        }
-
-        /*
-         *  add extra header functions
-         */
-
-        let targetCss = `.inventory .${InventoryPlusForSpells.getCSSName("sub-header")}`;
-        let headers = html.find(targetCss);
-        for (let header of headers) {
-            header = $(header);
-            let type = header.find('.item-control')[0].dataset.type;
-
-            let extraStuff = $('<div class="inv-plus-stuff flexrow"></div>');
-            header.find('h3').after(extraStuff);
-
-            if (this.customCategories[type] === undefined) {
-                return;
-            }
-
-            // toggle item visibility
-            let arrow = this.customCategories[type].collapsed === true ? 'right' : 'down';
-            let toggleBtn = $(`<a class="toggle-collapse"><i class="fas fa-caret-${arrow}"></i></a>`).click(ev => {
-                this.customCategories[type].collapsed = !this.customCategories[type].collapsed;
-                this.saveCategories();
-            });
-            header.find('h3').before(toggleBtn);
-            
-            // reorder category
-            if (this.getLowestSortFlag() !== this.customCategories[type].order) {
-                let upBtn = $(`<a class="inv-plus-stuff shuffle-up" title="Move category up"><i class="fas fa-chevron-up"></i></a>`).click(() => this.changeCategoryOrder(type, true));
-                extraStuff.append(upBtn);
-            }
-            if (this.getHighestSortFlag() !== this.customCategories[type].order) {
-                let downBtn = $(`<a class="inv-plus-stuff shuffle-down" title="Move category down"><i class="fas fa-chevron-down"></i></a>`).click(() => this.changeCategoryOrder(type, false));
-                extraStuff.append(downBtn);
-            }
-
-            // edit category 
-            let editCategoryBtn = $('<a class="inv-plus-stuff customize-category"><i class="fas fa-edit"></i></a>').click(async ev => {
-                let template = await renderTemplate('modules/inventory-plus/templates/categoryDialog.hbs', this.customCategories[type]);
-                let d = new Dialog({
-                    title: "Edit Inventory Category",
-                    content: template,
-                    buttons: {
-                        accept: {
-                            icon: '<i class="fas fa-check"></i>',
-                            label: "Accept",
-                            callback: async html => {
-                                let inputs = html.find('input');
-                                for (let input of inputs) {
-                                    let value = input.type === 'checkbox' ? input.checked : input.value;
-                                    if (input.dataset.dtype === "Number") {
-                                        value = Number(value) > 0 ? Number(value) : 0;
-                                    }
-                                    this.customCategories[type][input.name] = value;
-                                }
-                                this.saveCategories();
-                            }
-                        },
-                        cancle: {
-                            icon: '<i class="fas fa-times"></i>',
-                            label: "Cancel"
-                        }
-                    },
-                    default: "accept",
-                });
-                d.render(true);
-            });
-            extraStuff.append(editCategoryBtn);
-
-            // hide collapsed category items
-            if (this.customCategories[type].collapsed === true) {
-                header.next().hide();
-            }
-
-            if (this.customCategories[type].maxWeight > 0) {
-                let weight = this.getCategoryItemWeight(type);
-                let weightString = $(`<label class="category-weight">( ${weight}/${this.customCategories[type].maxWeight}  ${game.i18n.localize('DND5E.AbbreviationLbs')})</label>`);
-                header.find('h3').append(weightString);
-            }
-        }
-    }
 
     static filterSpells(spells, appliedFilterSets) {
         const labelFilterSets = Object.keys(SPELL_BETTER.labelFilterSets);
@@ -372,6 +127,36 @@ export class InventoryPlusForSpells {
         const templateFlags = customCategory?.templateFlags;
         return {templateItemData, templateFlags};
     }
+
+    async createNewCategoryDialog() {
+        const templateData = {
+            filterSet : "Level",
+            filters: SPELL_BETTER.labelFilterSets.levels.map(f => f.name)
+        }
+        let template = await renderTemplate('modules/spell-better/templates/categoryDialog.hbs', templateData);
+        let d = new Dialog({
+            title: game.i18n.localize("SPELL_BETTER.NewCategory.TITLE"),
+            content: template,
+            buttons: {
+                accept: {
+                    icon: '<i class="fas fa-check"></i>',
+                    label: game.i18n.localize("SETTINGS.Save"),
+                    callback: async html => {
+                        let input = html.find('input');
+                        this.createCategory(input);
+                    }
+                },
+                cancel: {
+                    icon: '<i class="fas fa-times"></i>',
+                    label: game.i18n.localize("Cancel")
+                }
+            },
+            default: "accept",
+        });
+        d.render(true);
+    }
+
+
 
     createCategory(inputs) {
         let newCategory = {}
@@ -493,53 +278,6 @@ export class InventoryPlusForSpells {
             category = spell.type + spell.data.level;
         }
         return category;
-    }
-
-    getCategoryItemWeight(type) {
-        let weight = 0;
-        for (let i of this.actor.spells) {
-            if (type === this.getSpellCategory(i.data)) {
-                weight += i.data.totalWeight;
-            }
-        }
-        return weight;
-    }
-
-    static calculateWeight(inventory, currency) {
-        let customWeight = 0;
-        for (let id in inventory) {
-            let section = inventory[id];
-            if (section.ignoreWeight !== true) {
-                for (let i of section.spells) {
-                    customWeight += i.totalWeight;
-                }
-            }
-            if (Number(section.ownWeight) > 0) {
-                customWeight += Number(section.ownWeight);
-            }
-        }
-
-        let coinWeight = 0
-        if (game.settings.get("dnd5e", "currencyWeight")) {
-            let numCoins = Object.values(currency).reduce((val, denom) => val += Math.max(denom, 0), 0);
-            coinWeight = Math.round((numCoins * 10) / CONFIG.DND5E.encumbrance.currencyPerWeight) / 10;
-        }
-        customWeight += coinWeight;
-
-        customWeight = Number(customWeight).toFixed(2);
-
-        return customWeight;
-    }
-
-    static getCSSName(element) {
-        let version = game.system.data.version.split('.');
-        if (element === "sub-header") {
-            if (version[0] == 0 && version[1] <= 9 && version[2] <= 8) {
-                return "inventory-header";
-            } else {
-                return "items-header";
-            }
-        }
     }
 
     async saveCategories() {
