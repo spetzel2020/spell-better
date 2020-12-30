@@ -50,6 +50,8 @@ export class Category extends FormApplication {
         } 
 
         let newCategory = {
+            label: formData.label,
+            filterSets: [],
             type: "spell",
             isCustom: true,
             canCreate: true, 
@@ -62,14 +64,32 @@ export class Category extends FormApplication {
             if (value === null || value === undefined || value === "") {
                 delete newCategory[input];
             } else {
-                newCategory[input] = value;
+                //If this is (one or more) filters, then recover the filterSets (because we use those to correctly apply)
+                if (input === "filter") {
+                    const filterSet = Category.findFilterSet(value);
+                    if (filterSet) {
+                        newCategory.filterSets.push({
+                            filterSet : filterSet,
+                            filters: [value]
+                        });
+                    }
+                } else {
+                    newCategory[input] = value;
+                }
             }
         }
         if (this.inventoryPlusForSpells) {
             this.inventoryPlusForSpells.allCategories[key] = newCategory;
             this.inventoryPlusForSpells.saveCategories();
         }
-;
+    }
+
+    static findFilterSet(filter) {
+        if (!filter) return null;
+        for (const [filterSet, filters] of Object.entries(SPELL_BETTER.labelFilterSets)) {
+            if (filters.map(f => f.filter).includes(filter)) return filterSet;
+        }
+        return null;
     }
 
     

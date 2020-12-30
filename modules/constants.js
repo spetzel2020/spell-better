@@ -68,7 +68,7 @@ export const SPELL_BETTER = {
                     {filterSet : "category", filters: []}
                 ],
                 /* Will be overridden by actual spell level stats */
-                 prop: "spell0", canCreate: true, canPrepare: false, slots: "&infin;", uses: "&infin;", usesSlots: false,
+                prop: "spell0", canCreate: true, canPrepare: false, slots: "&infin;", uses: "&infin;", usesSlots: false,
                 order: 0, type: "spell",  isCollapsed: true },
         spell1: { label: "SPELL_BETTER.SpellLevel1", 
                 templateItemData: {level: 1},
