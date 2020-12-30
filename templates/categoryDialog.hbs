@@ -1,3 +1,4 @@
+<form autocomplete="off" onsubmit="event.preventDefault();"></form>
     <div class="form-group">
         <label>{{localize "SPELL_BETTER.NewCategory.NAME"}}</label>
         <input type="String" name="categoryLabel" data-dtype="String"/>
@@ -22,3 +23,8 @@
         <input type="checkbox" name="useCategory" {{checked useCategory}} data-dtype="Boolean"/>
         <p class="notes">{{localize "SPELL_BETTER.NewCategory.UseCategory.HINT"}}</p>
     </div>
+
+    <button type="submit" name="submit">
+        <i class="fas fa-save"></i> {{localize 'SETTINGS.Save'}}
+    </button>
+</form>

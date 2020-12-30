@@ -256,7 +256,7 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
             const toggle = el.find(".toggle-collapse");
             if (toggle.length) {
                 toggle.click(async ev => {
-                    inventoryPlusForSpells.customCategories[category].isCollapsed = !inventoryPlusForSpells.customCategories[category].isCollapsed;
+                    inventoryPlusForSpells.allCategories[category].isCollapsed = !inventoryPlusForSpells.allCategories[category].isCollapsed;
                     inventoryPlusForSpells.saveCategories();
                 });
             }

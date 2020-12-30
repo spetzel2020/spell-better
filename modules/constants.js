@@ -1,3 +1,11 @@
+/*
+29-Dec-2020 0.5.1:  Add isCustom flag to added categories
+
+
+
+*/
+
+
 export const MODULE_ID = 'spell-better';
 export const MODULE_VERSION = "0.5.1";
 
@@ -52,8 +60,7 @@ export const SPELL_BETTER = {
     categoriesVersion : MODULE_VERSION, 
     categories_key : "categories",
     standardCategories : { 
-        //.prop is needed for now for display
-//FIXME: For now, we are completely overriding the custom categories every time you restart        
+        //.prop is needed for now for display     
         spell0: { label: "DND5E.SpellLevel0",
                 templateItemData: {level: 0},
                 filterSets: [
@@ -134,7 +141,15 @@ export const SPELL_BETTER = {
                     {filterSet : "category", filters: []}
                 ],                
                 prop: "spell9", canCreate: true, canPrepare: true, slots: "1", uses: "1", usesSlots: true,                
-                order: 90,  type: "spell",  isCollapsed: false },                                                                                                                                       
+                order: 90,  type: "spell",  isCollapsed: false },
+        wanted4: { label: "Wanted (4th)",
+                templateItemData: {level: 9}, templateFlags: {"category": "wanted"},
+                filterSets: [
+                    {filterSet : "levels", filters: ["4th Level"]},
+                    {filterSet : "category", filters: ["wanted"]}
+                ],     
+                canCreate: true, canPrepare : true,           
+                order: 999, usesSlots: false, type: "spell",  isCollapsed: true },                                                                                                                                                       
         wanted: { label: "SPELL_BETTER.Category.Wanted",
                 templateItemData: {level: 9}, templateFlags: {"category": "wanted"},
                 filterSets: [

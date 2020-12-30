@@ -16,7 +16,7 @@
 		}
 	],
 	"esmodules": [
-		"modules/SpellBetter.js", "modules/Inventory+ForSpells.js"
+		"modules/SpellBetter.js", "modules/Inventory+ForSpells.js", "modules/Category.js"
 	],
 	"styles": [
 		"styles/spell-better.css"

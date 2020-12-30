@@ -4,48 +4,56 @@
 23-Dec-2020     0.5.1: - Have to null out flags.spell-better during development     
 24-Dec-2020     0.5.1i: filterSpells(): loops over legal filterSets in the passed spell filters    
                 0.5.1k: Check the flags as well for inclusion     
-27-Dec-2020     0.5.1s: categorizeSpells: Copy over slots etc from real sections                
+27-Dec-2020     0.5.1s: categorizeSpells: Copy over slots etc from real sections  
+29-Dec-2020     0.5.1t: Only save the customCategories and merge with the standardCategories (then we don't have to upgrade standard categories)              
+                Delete standardCategories from the saved ones
 */
 
 import {SpellBetterCharacterSheet} from "./SpellBetter.js";
+import {Category} from "./Category.js";
 import { MODULE_ID, SPELL_BETTER } from './constants.js';
 
 export class InventoryPlusForSpells {
     constructor(actor) {
         this.actor = actor;
         this.initCategories();
-        //this.replaceOnDropItem();
     }
 
     initCategories() {
-        //Standard categories that cannot be deleted
-        let actorCategories = this.actor.getFlag(MODULE_ID, SPELL_BETTER.categories_key);
-        
-        if (!actorCategories) {
-            this.customCategories = SPELL_BETTER.standardCategories;
-            this.categoriesVersion = SPELL_BETTER.categoriesVersion;
+        //Saved custom categories
+        const savedCategories = this.actor.getFlag(MODULE_ID, SPELL_BETTER.categories_key);
+        const savedCategoriesVersion = this.actor.getFlag(MODULE_ID, SPELL_BETTER.categoriesVersion_key);
+        //Upgrade the saved categories if necessary (compare savedCategoriesVersion)
+        if (SPELL_BETTER.categoriesVersion !== (savedCategoriesVersion ?? MODULE_VERSION)) {
+
         } else {
-            this.customCategories = duplicate(actorCategories);
-            this.categoriesVersion = this.actor.getFlag(MODULE_ID, SPELL_BETTER.categoriesVersion_key);
-//FIXME: Sometimes we have to recreate the categories - how do we do this when we have a new version
-//Should probably save the version with spell-better flags
-            //this.customCategories = SPELL_BETTER.standardCategories;
-            this.applySortKey();
+            //Remove standard categories from the saved ones
+            for (const [key, categoryData] of Object.entries(savedCategories)) {
+                if (Object.keys(SPELL_BETTER.standardCategories).includes(key)) {
+                    delete savedCategories[key];
+                }
+            }
         }
+        const customCategories = savedCategories ?? {};
+
+        //Merge standard and saved categories
+        this.allCategories = mergeObject(customCategories, SPELL_BETTER.standardCategories);
+
+        this.applySortKey();
     }
 
     
     applySortKey() {
         let sortedCategories = {};
 
-        let keys = Object.keys(this.customCategories);
+        let keys = Object.keys(this.allCategories);
         keys.sort((a, b) => {
-            return this.customCategories[a].order - this.customCategories[b].order;
+            return this.allCategories[a].order - this.allCategories[b].order;
         });
         for (let key of keys) {
-            sortedCategories[key] = this.customCategories[key];
+            sortedCategories[key] = this.allCategories[key];
         }
-        this.customCategories = sortedCategories;
+        this.allCategories = sortedCategories;
     }
 
     static filterSpells(spells, appliedFilterSets) {
@@ -86,7 +94,7 @@ export class InventoryPlusForSpells {
     }
 
     categorizeSpells(spellbook) {
-        let categories = duplicate(this.customCategories);
+        let categories = duplicate(this.allCategories);
 
         //Categorize spells for display; the same spell could appear in MULTIPLE areas
         //TODO: Would probably be more efficient to make the outer loop the spells and the inner loop the categories, since most spells will be in one category        
@@ -118,7 +126,7 @@ export class InventoryPlusForSpells {
     }
 
     getTemplateItemData(category) {
-        const customCategory = this.customCategories[category];
+        const customCategory = this.allCategories[category];
         let templateItemData = {name: game.i18n.localize(customCategory?.label), type: "spell" }
         let templateItemDataData = duplicate(customCategory?.templateItemData);
         if (templateItemDataData) {
@@ -129,34 +137,8 @@ export class InventoryPlusForSpells {
     }
 
     async createNewCategoryDialog() {
-        const templateData = {
-            filterSet : "Level",
-            filters: SPELL_BETTER.labelFilterSets.levels.map(f => f.name)
-        }
-        let template = await renderTemplate('modules/spell-better/templates/categoryDialog.hbs', templateData);
-        let d = new Dialog({
-            title: game.i18n.localize("SPELL_BETTER.NewCategory.TITLE"),
-            content: template,
-            buttons: {
-                accept: {
-                    icon: '<i class="fas fa-check"></i>',
-                    label: game.i18n.localize("SETTINGS.Save"),
-                    callback: async html => {
-                        let input = html.find('input');
-                        this.createCategory(input);
-                    }
-                },
-                cancel: {
-                    icon: '<i class="fas fa-times"></i>',
-                    label: game.i18n.localize("Cancel")
-                }
-            },
-            default: "accept",
-        });
-        d.render(true);
+        new Category(null, {}, this).render(true);
     }
-
-
 
     createCategory(inputs) {
         let newCategory = {}
@@ -199,7 +181,7 @@ export class InventoryPlusForSpells {
         }
         await this.actor.updateEmbeddedEntity('OwnedItem', changedItems);
 
-        delete this.customCategories[catType];
+        delete this.allCategories[catType];
         let deleteKey = `-=${catType}`
         this.actor.setFlag(MODULE_ID,  SPELL_BETTER.categories_key, { [deleteKey]:null });
     }
@@ -208,15 +190,15 @@ export class InventoryPlusForSpells {
         let targetType = movedType;
         let currentSortFlag = 0;
         if(!up) currentSortFlag = 999999999;
-        for (let id in this.customCategories) {
-            let currentCategory = this.customCategories[id];
+        for (let id in this.allCategories) {
+            let currentCategory = this.allCategories[id];
             if (up) {
-                if (id !== movedType && currentCategory.order < this.customCategories[movedType].order && currentCategory.order > currentSortFlag) {
+                if (id !== movedType && currentCategory.order < this.allCategories[movedType].order && currentCategory.order > currentSortFlag) {
                     targetType = id;
                     currentSortFlag = currentCategory.order;
                 }
             } else {
-                if (id !== movedType && currentCategory.order > this.customCategories[movedType].order && currentCategory.order < currentSortFlag) {
+                if (id !== movedType && currentCategory.order > this.allCategories[movedType].order && currentCategory.order < currentSortFlag) {
                     targetType = id;
                     currentSortFlag = currentCategory.order;
                 }
@@ -224,11 +206,11 @@ export class InventoryPlusForSpells {
         } 
 
         if (movedType !== targetType) {
-            let oldMovedSortFlag = this.customCategories[movedType].order;
+            let oldMovedSortFlag = this.allCategories[movedType].order;
             let newMovedSortFlag = currentSortFlag;
 
-            this.customCategories[movedType].order = newMovedSortFlag;
-            this.customCategories[targetType].order = oldMovedSortFlag;
+            this.allCategories[movedType].order = newMovedSortFlag;
+            this.allCategories[targetType].order = oldMovedSortFlag;
             this.applySortKey();
             this.saveCategories();
         }
@@ -238,8 +220,8 @@ export class InventoryPlusForSpells {
     getHighestSortFlag() {
         let highest = 0;
 
-        for (let id in this.customCategories) {
-            let cat = this.customCategories[id];
+        for (let id in this.allCategories) {
+            let cat = this.allCategories[id];
             if (cat.order > highest) {
                 highest = cat.order;
             }
@@ -251,8 +233,8 @@ export class InventoryPlusForSpells {
     getLowestSortFlag() {
         let lowest = 999999999;
 
-        for (let id in this.customCategories) {
-            let cat = this.customCategories[id];
+        for (let id in this.allCategories) {
+            let cat = this.allCategories[id];
             if (cat.order < lowest) {
                 lowest = cat.order;
             }
@@ -267,25 +249,26 @@ export class InventoryPlusForSpells {
         do {
             id = Math.random().toString(36).substring(7);
             iterations--;
-        } while (this.customCategories[id] !== undefined && iterations > 0 && id.length>=5)
+        } while (this.allCategories[id] !== undefined && iterations > 0 && id.length>=5)
 
         return id;
     }
 
     getSpellCategory(spell) {
         let category = getProperty(spell, 'flags.spell-better.category');
-        if (category === undefined || this.customCategories[category] === undefined) {
+        if (category === undefined || this.allCategories[category] === undefined) {
             category = spell.type + spell.data.level;
         }
         return category;
     }
 
     async saveCategories() {
-        //this.actor.update({ 'flags.inventory-plus.categories': this.customCategories }).then(() => { console.log(this.actor.data.flags) });
-//FiXME: Need to null it during development, because if you change the format it remembers the old extraneous info        
+        //Save only the custom categories
+        const customCategories = this.allCategories(ac => ac.isCustom);
+    
         await this.actor.setFlag(MODULE_ID, SPELL_BETTER.categories_key, null);
-        await this.actor.setFlag(MODULE_ID,  SPELL_BETTER.categories_key, this.customCategories);
+        await this.actor.setFlag(MODULE_ID,  SPELL_BETTER.categories_key, customCategories);
         //0.5.1s: Save the categoryVersion (which means we need to do any upgrading on read)
-        await this.actor.setFlag(MODULE_ID, SPELL_BETTER.categoriesVersion_key, this.categoriesVersion);
+        await this.actor.setFlag(MODULE_ID, SPELL_BETTER.categoriesVersion_key, SPELL_BETTER.categoriesVersion);
     }
 }//end InventoryPlusForSpells
