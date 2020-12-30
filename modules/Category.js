@@ -9,6 +9,8 @@ import { MODULE_ID, SPELL_BETTER } from './constants.js';
 export class Category extends FormApplication {
     constructor(category, options, inventoryPlusForSpells) {
         super(category, options);
+//FIXME        
+        this.key = null;
         this.category = category;
         this.inventoryPlusForSpells = inventoryPlusForSpells;
     }
@@ -17,7 +19,7 @@ export class Category extends FormApplication {
         return mergeObject(super.defaultOptions, {
             id: "create-category",
             title:  game.i18n.localize("SPELL_BETTER.NewCategory.TITLE"),
-            classes: ["sheet"],
+            classes: ["sheet","combat-sheet"],
             template: 'modules/spell-better/templates/categoryDialog.hbs',
             width: 420
         });
@@ -25,9 +27,10 @@ export class Category extends FormApplication {
 
     async getData(options) {
         const templateData = {
+            key: this.key,
             category : this.category,
-            filterSet : "Level",
-            filters: SPELL_BETTER.labelFilterSets.levels.map(f => f.name)
+            labelFilterSets : SPELL_BETTER.labelFilterSets ,
+            includeInStandard: this.category?.includeInStandard ?? true
         }
         return templateData;
     }
@@ -36,9 +39,9 @@ export class Category extends FormApplication {
 
         //If this is a new category, create it
         let key = formData.key;
-        if (key) {
+        if (!key) {
             //Validation
-            if (formData.label === undefined || newCategory.label === '') {
+            if (!formData.label || formData.label === '') {
                 ui.notifications.error('Could not create Category as no name was specified');
                 return;
             }
@@ -47,23 +50,24 @@ export class Category extends FormApplication {
         } 
 
         let newCategory = {
+            type: "spell",
             isCustom: true,
             canCreate: true, 
             canPrepare: true,
-            collapsed: false,
+            isCollapsed: false,
             order: this.inventoryPlusForSpells?.getHighestSortFlag() + 1000
         }
 
-        for (let input of formData) {
-            let value = input.type === 'checkbox' ? input.checked : input.value;
-            if (input.dataset.dtype === "Number") {
-                value = Number(value) > 0 ? Number(value) : 0;
+        for (let [input, value] of Object.entries(formData)) {
+            if (value === null || value === undefined || value === "") {
+                delete newCategory[input];
+            } else {
+                newCategory[input] = value;
             }
-            newCategory[input.name] = value;
         }
         if (this.inventoryPlusForSpells) {
             this.inventoryPlusForSpells.allCategories[key] = newCategory;
-            this.inventoryPlusForSpells.saveCategories()
+            this.inventoryPlusForSpells.saveCategories();
         }
 ;
     }

@@ -26,7 +26,7 @@ export class InventoryPlusForSpells {
         //Upgrade the saved categories if necessary (compare savedCategoriesVersion)
         if (SPELL_BETTER.categoriesVersion !== (savedCategoriesVersion ?? MODULE_VERSION)) {
 
-        } else {
+        } else if (savedCategories) {
             //Remove standard categories from the saved ones
             for (const [key, categoryData] of Object.entries(savedCategories)) {
                 if (Object.keys(SPELL_BETTER.standardCategories).includes(key)) {
@@ -101,6 +101,7 @@ export class InventoryPlusForSpells {
         for (const [category, value] of Object.entries(categories) ) {
             categories[category].spells = [];
             for (const section of spellbook) {
+//FIXME: Custom categories badly defined will not have filterSets                
                 const filteredSpells = InventoryPlusForSpells.filterSpells(section.spells, value.filterSets);
                 categories[category].spells.push(...filteredSpells);
 
@@ -138,32 +139,6 @@ export class InventoryPlusForSpells {
 
     async createNewCategoryDialog() {
         new Category(null, {}, this).render(true);
-    }
-
-    createCategory(inputs) {
-        let newCategory = {}
-
-        for (let input of inputs) {
-            let value = input.type === 'checkbox' ? input.checked : input.value;
-            if (input.dataset.dtype === "Number") {
-                value = Number(value) > 0 ? Number(value) : 0;
-            }
-            newCategory[input.name] = value;
-        }
-
-
-        if (newCategory.label === undefined || newCategory.label === '') {
-            ui.notifications.error('Could not create Category as no name was specified');
-            return;
-        }
-
-        let key = this.generateCategoryId();
-
-        newCategory.dataset = { type: key };
-        newCategory.collapsed = false;
-        newCategory.order = this.getHighestSortFlag() + 1000;
-        this.customCategories[key] = newCategory;
-        this.saveCategories();
     }
 
     async removeCategory(ev) {
@@ -263,8 +238,12 @@ export class InventoryPlusForSpells {
     }
 
     async saveCategories() {
-        //Save only the custom categories
-        const customCategories = this.allCategories(ac => ac.isCustom);
+        //Save only the custom categories - probably a better way to filter this
+//FIXME: Maybe only pass the custom categories except when we filter by categories        
+        const customCategories = duplicate(this.allCategories);
+        for (const key in customCategories) {
+            if (!customCategories[key].isCustom) {delete customCategories[key];}
+        }
     
         await this.actor.setFlag(MODULE_ID, SPELL_BETTER.categories_key, null);
         await this.actor.setFlag(MODULE_ID,  SPELL_BETTER.categories_key, customCategories);

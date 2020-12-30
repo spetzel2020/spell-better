@@ -1,27 +1,31 @@
-<form autocomplete="off" onsubmit="event.preventDefault();"></form>
+<form autocomplete="off" onsubmit="event.preventDefault();">
     <div class="form-group">
-        <label>{{localize "SPELL_BETTER.NewCategory.NAME"}}</label>
-        <input type="String" name="categoryLabel" data-dtype="String"/>
+        <label for="label">{{localize "SPELL_BETTER.NewCategory.NAME"}}</label>
+        <input type="String" name="label" data-dtype="String"/>
     </div>
     <div class="form-group">
-        <label>{{localize "SPELL_BETTER.NewCategory.FilterSet.LABEL"}}</label>
-        <select name="filter">
-            {{#select filterSet}}
-                <optgroup label="{{ Levels }}"></optgroup>
-                    <option value="">None</option>
-                    {{#each filters}}
-                        <option value="{{this}}">{{this}}</option>
+        <label for="filter">{{localize "SPELL_BETTER.NewCategory.Filter.LABEL"}}</label>
+        <div class="form-fields">
+            <select name="filter">
+                <option value="">None</option>
+                {{#each labelFilterSets}}
+                <optgroup label="{{@key}}">
+                    {{#each this}}
+                        <option value="{{this.filter}}">{{localize this.name}}</option>
                     {{/each}}
                 </optgroup>
-            {{/select}}
-        </select>
-        <p class="notes">{{localize filterSet.hint}}</p>
+                {{/each}}
+            </select>
+        </div>
+        <p class="notes">{{localize  "SPELL_BETTER.NewCategory.Filter.HINT"}}</p>
     </div>
 
     <div class="form-group">
-        <label>{{localize "SPELL_BETTER.NewCategory.UseCategory.NAME"}}</label>
-        <input type="checkbox" name="useCategory" {{checked useCategory}} data-dtype="Boolean"/>
-        <p class="notes">{{localize "SPELL_BETTER.NewCategory.UseCategory.HINT"}}</p>
+        <label for="useCategory">{{localize "SPELL_BETTER.NewCategory.IncludeInStandard.NAME"}}</label>
+        <div class="form-fields">
+            <input type="checkbox" name="includeInStandard" {{checked includeInStandard}} data-dtype="Boolean"/>
+        </div>    
+        <p class="notes">{{{localize "SPELL_BETTER.NewCategory.IncludeInStandard.HINT"}}}</p>
     </div>
 
     <button type="submit" name="submit">
