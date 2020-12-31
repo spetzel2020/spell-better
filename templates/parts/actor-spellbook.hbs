@@ -125,6 +125,11 @@
                         <i class="fas fa-plus"></i> {{localize "DND5E.Add"}}
                     </a>
                 {{/if}}
+                {{#if section.isCustom}}
+                    <a class="spell-control remove-category" title="{{localize "SPELL_BETTER.DeleteCustomCategory.LINK"}}" data-category="{{@key}}">
+                        <i class="fas fa-minus"></i> {{localize "SPELL_BETTER.Del"}}
+                    </a>
+                {{/if}}
             </div>
         </li>
         {{#unless section.isCollapsed}}

@@ -9,7 +9,8 @@
 23-Dec-2020     0.5.1c: Attach listeners to toggle category collapsed/shown - loop through    
 26-Dec-2020     0.5.1p: _onDropItem(): If flags are different (because of different category) then udpate them first
                 0.5.1q: Check both sub-header and item-list parents (because the header and the list are in parallel trees)
-27-Dec-2020     Attach the toggle to the caret, not to the whole line                
+27-Dec-2020     Attach the toggle to the caret, not to the whole line   
+30-Dec-2020     0.5.1w: Add Delete Custom Category control             
 */
 
 import { log, getActivationType, getWeaponRelevantAbility, hasAttack, hasDamage } from './helpers.js';
@@ -259,6 +260,11 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
                     inventoryPlusForSpells.allCategories[category].isCollapsed = !inventoryPlusForSpells.allCategories[category].isCollapsed;
                     inventoryPlusForSpells.saveCategories();
                 });
+            }
+            //0.5.1u Delete category
+            const delCategory = el.find(".remove-category");
+            if (delCategory.length) {
+                delCategory.click(async ev => inventoryPlusForSpells.removeCategory(category));
             }
         }
     }

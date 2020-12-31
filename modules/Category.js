@@ -54,7 +54,7 @@ export class Category extends FormApplication {
             filterSets: [],
             type: "spell",
             isCustom: true,
-            canCreate: true, 
+            canCreate: false,   //Not the place to create new spells
             canPrepare: true,
             isCollapsed: false,
             order: this.inventoryPlusForSpells?.getHighestSortFlag() + 1000

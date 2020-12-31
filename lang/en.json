@@ -35,6 +35,8 @@
   "SPELL_BETTER.Category.Wanted" : "Wanted" ,
   "SPELL_BETTER.Category.All" : "All",
   "SPELL_BETTER.AddCustomCategory.LINK" : "Add Custom Category",
+  "SPELL_BETTER.DeleteCustomCategory.LINK" : "Delete Custom Category",
+  "SPELL_BETTER.Del" : "Del",
   "SPELL_BETTER.NewCategory.TITLE" : "Create New Spell Category",
   "SPELL_BETTER.NewCategory.NAME" : "Category Name",
     "SPELL_BETTER.NewCategory.Filter.LABEL" : "Filter",  

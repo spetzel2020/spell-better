@@ -141,24 +141,29 @@ export class InventoryPlusForSpells {
         new Category(null, {}, this).render(true);
     }
 
-    async removeCategory(ev) {
-        let catType = ev.target.dataset.type;
+    async removeCategory(category) {
         let changedItems = [];
-        for (let item of this.actor.spells) {
-            let type = this.getSpellCategory(item.data);
-            if (type === catType) {
-                //await item.unsetFlag("spell-better", 'category');
-                changedItems.push({
-                    _id: item.id,
-                    '-=flags.inventory-plus':null
-                })
+        for (let spell of this.actor.data.items.filter(i => i.type === "spell")) {
+            let type = InventoryPlusForSpells.getSpellCategory(spell);
+            if (type === category) {
+                const unsetFlag =  `-=flags.${MODULE_ID}`;
+                const changedItem = {_id: spell.id}
+                changedItem[unsetFlag] = null;
+                changedItems.push(changedItem);
             }
         }
         await this.actor.updateEmbeddedEntity('OwnedItem', changedItems);
 
-        delete this.allCategories[catType];
-        let deleteKey = `-=${catType}`
+        delete this.allCategories[category];
+        let deleteKey = `-=${category}`
         this.actor.setFlag(MODULE_ID,  SPELL_BETTER.categories_key, { [deleteKey]:null });
+    }
+
+
+    static getSpellCategory(spell) {
+        const spellFlags = spell.flags[MODULE_ID];
+        const spellCategory = spellFlags ? spellFlags.category : null;
+        return spellCategory;
     }
 
     changeCategoryOrder(movedType, up) {
@@ -229,13 +234,6 @@ export class InventoryPlusForSpells {
         return id;
     }
 
-    getSpellCategory(spell) {
-        let category = getProperty(spell, 'flags.spell-better.category');
-        if (category === undefined || this.allCategories[category] === undefined) {
-            category = spell.type + spell.data.level;
-        }
-        return category;
-    }
 
     async saveCategories() {
         //Save only the custom categories - probably a better way to filter this
