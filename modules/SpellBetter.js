@@ -258,7 +258,7 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
             if (toggle.length) {
                 toggle.click(async ev => {
                     inventoryPlusForSpells.allCategories[category].isCollapsed = !inventoryPlusForSpells.allCategories[category].isCollapsed;
-                    inventoryPlusForSpells.saveCategories();
+                    inventoryPlusForSpells.saveCategories(category);
                 });
             }
             //0.5.1u Delete category

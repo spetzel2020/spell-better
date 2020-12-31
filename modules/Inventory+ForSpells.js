@@ -7,6 +7,8 @@
 27-Dec-2020     0.5.1s: categorizeSpells: Copy over slots etc from real sections  
 29-Dec-2020     0.5.1t: Only save the customCategories and merge with the standardCategories (then we don't have to upgrade standard categories)              
                 Delete standardCategories from the saved ones
+30-Dec-2020     0.5.1x: Store standard categories, but just for the isCollapsed status   
+                If (default) hide standard categories with no spells, remove them for display             
 */
 
 import {SpellBetterCharacterSheet} from "./SpellBetter.js";
@@ -26,18 +28,22 @@ export class InventoryPlusForSpells {
         //Upgrade the saved categories if necessary (compare savedCategoriesVersion)
         if (SPELL_BETTER.categoriesVersion !== (savedCategoriesVersion ?? MODULE_VERSION)) {
 
-        } else if (savedCategories) {
-            //Remove standard categories from the saved ones
-            for (const [key, categoryData] of Object.entries(savedCategories)) {
-                if (Object.keys(SPELL_BETTER.standardCategories).includes(key)) {
-                    delete savedCategories[key];
-                }
+        }
+        let customCategories = {};
+        if (savedCategories) {
+            //Get the custom categories
+            for (const [category, value] of Object.entries(savedCategories)) {
+                if (value.isCustom) {customCategories[category] = value}
             }
         }
-        const customCategories = savedCategories ?? {};
-
-        //Merge standard and saved categories
+        //Merge standard and custom categories
         this.allCategories = mergeObject(customCategories, SPELL_BETTER.standardCategories);
+        //And now apply info about collapsed/shown (the only reason we saved)
+        for (const category of Object.keys(this.allCategories)) {
+            if (savedCategories[category]) {
+                this.allCategories[category].isCollapsed = savedCategories[category].isCollapsed;
+            }
+        }
 
         this.applySortKey();
     }
@@ -101,7 +107,6 @@ export class InventoryPlusForSpells {
         for (const [category, value] of Object.entries(categories) ) {
             categories[category].spells = [];
             for (const section of spellbook) {
-//FIXME: Custom categories badly defined will not have filterSets                
                 const filteredSpells = InventoryPlusForSpells.filterSpells(section.spells, value.filterSets);
                 categories[category].spells.push(...filteredSpells);
 
@@ -117,12 +122,19 @@ export class InventoryPlusForSpells {
                     mergeObject(categories[category], levelStats);
                 }
             }
+            //0.5.1x: If (default) hide standard categories with no spells, remove them for display
+            if (game.settings.get(MODULE_ID, SPELL_BETTER.hideCategoryWithNoSpells)) {
+                if (!value.isCustom && !value.spells?.length) {
+                    delete categories[category];
+                    continue;
+                }
+            }
             //Now sort spells within categories - should make this configurable
             categories[category].spells.sort((a, b) => {
                 return a.sort - b.sort;
             });
-
         }
+
         return categories;
     }
 
@@ -235,16 +247,10 @@ export class InventoryPlusForSpells {
     }
 
 
-    async saveCategories() {
-        //Save only the custom categories - probably a better way to filter this
-//FIXME: Maybe only pass the custom categories except when we filter by categories        
-        const customCategories = duplicate(this.allCategories);
-        for (const key in customCategories) {
-            if (!customCategories[key].isCustom) {delete customCategories[key];}
-        }
-    
+    async saveCategories(category=null) {
+        //Save all categories, because we want the collapsed/shown status
         await this.actor.setFlag(MODULE_ID, SPELL_BETTER.categories_key, null);
-        await this.actor.setFlag(MODULE_ID,  SPELL_BETTER.categories_key, customCategories);
+        await this.actor.setFlag(MODULE_ID,  SPELL_BETTER.categories_key, this.allCategories);
         //0.5.1s: Save the categoryVersion (which means we need to do any upgrading on read)
         await this.actor.setFlag(MODULE_ID, SPELL_BETTER.categoriesVersion_key, SPELL_BETTER.categoriesVersion);
     }

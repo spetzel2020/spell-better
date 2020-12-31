@@ -30,4 +30,12 @@ export const registerSettings = function () {
     config: true,
     hint: 'SPELL_BETTER.expandedLimitedHint',
   });
+    game.settings.register(MODULE_ID, SPELL_BETTER.hideCategoryWithNoSpells, {
+        name:  "SPELL_BETTER.HideCategoryWithNoSpells.NAME",
+        default: true,
+        type: Boolean,
+        scope: 'world',
+        config: true,
+        hint:  "SPELL_BETTER.HideCategoryWithNoSpells.HINT",
+     });
 };

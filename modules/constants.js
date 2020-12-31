@@ -1,6 +1,6 @@
 /*
 29-Dec-2020 0.5.1:  Add isCustom flag to added categories
-
+30-Dec-2020 0.5.1x: OPtion to not display standard categories with no spells
 
 
 */
@@ -14,6 +14,7 @@ export const SPELL_BETTER = {
     limitActionsToCantrips : 'limit-actions-to-cantrips',
     showIconsOnInventoryList : 'show-icons-on-inventory-list',
     expandedLimited : 'expanded-limited',
+    hideCategoryWithNoSpells : "hide-category-with-no-spells",
     labelFilterSets :  {
         castingTimes : [
             {filter : "1 Action", name: "DND5E.Action"},         
@@ -142,7 +143,7 @@ export const SPELL_BETTER = {
                 ],                
                 prop: "spell9", canCreate: true, canPrepare: true, slots: "1", uses: "1", usesSlots: true,                
                 order: 90,  type: "spell",  isCollapsed: false },
-        wanted4: { label: "Wanted (4th)",
+        wanted4: { label: "Wanted (4th)", isCustom: true,
                 templateItemData: {level: 9}, templateFlags: {"category": "wanted"},
                 filterSets: [
                     {filterSet : "levels", filters: ["4th Level"]},
@@ -150,7 +151,7 @@ export const SPELL_BETTER = {
                 ],     
                 canCreate: true, canPrepare : true,           
                 order: 999, usesSlots: false, type: "spell",  isCollapsed: true },                                                                                                                                                       
-        wanted: { label: "SPELL_BETTER.Category.Wanted",
+        wanted: { label: "SPELL_BETTER.Category.Wanted", isCustom: true, 
                 templateItemData: {level: 9}, templateFlags: {"category": "wanted"},
                 filterSets: [
                     {filterSet : "category", filters: ["wanted"]}

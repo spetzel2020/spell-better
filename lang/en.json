@@ -10,6 +10,9 @@
   "SPELL_BETTER.expandedLimited": "Use Expanded Sheet as Limited",
   "SPELL_BETTER.expandedLimitedHint": "Show the full character sheet for users who have the Limited permission for a given Actor.",
 
+   "SPELL_BETTER.HideCategoryWithNoSpells.NAME": "Hide categories with no spells",
+  "SPELL_BETTER.HideCategoryWithNoSpells.HINT": "Hide standard categories with no spells; custom categories are always shown.",
+
   "SPELL_BETTER.CastingTime" : "Usage (Or)",
   "SPELL_BETTER.OtherAnd" : "Other (And)",
   "SPELL_BETTER.LevelOr" : "Level (Or)",
