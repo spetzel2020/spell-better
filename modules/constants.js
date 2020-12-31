@@ -149,14 +149,14 @@ export const SPELL_BETTER = {
                     {filterSet : "levels", filters: ["4th Level"]},
                     {filterSet : "category", filters: ["wanted"]}
                 ],     
-                canCreate: true, canPrepare : true,           
+                canCreate: false, canPrepare : false,           
                 order: 999, usesSlots: false, type: "spell",  isCollapsed: true },                                                                                                                                                       
         wanted: { label: "SPELL_BETTER.Category.Wanted", isCustom: true, 
                 templateItemData: {level: 9}, templateFlags: {"category": "wanted"},
                 filterSets: [
                     {filterSet : "category", filters: ["wanted"]}
                 ],     
-                canCreate: true, canPrepare : true,           
+                canCreate: true, canPrepare : false,           
                 order: 1000, usesSlots: false, type: "spell",  isCollapsed: true },
         //ALL category to make sure setting a flag doesn't hide a spell completely                
         all:    {label: "SPELL_BETTER.Category.All", 

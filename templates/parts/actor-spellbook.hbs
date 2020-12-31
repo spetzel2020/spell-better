@@ -45,7 +45,7 @@
             {{#if preparedSpells}}({{preparedSpells}}/
                 {{#with (lookup data.abilities data.attributes.spellcasting)}}
                     {{numberFormat (ogl5e-sheet-add mod ../data.details.level) decimals=0}}
-                {{/with}}
+                {{/with}})
             {{/if}}
         </li>
     </ul>
@@ -59,7 +59,7 @@
         <li class="filter-set "><h4>{{localize "SPELL_BETTER.LevelOr"}}:</h4></li>
         {{#each filters.choices.levels as |fl|}}
             <li class="filter-item tag" data-filter="{{fl.filter}}">
-                {{localize fl.name}} {{#if @index}}{{#with (lookup ../spellbook @index)}} {{uses}}/{{slots}} {{/with}}{{/if}}
+                {{localize fl.name}} {{#if @index}}{{#with (lookup @root.spellbook @index)}} {{uses}}/{{slots}} {{/with}}{{/if}}
             </li>
         {{/each}}       
     </ul>
@@ -91,7 +91,7 @@
         </div>
     </li>
 
-    {{#each spellbook as |section|}}
+    {{#each categories as |section|}}
         <li class="sub-header spellbook-header" data-category="{{@key}}">
             {{#if section.isCollapsed}}
                 <a class="toggle-collapse"><i class="fas fa-caret-right"></i></a>

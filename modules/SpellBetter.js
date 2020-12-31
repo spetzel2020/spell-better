@@ -10,7 +10,8 @@
 26-Dec-2020     0.5.1p: _onDropItem(): If flags are different (because of different category) then udpate them first
                 0.5.1q: Check both sub-header and item-list parents (because the header and the list are in parallel trees)
 27-Dec-2020     Attach the toggle to the caret, not to the whole line   
-30-Dec-2020     0.5.1w: Add Delete Custom Category control             
+30-Dec-2020     0.5.1w: Add Delete Custom Category control         
+                Don't overwrite spellbook; just add categories    
 */
 
 import { log, getActivationType, getWeaponRelevantAbility, hasAttack, hasDamage } from './helpers.js';
@@ -541,7 +542,7 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     if (!this.inventoryPlusForSpells) {
         this.inventoryPlusForSpells = new InventoryPlusForSpells(this.actor);
     }
-    sheetData.spellbook = this.inventoryPlusForSpells.categorizeSpells(sheetData?.spellbook);
+    sheetData.categories = this.inventoryPlusForSpells.categorizeSpells(sheetData?.spellbook);
 
     return sheetData;
   }
