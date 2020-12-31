@@ -483,6 +483,20 @@
 .dnd5e.sheet.actor.character.spell-better-sheet .items-list .sub-header .item-controls a {
   flex: 1 0 auto;
 }
+.dnd5e.sheet.actor.character.spell-better-sheet .items-list .inv-plus-stuff:hover, .dnd5e.sheet.actor.character.spell-better-sheet .items-list .sub-header .toggle-collapse:hover  {
+    opacity:1;
+}
+
+.dnd5e.sheet.actor.character.spell-better-sheet .items-list .sub-header .toggle-collapse {
+    flex:0;
+    opacity:0.5;
+    font-size: 18px;
+    margin-left:4px;
+}
+
+
+
+
 .dnd5e.sheet.actor.character.spell-better-sheet .items-list .item-name {
   min-height: 30px;
 }
@@ -492,6 +506,42 @@
 .dnd5e.sheet.actor.character.spell-better-sheet .items-list .item-controls > :not(:last-child) {
   margin-right: 5px;
 }
+
+.dnd5e.sheet.actor.character.spell-better-sheet .filter-list {
+    max-width: 100%;
+}
+
+.dnd5e.sheet.actor.character.spell-better-sheet.character.spell-better-sheet .filter-list .custom-category{
+    flex-grow: 2;
+}
+
+.dnd5e.sheet.actor.character.spell-better-sheet .items-list .item-controls .remove-category {
+    flex: 0 0 100%;
+}
+
+.dnd5e.sheet.actor.character.spell-better-sheet .items-list .inv-plus-stuff {
+    flex:inherit;
+    opacity:0.5;
+}
+
+
+
+.dnd5e.sheet.actor.character.spell-better-sheet .items-list .inv-plus-stuff div {
+    flex-grow:1;
+    max-width:120px;
+}
+
+.dnd5e.sheet.actor.character.spell-better-sheet .items-list .inv-plus-stuff a {
+    flex-grow:0;
+    margin-right:2px;
+}
+
+.dnd5e.sheet.actor.character.spell-better-sheet .items-list .inv-plus-stuff input{
+    height:16px;
+    width:16px;
+}
+
+
 .dnd5e.sheet.actor.character.spell-better-sheet .condensed-inventory-list {
   padding: 0;
 }
