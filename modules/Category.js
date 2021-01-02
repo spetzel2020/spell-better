@@ -1,18 +1,18 @@
 /*
 29-Dec-2020     0.5.1t: Only save the customCategories and merge with the standardCategories (then we don't have to upgrade standard categories)              
                 Split out from Inventory+ForSpells.js for creating and deleting categories
-1-Jan-2021      0.5.1aa: getData(): includeInStandard -> showOnlyInCategory                
+1-Jan-2021      0.5.1aa: getData(): includeInStandard -> showOnlyInCategory      
+2-Jan-2021      0.5.1ac: Handle editCategory          
 */
 
 import {SpellBetterCharacterSheet} from "./SpellBetter.js";
 import { MODULE_ID, SPELL_BETTER } from './constants.js';
 
 export class Category extends FormApplication {
-    constructor(category, options, inventoryPlusForSpells) {
-        super(category, options);
-//FIXME        
-        this.key = null;
-        this.category = category;
+    constructor(categoryKey, options, inventoryPlusForSpells) {
+        const categoryData = categoryKey ? inventoryPlusForSpells?.allCategories[categoryKey] : null;
+        super(categoryData, options);
+        this.categoryKey = categoryKey;
         this.inventoryPlusForSpells = inventoryPlusForSpells;
     }
 
@@ -28,10 +28,11 @@ export class Category extends FormApplication {
 
     async getData(options) {
         const templateData = {
-            key: this.key,
-            category : this.category,
+            categoryKey : this.categoryKey,
+            isCustom: this.object?.isCustom,
+            label: this.object?.label,
             labelFilterSets : SPELL_BETTER.labelFilterSets ,
-            showOnlyInCategory: this.category?.showOnlyInCategory ?? false
+            showOnlyInCategory: this.object?.showOnlyInCategory ?? false
         }
         return templateData;
     }
@@ -39,15 +40,15 @@ export class Category extends FormApplication {
     async _updateObject(event, formData) {
 
         //If this is a new category, create it
-        let key = formData.key;
-        if (!key) {
+        let categoryKey = formData.categoryKey;
+        if (!categoryKey) {
             //Validation
             if (!formData.label || formData.label === '') {
                 ui.notifications.error('Could not create Category as no name was specified');
                 return;
             }
             //Creating a new key should be encapsulated here
-            key = this.inventoryPlusForSpells?.generateCategoryId();
+            categoryKey = this.inventoryPlusForSpells?.generateCategoryId();
         } 
 
         let newCategory = {
@@ -80,7 +81,7 @@ export class Category extends FormApplication {
             }
         }
         if (this.inventoryPlusForSpells) {
-            this.inventoryPlusForSpells.allCategories[key] = newCategory;
+            this.inventoryPlusForSpells.allCategories[categoryKey] = newCategory;
             this.inventoryPlusForSpells.saveCategories();
         }
     }

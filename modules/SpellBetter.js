@@ -12,7 +12,8 @@
 27-Dec-2020     Attach the toggle to the caret, not to the whole line   
 30-Dec-2020     0.5.1w: Add Delete Custom Category control         
                 Don't overwrite spellbook; just add categories    
-2-Jan-2021      0.5.1ab: Add Move Category up/down controls                
+2-Jan-2021      0.5.1ab: Add Move Category up/down controls      
+                0.5.1ac: Add Edit Category control; remove down or up at top of list          
 */
 
 import { log, getActivationType, getWeaponRelevantAbility, hasAttack, hasDamage } from './helpers.js';
@@ -244,7 +245,7 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
 
     //Pop-up custom category dialog
     html.find(".custom-category").click(async ev => {
-       this.inventoryPlusForSpells?.createNewCategoryDialog();
+       this.inventoryPlusForSpells?.newCategory();
     });
 
     //Attach listeners to toggle category collapsed/shown and move up/down - loop through
@@ -253,33 +254,40 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     const inventoryPlusForSpells = this.inventoryPlusForSpells;
     for (const header of categoryHeaders) {
         const el = $(header);
-        const category = el[0].dataset.category;
-        if (category) {
+        const categoryKey = el[0].dataset.category;
+        if (categoryKey) {
             //0.5.1s Attach the toggle to the caret, not to the whole line
             const toggle = el.find(".toggle-collapse");
             if (toggle.length) {
                 toggle.click(async ev => {
-                    inventoryPlusForSpells.allCategories[category].isCollapsed = !inventoryPlusForSpells.allCategories[category].isCollapsed;
-                    inventoryPlusForSpells.saveCategories(category);
+                    inventoryPlusForSpells.allCategories[categoryKey].isCollapsed = !inventoryPlusForSpells.allCategories[categoryKey].isCollapsed;
+                    inventoryPlusForSpells.saveCategories(categoryKey);
                 });
             }
             //0.5.1ab: Move category
             const shuffleUp = el.find(".shuffle-up");
             if (shuffleUp.length) {
                 shuffleUp.click(async ev => {
-                    this.inventoryPlusForSpells.changeCategoryOrder(category, true);
+                    this.inventoryPlusForSpells.changeCategoryOrder(categoryKey, true);
                 });
             }
             const shuffleDown = el.find(".shuffle-down");
             if (shuffleDown.length) {
                 shuffleDown.click(async ev => {
-                    this.inventoryPlusForSpells.changeCategoryOrder(category, false);
+                    this.inventoryPlusForSpells.changeCategoryOrder(categoryKey, false);
                 });
             }
+            //0.5.1ac: Edit Category
+            const editCategory = el.find(".customize-category");
+            if (editCategory.length) {
+                editCategory.click(async ev => this.inventoryPlusForSpells?.editCategory(categoryKey));
+            }
+
+
             //0.5.1u Delete category
             const delCategory = el.find(".remove-category");
             if (delCategory.length) {
-                delCategory.click(async ev => inventoryPlusForSpells.removeCategory(category));
+                delCategory.click(async ev => inventoryPlusForSpells.removeCategory(categoryKey));
             }
         }
     }

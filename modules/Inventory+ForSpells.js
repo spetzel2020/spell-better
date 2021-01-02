@@ -9,7 +9,9 @@
                 Delete standardCategories from the saved ones
 30-Dec-2020     0.5.1x: Store standard categories, but just for the isCollapsed status   
                 If (default) hide standard categories with no spells, remove them for display    
-1-Jan-20201     0.5.1aa: If the showOnlyInCategory flag is set, create a flagFilterSet and templateFlag to represent that                         
+1-Jan-2021     0.5.1aa: If the showOnlyInCategory flag is set, create a flagFilterSet and templateFlag to represent that   
+2-Jan-2021     0.5.1ac: Refactor newCategory and add editCategory
+                sortCategories(): Add isFirst, isLast (for not displaying move controls)
 */
 
 import {SpellBetterCharacterSheet} from "./SpellBetter.js";
@@ -46,11 +48,11 @@ export class InventoryPlusForSpells {
             }
         }
 
-        this.applySortKey();
+        this.sortCategories();
     }
 
     
-    applySortKey() {
+    sortCategories() {
         let sortedCategories = {};
 
         let keys = Object.keys(this.allCategories);
@@ -59,7 +61,11 @@ export class InventoryPlusForSpells {
         });
         for (let key of keys) {
             sortedCategories[key] = this.allCategories[key];
+            sortedCategories[key].isFirst = false;
+            sortedCategories[key].isLast = false;
         }
+        sortedCategories[keys[0]].isFirst = true;
+        sortedCategories[keys[keys.length-1]].isLast = true;
         this.allCategories = sortedCategories;
     }
 
@@ -145,8 +151,8 @@ export class InventoryPlusForSpells {
         return categories;
     }
 
-    getTemplateItemData(category) {
-        const customCategory = this.allCategories[category];
+    getTemplateItemData(categoryKey) {
+        const customCategory = this.allCategories[categoryKey];
         let templateItemData = {name: game.i18n.localize(customCategory?.label), type: "spell" }
         let templateItemDataData = customCategory.templateItemData ? duplicate(customCategory.templateItemData) : null;
         if (templateItemDataData) {
@@ -155,20 +161,25 @@ export class InventoryPlusForSpells {
         let templateFlags = customCategory?.templateFlags ?? {}
         //0.5.1aa If the showOnlyInCategory flag is set, then create a pseudo templateFlag
         if (customCategory.showOnlyInCategory) {
-            mergeObject(templateFlags, {"category": category});
+            mergeObject(templateFlags, {"category": categoryKey});
         }
         return {templateItemData, templateFlags};
     }
 
-    async createNewCategoryDialog() {
+    async newCategory() {
         new Category(null, {}, this).render(true);
     }
 
-    async removeCategory(category) {
+    async editCategory(categoryKey) {
+        new Category(categoryKey, {}, this).render(true);
+    }
+
+    async removeCategory(categoryKey) {
         let changedItems = [];
+        //Remove the categoryKey off the contained spells
         for (let spell of this.actor.data.items.filter(i => i.type === "spell")) {
             let type = InventoryPlusForSpells.getSpellCategory(spell);
-            if (type === category) {
+            if (type === categoryKey) {
                 const unsetFlag =  `-=flags.${MODULE_ID}`;
                 const changedItem = {_id: spell.id}
                 changedItem[unsetFlag] = null;
@@ -177,8 +188,8 @@ export class InventoryPlusForSpells {
         }
         await this.actor.updateEmbeddedEntity('OwnedItem', changedItems);
 
-        delete this.allCategories[category];
-        let deleteKey = `-=${category}`
+        delete this.allCategories[categoryKey];
+        let deleteKey = `-=${categoryKey}`
         this.actor.setFlag(MODULE_ID,  SPELL_BETTER.categories_key, { [deleteKey]:null });
     }
 
@@ -214,7 +225,7 @@ export class InventoryPlusForSpells {
 
             this.allCategories[movedCategory].order = newMovedSortFlag;
             this.allCategories[targetCategory].order = oldMovedSortFlag;
-            this.applySortKey();
+            this.sortCategories();
             this.saveCategories();
         }
     }
