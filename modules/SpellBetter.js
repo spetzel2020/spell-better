@@ -12,6 +12,7 @@
 27-Dec-2020     Attach the toggle to the caret, not to the whole line   
 30-Dec-2020     0.5.1w: Add Delete Custom Category control         
                 Don't overwrite spellbook; just add categories    
+2-Jan-2021      0.5.1ab: Add Move Category up/down controls                
 */
 
 import { log, getActivationType, getWeaponRelevantAbility, hasAttack, hasDamage } from './helpers.js';
@@ -246,7 +247,7 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
        this.inventoryPlusForSpells?.createNewCategoryDialog();
     });
 
-    //Attach listeners to toggle category collapsed/shown - loop through
+    //Attach listeners to toggle category collapsed/shown and move up/down - loop through
     const categoryHeaders = html.find(".sub-header");
 //FIXME: For a brand-new sheet, this may be null; use a singleton call to do this
     const inventoryPlusForSpells = this.inventoryPlusForSpells;
@@ -260,6 +261,19 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
                 toggle.click(async ev => {
                     inventoryPlusForSpells.allCategories[category].isCollapsed = !inventoryPlusForSpells.allCategories[category].isCollapsed;
                     inventoryPlusForSpells.saveCategories(category);
+                });
+            }
+            //0.5.1ab: Move category
+            const shuffleUp = el.find(".shuffle-up");
+            if (shuffleUp.length) {
+                shuffleUp.click(async ev => {
+                    this.inventoryPlusForSpells.changeCategoryOrder(category, true);
+                });
+            }
+            const shuffleDown = el.find(".shuffle-down");
+            if (shuffleDown.length) {
+                shuffleDown.click(async ev => {
+                    this.inventoryPlusForSpells.changeCategoryOrder(category, false);
                 });
             }
             //0.5.1u Delete category

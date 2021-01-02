@@ -100,6 +100,9 @@
             {{/if}}
             <h4>{{localize section.label}}</h4>
 
+            <a class="inv-plus-stuff shuffle-up" title={{localize "SPELL_BETTER.MoveCategoryUp"}}><i class="fas fa-chevron-up"></i></a>
+            <a class="inv-plus-stuff shuffle-down" title={{localize "SPELL_BETTER.MoveCategoryDown"}}><i class="fas fa-chevron-down"></i></a>
+
             {{#if section.usesSlots}}
                 <div class="spell-slots">
                 <input type="text" name="data.spells.{{section.prop}}.value" value="{{section.uses}}" placeholder="0" data-dtype="Number" />

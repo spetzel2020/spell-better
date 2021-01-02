@@ -189,31 +189,31 @@ export class InventoryPlusForSpells {
         return spellCategory;
     }
 
-    changeCategoryOrder(movedType, up) {
-        let targetType = movedType;
+    changeCategoryOrder(movedCategory, up) {
+        let targetCategory = movedCategory;
         let currentSortFlag = 0;
         if(!up) currentSortFlag = 999999999;
         for (let id in this.allCategories) {
             let currentCategory = this.allCategories[id];
             if (up) {
-                if (id !== movedType && currentCategory.order < this.allCategories[movedType].order && currentCategory.order > currentSortFlag) {
-                    targetType = id;
+                if (id !== movedCategory && currentCategory.order < this.allCategories[movedCategory].order && currentCategory.order > currentSortFlag) {
+                    targetCategory = id;
                     currentSortFlag = currentCategory.order;
                 }
             } else {
-                if (id !== movedType && currentCategory.order > this.allCategories[movedType].order && currentCategory.order < currentSortFlag) {
-                    targetType = id;
+                if (id !== movedCategory && currentCategory.order > this.allCategories[movedCategory].order && currentCategory.order < currentSortFlag) {
+                    targetCategory = id;
                     currentSortFlag = currentCategory.order;
                 }
             }
         } 
 
-        if (movedType !== targetType) {
-            let oldMovedSortFlag = this.allCategories[movedType].order;
+        if (movedCategory !== targetCategory) {
+            let oldMovedSortFlag = this.allCategories[movedCategory].order;
             let newMovedSortFlag = currentSortFlag;
 
-            this.allCategories[movedType].order = newMovedSortFlag;
-            this.allCategories[targetType].order = oldMovedSortFlag;
+            this.allCategories[movedCategory].order = newMovedSortFlag;
+            this.allCategories[targetCategory].order = oldMovedSortFlag;
             this.applySortKey();
             this.saveCategories();
         }
