@@ -1,6 +1,7 @@
 /*
 29-Dec-2020     0.5.1t: Only save the customCategories and merge with the standardCategories (then we don't have to upgrade standard categories)              
                 Split out from Inventory+ForSpells.js for creating and deleting categories
+1-Jan-2021      0.5.1aa: getData(): includeInStandard -> showOnlyInCategory                
 */
 
 import {SpellBetterCharacterSheet} from "./SpellBetter.js";
@@ -30,7 +31,7 @@ export class Category extends FormApplication {
             key: this.key,
             category : this.category,
             labelFilterSets : SPELL_BETTER.labelFilterSets ,
-            includeInStandard: this.category?.includeInStandard ?? true
+            showOnlyInCategory: this.category?.showOnlyInCategory ?? false
         }
         return templateData;
     }

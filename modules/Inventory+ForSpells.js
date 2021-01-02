@@ -8,7 +8,8 @@
 29-Dec-2020     0.5.1t: Only save the customCategories and merge with the standardCategories (then we don't have to upgrade standard categories)              
                 Delete standardCategories from the saved ones
 30-Dec-2020     0.5.1x: Store standard categories, but just for the isCollapsed status   
-                If (default) hide standard categories with no spells, remove them for display             
+                If (default) hide standard categories with no spells, remove them for display    
+1-Jan-20201     0.5.1aa: If the showOnlyInCategory flag is set, create a flagFilterSet and templateFlag to represent that                         
 */
 
 import {SpellBetterCharacterSheet} from "./SpellBetter.js";
@@ -106,8 +107,14 @@ export class InventoryPlusForSpells {
         //TODO: Would probably be more efficient to make the outer loop the spells and the inner loop the categories, since most spells will be in one category        
         for (const [category, value] of Object.entries(categories) ) {
             categories[category].spells = [];
+            //0.5.1aa: If the showOnlyInCategory flag is set, create a flagFilterSet to represent that
+            let augmentedFilterSets = duplicate(value.filterSets);
+            if (value.showOnlyInCategory) {
+                const categoryFilterSet = {filterSet: "category", filters: [category]}
+                augmentedFilterSets.push(categoryFilterSet);
+            }
             for (const section of spellbook) {
-                const filteredSpells = InventoryPlusForSpells.filterSpells(section.spells, value.filterSets);
+                const filteredSpells = InventoryPlusForSpells.filterSpells(section.spells, augmentedFilterSets);
                 categories[category].spells.push(...filteredSpells);
 
                 //Copy the standard level-based stats over
@@ -141,11 +148,15 @@ export class InventoryPlusForSpells {
     getTemplateItemData(category) {
         const customCategory = this.allCategories[category];
         let templateItemData = {name: game.i18n.localize(customCategory?.label), type: "spell" }
-        let templateItemDataData = duplicate(customCategory?.templateItemData);
+        let templateItemDataData = customCategory.templateItemData ? duplicate(customCategory.templateItemData) : null;
         if (templateItemDataData) {
             mergeObject(templateItemData, {data: templateItemDataData});
         }
-        const templateFlags = customCategory?.templateFlags;
+        let templateFlags = customCategory?.templateFlags ?? {}
+        //0.5.1aa If the showOnlyInCategory flag is set, then create a pseudo templateFlag
+        if (customCategory.showOnlyInCategory) {
+            mergeObject(templateFlags, {"category": category});
+        }
         return {templateItemData, templateFlags};
     }
 

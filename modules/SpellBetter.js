@@ -154,7 +154,7 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
         return this._onDropItemCreate(itemData);
     }
 
-    /** @override */
+    /** @override */       
     _getHeaderButtons() {
         let buttons = super._getHeaderButtons();
         let printButton = buttons.findIndex(button => button.label === game.i18n.localize("Close"));
@@ -184,7 +184,7 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
                 parent.removeChild(parent.firstChild);
             }
         }
-}
+    }
 
     async printContent(bodyCopy) {
         const printableContent = bodyCopy.outerHTML;
