@@ -1,5 +1,5 @@
 # BUGS
-- Need Move Up/Down for custom categories
+
 - Need Edit for custom catgeories
 >>> - Default should be that OTHER filters (even without a custom category) do not show one with a Custom Category
     - just like we have for the standard categories
@@ -25,6 +25,7 @@ FIXED Clicking on  any part of a category header toggles collapsed/shown , even 
 FIXED Spell slots should move to the top, or need to be not hard-coded by category
     - spell slots are copied to standard categories
 FIXED - New Category dialog does't use the category checkbox yet (need to reword)
+FIXED - Need Move Up/Down for custom categories
 # COMPLETED FEATURES
 0.5.1r:  Need to store version in the flags so that we know whether they need to be upgraded in place    
 - Dialog to create a new category with filters and templates
