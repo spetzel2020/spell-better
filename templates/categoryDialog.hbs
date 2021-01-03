@@ -1,8 +1,8 @@
 <form autocomplete="off" onsubmit="event.preventDefault();">
-    <input type="String" name="categoryKey" data-dtype="String" value={{categoryKey}} hidden/>
+    <input type="hidden" name="categoryKey" data-dtype="String" value={{categoryKey}}/>
     <div class="form-group">
         <label for="label">{{localize "SPELL_BETTER.NewCategory.NAME"}}</label>
-        <input type="String" name="label" data-dtype="String"/>
+        <input type="String" name="label" value="{{label}}" data-dtype="String"/>
     </div>
     <div class="form-group">
         <label for="filter">{{localize "SPELL_BETTER.NewCategory.Filter.LABEL"}}</label>
@@ -11,9 +11,7 @@
                 <option value="">None</option>
                 {{#each labelFilterSets}}
                 <optgroup label="{{@key}}">
-                    {{#each this}}
-                        <option value="{{this.filter}}">{{localize this.name}}</option>
-                    {{/each}}
+                    {{selectOptions this localize=true}}
                 </optgroup>
                 {{/each}}
             </select>

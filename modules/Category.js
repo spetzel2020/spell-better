@@ -2,7 +2,8 @@
 29-Dec-2020     0.5.1t: Only save the customCategories and merge with the standardCategories (then we don't have to upgrade standard categories)              
                 Split out from Inventory+ForSpells.js for creating and deleting categories
 1-Jan-2021      0.5.1aa: getData(): includeInStandard -> showOnlyInCategory      
-2-Jan-2021      0.5.1ac: Handle editCategory          
+2-Jan-2021      0.5.1ac: Handle editCategory       
+                0.5.1ad: Create choices structure to make mapping suitable for selectOptions Handlebars
 */
 
 import {SpellBetterCharacterSheet} from "./SpellBetter.js";
@@ -14,6 +15,17 @@ export class Category extends FormApplication {
         super(categoryData, options);
         this.categoryKey = categoryKey;
         this.inventoryPlusForSpells = inventoryPlusForSpells;
+
+        //0.5.1ad: Convert filter choices to mapping suitable for selectOPtions Handlebars helper
+        this.choices = {};
+        for (const [filterSetKey, filters] of Object.entries(SPELL_BETTER.labelFilterSets)) {
+            this.choices[filterSetKey] = {};
+            for (const filter of filters) {
+                const choice = filter.choice ?? filter.filter;
+                this.choices[filterSetKey][choice] = filter.name;
+            }
+        }
+
     }
 
     static get defaultOptions() {
@@ -31,7 +43,7 @@ export class Category extends FormApplication {
             categoryKey : this.categoryKey,
             isCustom: this.object?.isCustom,
             label: this.object?.label,
-            labelFilterSets : SPELL_BETTER.labelFilterSets ,
+            labelFilterSets : this.choices ,
             showOnlyInCategory: this.object?.showOnlyInCategory ?? false
         }
         return templateData;
