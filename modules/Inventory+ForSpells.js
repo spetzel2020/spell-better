@@ -12,7 +12,8 @@
 1-Jan-2021     0.5.1aa: If the showOnlyInCategory flag is set, create a flagFilterSet and templateFlag to represent that   
 2-Jan-2021     0.5.1ac: Refactor newCategory and add editCategory
                 sortCategories(): Add isFirst, isLast (for not displaying move controls)
-3-Jan-2021      0.5.2a: Switch categorizeSpells() and filterSPells() to property-oriented labelFilterSets                
+3-Jan-2021      0.5.2a: Switch categorizeSpells() and filterSPells() to property-oriented labelFilterSets  
+                0.5.2c: Use foundry.js#randomID() to replace built-in getCategoryId which was producing single character id's
 */
 
 import {SpellBetterCharacterSheet} from "./SpellBetter.js";
@@ -111,7 +112,7 @@ export class InventoryPlusForSpells {
         for (const [category, value] of Object.entries(categories) ) {
             categories[category].spells = [];
             //0.5.1aa: If the showOnlyInCategory flag is set, create a flagFilterSet to represent that
-            const labelFilterSets = duplicate(value.labelFilterSets);
+            const labelFilterSets = value.labelFilterSets ? duplicate(value.labelFilterSets) : {};
             let flagFilterSets = value.flagFilterSets ? duplicate(value.flagFilterSets) : {};
             if (value.showOnlyInCategory) {
                 flagFilterSets["category"] = [category];
@@ -261,9 +262,9 @@ export class InventoryPlusForSpells {
         let id = '';
         let iterations = 100;
         do {
-            id = Math.random().toString(36).substring(7);
+            id = randomID(7);
             iterations--;
-        } while (this.allCategories[id] !== undefined && iterations > 0 && id.length>=5)
+        } while (this.allCategories[id] !== undefined && iterations > 0)
 
         return id;
     }

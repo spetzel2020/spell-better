@@ -8,7 +8,6 @@
 3-Jan-2021      0.5.2a: Switch to SPELL_BETTER.labelFilterSets format more consistent with selectOPtions
 */
 
-import {SpellBetterCharacterSheet} from "./SpellBetter.js";
 import { MODULE_ID, SPELL_BETTER } from './constants.js';
 
 export class Category extends FormApplication {
@@ -44,8 +43,10 @@ export class Category extends FormApplication {
 
         let selectedOptions = [];
         if (this.object) {
-            for (const filters of Object.values(this.object?.filterSets)) {
-                selectedOptions = selectedOptions.concat(filters);
+            for (const [filterSetKey, filters] of Object.entries(this.object?.labelFilterSets)) {
+                const sbEntries = Object.entries(SPELL_BETTER.labelFilterSets[filterSetKey]);
+                const labels = sbEntries.filter(entry => filters.includes(entry[1].label)).map(entry => entry[0]);
+                selectedOptions = selectedOptions.concat(labels);
             }
         }
 
@@ -76,7 +77,7 @@ export class Category extends FormApplication {
 
         let newCategory = {
             label: formData.label,
-            filterSets: {},
+            labelFilterSets: {},
             type: "spell",
             isCustom: true,
             canCreate: false,   //Not the place to create new spells
@@ -93,8 +94,8 @@ export class Category extends FormApplication {
                 if (input === "filter") {
                     const {filterSetKey,label} = Category.findFilterSet(value);
                     if (filterSetKey) {
-                        if (!newCategory.filterSets[filterSetKey]) newCategory.filterSets[filterSetKey] = [];
-                        newCategory.filterSets[filterSetKey].push(label);
+                        if (!newCategory.labelFilterSets[filterSetKey]) newCategory.labelFilterSets[filterSetKey] = [];
+                        newCategory.labelFilterSets[filterSetKey].push(label);
                     }
                 } else {
                     newCategory[input] = value;
