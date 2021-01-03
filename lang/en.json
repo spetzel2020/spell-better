@@ -49,7 +49,7 @@
     "SPELL_BETTER.NewCategory.Filter.LABEL" : "Filter",  
     "SPELL_BETTER.NewCategory.Filter.HINT" : "Pick a standard filter (optional)",
   "SPELL_BETTER.NewCategory.ShowOnlyInCategory.NAME" : "Show only in category",
-  "SPELL_BETTER.NewCategory.ShowOnlyInCategory.HINT" : "If checked, a spell moved to this category will only show here and in the <strong>All</strong> category.<br>If unchecked (the default), spells in this category are also shown in other standard views.",      
+  "SPELL_BETTER.NewCategory.ShowOnlyInCategory.HINT" : "If unchecked (the default), spells in this category are also shown in other standard views. If checked, a spell moved to this category will only show here and in the <strong>All</strong> category.",      
   "SPELL_BETTER.EditSpell" : "Edit Spell",
   "SPELL_BETTER.DeleteSpell" : "Delete Spell"
 }

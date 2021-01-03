@@ -70,12 +70,12 @@ export class InventoryPlusForSpells {
         this.allCategories = sortedCategories;
     }
 
-    static filterSpells(spells, appliedFilterSets) {
+    static filterSpells(spells, labelFilterSets, flagFilterSets={}) {
         return spells.filter(spell => {
             let includeSpell = true;
             //0.5.1i: Instead of working off SPELL_BETTER.filters, just use the available filterSets
             //LabelFilters are against standard things (levels, schools...) that are in the labels
-            for (const [filterSetKey, filters] of Object.entries(appliedFilterSets)) {
+            for (const [filterSetKey, filters] of Object.entries(labelFilterSets)) {
                 if (!Object.keys(SPELL_BETTER.labelFilterSets).includes(filterSetKey)) continue;
                 const isInSpellLabels = filters?.filter(f =>  Object.values(spell.labels).includes(f));
                 includeSpell = includeSpell && (isInSpellLabels?.length > 0);
@@ -86,8 +86,7 @@ export class InventoryPlusForSpells {
             if (includeSpell) {
                 //If we have flagFilterSets, but no flags, might be an exclude (indicated by empty filter list)
                 //so we have to process
-                for (const [filterSetKey, filters] of Object.entries(appliedFilterSets)) {
-                    if (Object.keys(SPELL_BETTER.labelFilterSets).includes(filterSetKey)) continue;
+                for (const [filterSetKey, filters] of Object.entries(flagFilterSets)) {
                     //0.5.1: Just a single flag per flag label for now
                     const flagForFilterSet =  (spell.flags && spell.flags[MODULE_ID]) ? spell.flags[MODULE_ID][filterSetKey] : null;
                     //Possibilities:
@@ -112,12 +111,16 @@ export class InventoryPlusForSpells {
         for (const [category, value] of Object.entries(categories) ) {
             categories[category].spells = [];
             //0.5.1aa: If the showOnlyInCategory flag is set, create a flagFilterSet to represent that
-            let augmentedFilterSets = duplicate(value.filterSets);
+            const labelFilterSets = duplicate(value.labelFilterSets);
+            let flagFilterSets = value.flagFilterSets ? duplicate(value.flagFilterSets) : {};
             if (value.showOnlyInCategory) {
-                augmentedFilterSets["category"] = [category];
+                flagFilterSets["category"] = [category];
+            }
+            if (!value.showAnyCategory) {
+                flagFilterSets["category"] = [];
             }
             for (const section of spellbook) {
-                const filteredSpells = InventoryPlusForSpells.filterSpells(section.spells, augmentedFilterSets);
+                const filteredSpells = InventoryPlusForSpells.filterSpells(section.spells, labelFilterSets, flagFilterSets);
                 categories[category].spells.push(...filteredSpells);
 
                 //Copy the standard level-based stats over

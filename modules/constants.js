@@ -4,6 +4,7 @@
 2-Jan-2021  0.5.1ad: Add choice to labelFilterSets to make using selectOptions easier - they are converted into property names
                         (if not present then use filter value instead)
 3-Jan-2021  0.5.2a: Switch labelFilterSets and standard categories to a format more consistent with foundry.js#selectOptions
+            0.5.2b: SPELL_BETTER.standardCategories: Separate labelFilters and categoryFilters; add showOnlyNoCategory
 */
 
 
@@ -65,111 +66,101 @@ export const SPELL_BETTER = {
         //.prop is needed for now for display     
         spell0: { label: "DND5E.SpellLevel0",
                 templateItemData: {level: 0},
-                filterSets: {
-                    levels: ["Cantrip"],
-                    category: []
-                },
+                labelFilterSets: {
+                    levels: ["Cantrip"]
+                }, showAnyCategory: false,
                 /* Will be overridden by actual spell level stats */
                 prop: "spell0", canCreate: true, canPrepare: false, slots: "&infin;", uses: "&infin;", usesSlots: false,
                 order: 0, type: "spell",  isCollapsed: true },
         spell1: { label: "SPELL_BETTER.SpellLevel1", 
                 templateItemData: {level: 1},
-                filterSets: {
-                    levels: ["1st Level"],
-                    category: []
-                },        
+                labelFilterSets: {
+                    levels: ["1st Level"]
+                },         showAnyCategory: false,
                 prop: "spell1", canCreate: true, canPrepare: true, slots: "4", uses: "4", usesSlots: true,    
                 order: 10, type: "spell",  isCollapsed: false },     
         spell2: { label: "SPELL_BETTER.SpellLevel2", 
                 templateItemData: {level: 2},
-                filterSets: {
-                    levels: ["2nd Level"],
-                    category: []
-                },            
+                labelFilterSets: {
+                    levels: ["2nd Level"]
+                },          showAnyCategory: false,   
                 prop: "spell2", canCreate: true, canPrepare: true, slots: "3", uses: "3", usesSlots: true,       
                 order: 20, type: "spell",  isCollapsed: false },
         spell3: { label: "SPELL_BETTER.SpellLevel3", 
                 templateItemData: {level: 3},
-                filterSets: {
+                labelFilterSets: {
                     levels: ["3rd Level"],
-                    category: []
-                },  
+                },   showAnyCategory: false,
                 prop: "spell3", canCreate: true, canPrepare: true, slots: "3", uses: "3", usesSlots: true,                
                 order: 30,  type: "spell",  isCollapsed: false },
         spell4: { label: "SPELL_BETTER.SpellLevel4", 
                 templateItemData: {level: 4},
-                filterSets: {
-                    levels: ["4th Level"],
-                    category: []
-                },      
+                labelFilterSets: {
+                    levels: ["4th Level"]
+                },       showAnyCategory: false,
                 prop: "spell4", canCreate: true, canPrepare: true, slots: "3", uses: "3", usesSlots: true,                
                 order: 40,  type: "spell",  isCollapsed: false },          
         spell5: { label: "SPELL_BETTER.SpellLevel5", 
                 templateItemData: {level: 5},
-                filterSets: {
-                    levels: ["5th Level"],
-                    category: []
-                },                
+                labelFilterSets: {
+                    levels: ["5th Level"]
+                },       showAnyCategory: false,
                 prop: "spell5", canCreate: true, canPrepare: true, slots: "3", uses: "3", usesSlots: true,                
                 order: 50,  type: "spell",  isCollapsed: false },
         spell6: { label: "SPELL_BETTER.SpellLevel6",
                 templateItemData: {level: 6},
-                filterSets: {
-                    levels: ["6th Level"],
-                    category: []
-                },                
+                labelFilterSets: {
+                    levels: ["6th Level"]
+                },        showAnyCategory: false,         
                 prop: "spell6", canCreate: true, canPrepare: true, slots: "1", uses: "1", usesSlots: true,                
                 order: 60,  type: "spell",  isCollapsed: false },
         spell7: { label: "SPELL_BETTER.SpellLevel7", 
                 templateItemData: {level: 7},
-                filterSets: {
-                    levels: ["7th Level"],
-                    category: []
-                },             
+                labelFilterSets: {
+                    levels: ["7th Level"]
+                },        showAnyCategory: false,      
                 prop: "spell7", canCreate: true, canPrepare: true, slots: "1", uses: "1", usesSlots: true,                
                 order: 70,  type: "spell",  isCollapsed: false },
         spell8: { label: "SPELL_BETTER.SpellLevel8", 
                 templateItemData: {level: 8},
-                filterSets: {
-                    levels: ["8th Level"],
-                    category: []
-                },                
+                labelFilterSets: {
+                    levels: ["8th Level"]
+                },        showAnyCategory: false,         
                 prop: "spell8", canCreate: true, canPrepare: true, slots: "1", uses: "1", usesSlots: true,                
                 order: 80,  type: "spell",  isCollapsed: false },
         spell9: { label: "SPELL_BETTER.SpellLevel9", 
                 templateItemData: {level: 9},
-                filterSets: {
-                    levels: ["9th Level"],
-                    category: []
-                },               
+                labelFilterSets: {
+                    levels: ["9th Level"]
+                },        showAnyCategory: false,        
                 prop: "spell9", canCreate: true, canPrepare: true, slots: "1", uses: "1", usesSlots: true,                
                 order: 90,  type: "spell",  isCollapsed: false },
         rituals: { label: "SPELL_BETTER.Rituals", isCustom: true,
                 templateItemData: {level: 1},
-                filterSets: {
+                labelFilterSets: {
                     otherRitual: ["ritual"]
-                },    
+                },         showAnyCategory: false,
                 canCreate: false, canPrepare : false,           
                 order: 900, usesSlots: false, type: "spell",  isCollapsed: true },                 
         wanted4: { label: "Wanted (4th)", isCustom: true,
                 templateItemData: {level: 9}, templateFlags: {"category": "wanted"},
-                filterSets: {
-                    levels: ["4th Level"],
+                labelFilterSets: {
+                    levels: ["4th Level"]
+                },
+                flagFilterSets : {
                     category: ["wanted"]
-                },    
+                },
                 canCreate: false, canPrepare : false,           
                 order: 999, usesSlots: false, type: "spell",  isCollapsed: true },                                                                                                                                                       
         wanted: { label: "SPELL_BETTER.Category.Wanted", isCustom: true, 
                 templateItemData: {level: 9}, templateFlags: {"category": "wanted"},
-                filterSets: {
-                    category: ["wanted"]
-                },     
+                labelFilterSets: {}, showOnlyInCategory: true, 
                 canCreate: true, canPrepare : false,           
                 order: 1000, usesSlots: false, type: "spell",  isCollapsed: true },
         //ALL category to make sure setting a flag doesn't hide a spell completely                
         all:    {label: "SPELL_BETTER.Category.All", 
                 templateItemData: {level: 9},
-                filterSets: {},      
+                labelFilterSets: {},  showAnyCategory: true,   
                 canCreate: true, canPrepare : true,                     
                 order: 9000, usesSlots: false, type: "spell",  isCollapsed: true }
     }

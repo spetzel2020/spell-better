@@ -44,8 +44,8 @@ export class Category extends FormApplication {
 
         let selectedOptions = [];
         if (this.object) {
-            for (const filterSet of this.object?.filterSets) {
-                selectedOptions = selectedOptions.concat(filterSet.filters);
+            for (const filters of Object.values(this.object?.filterSets)) {
+                selectedOptions = selectedOptions.concat(filters);
             }
         }
 
