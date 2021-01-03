@@ -4,6 +4,8 @@
 1-Jan-2021      0.5.1aa: getData(): includeInStandard -> showOnlyInCategory      
 2-Jan-2021      0.5.1ac: Handle editCategory       
                 0.5.1ad: Create choices structure to make mapping suitable for selectOptions Handlebars
+                0.5.1ae findFilterSet(): Quick hack to check the constructed choice field too    
+3-Jan-2021      0.5.2a: Switch to SPELL_BETTER.labelFilterSets format more consistent with selectOPtions
 */
 
 import {SpellBetterCharacterSheet} from "./SpellBetter.js";
@@ -18,11 +20,10 @@ export class Category extends FormApplication {
 
         //0.5.1ad: Convert filter choices to mapping suitable for selectOPtions Handlebars helper
         this.choices = {};
-        for (const [filterSetKey, filters] of Object.entries(SPELL_BETTER.labelFilterSets)) {
+        for (const [filterSetKey, labelFilters] of Object.entries(SPELL_BETTER.labelFilterSets)) {
             this.choices[filterSetKey] = {};
-            for (const filter of filters) {
-                const choice = filter.choice ?? filter.filter;
-                this.choices[filterSetKey][choice] = filter.name;
+            for (const [labelFilterKey, labelFilter] of Object.entries(labelFilters)) {
+                this.choices[filterSetKey][labelFilterKey] = labelFilter.name;
             }
         }
 
@@ -39,11 +40,21 @@ export class Category extends FormApplication {
     }
 
     async getData(options) {
+        //0.5.1ae: Populate selectedArray to pre-select for existing categories
+
+        let selectedOptions = [];
+        if (this.object) {
+            for (const filterSet of this.object?.filterSets) {
+                selectedOptions = selectedOptions.concat(filterSet.filters);
+            }
+        }
+
         const templateData = {
             categoryKey : this.categoryKey,
             isCustom: this.object?.isCustom,
             label: this.object?.label,
             labelFilterSets : this.choices ,
+            selectedOptions: selectedOptions,
             showOnlyInCategory: this.object?.showOnlyInCategory ?? false
         }
         return templateData;
@@ -65,7 +76,7 @@ export class Category extends FormApplication {
 
         let newCategory = {
             label: formData.label,
-            filterSets: [],
+            filterSets: {},
             type: "spell",
             isCustom: true,
             canCreate: false,   //Not the place to create new spells
@@ -80,12 +91,10 @@ export class Category extends FormApplication {
             } else {
                 //If this is (one or more) filters, then recover the filterSets (because we use those to correctly apply)
                 if (input === "filter") {
-                    const filterSet = Category.findFilterSet(value);
-                    if (filterSet) {
-                        newCategory.filterSets.push({
-                            filterSet : filterSet,
-                            filters: [value]
-                        });
+                    const {filterSetKey,label} = Category.findFilterSet(value);
+                    if (filterSetKey) {
+                        if (!newCategory.filterSets[filterSetKey]) newCategory.filterSets[filterSetKey] = [];
+                        newCategory.filterSets[filterSetKey].push(label);
                     }
                 } else {
                     newCategory[input] = value;
@@ -100,8 +109,11 @@ export class Category extends FormApplication {
 
     static findFilterSet(filter) {
         if (!filter) return null;
-        for (const [filterSet, filters] of Object.entries(SPELL_BETTER.labelFilterSets)) {
-            if (filters.map(f => f.filter).includes(filter)) return filterSet;
+        for (const [filterSetKey, filters] of Object.entries(SPELL_BETTER.labelFilterSets)) {
+            //0.5.1ae Quick hack to check the constructed choice field too
+            for (const [fKey, f] of Object.entries(filters)) {
+                if (fKey === filter) return {filterSetKey, label: f.label};
+            }
         }
         return null;
     }

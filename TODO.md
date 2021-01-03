@@ -1,12 +1,10 @@
 # BUGS
-
 - Need Edit for custom catgeories
 >>> - Default should be that OTHER filters (even without a custom category) do not show one with a Custom Category
     - just like we have for the standard categories
 
 # FEATURES
-- Filter selection should be multi-select
-- Make Rituals a standard Category
+- Filter selection should be multi-select: use tag display like on main page?
 - Need examples of how to use:
     - Wanted Spells: Create a custom category called Wanted, and check the Show Only in Category checkbox
     - Spells in a found Spellbook: Same. When you transfer it to your Spellbook, simply create a new version
@@ -29,3 +27,5 @@ FIXED - Need Move Up/Down for custom categories
 # COMPLETED FEATURES
 0.5.1r:  Need to store version in the flags so that we know whether they need to be upgraded in place    
 - Dialog to create a new category with filters and templates
+0.5.2: Refactor the filter/view design to look like the constants without the extraneous filterSet: and filters:
+0.5.2: - Make Rituals a standard Category

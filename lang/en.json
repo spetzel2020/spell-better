@@ -32,6 +32,8 @@
   "SPELL_BETTER.SpellLevel7" : "7th",
   "SPELL_BETTER.SpellLevel8" : "8th",
   "SPELL_BETTER.SpellLevel9" : "9th" ,
+  "SPELL_BETTER.Wanted" : "Wanted",
+  "SPELL_BETTER.Rituals" : "Rituals",
   "SPELL_BETTER.Experience" : "Experience"     ,
   "SPELL_BETTER.Print" : "Print"   ,
   "SPELL_BETTER.Category.Spellbook" : "Spellbook",

@@ -11,7 +11,7 @@
                 <option value="">None</option>
                 {{#each labelFilterSets}}
                 <optgroup label="{{@key}}">
-                    {{selectOptions this localize=true}}
+                    {{selectOptions this selected=../selectedOptions localize=true}}
                 </optgroup>
                 {{/each}}
             </select>

@@ -12,6 +12,7 @@
 1-Jan-2021     0.5.1aa: If the showOnlyInCategory flag is set, create a flagFilterSet and templateFlag to represent that   
 2-Jan-2021     0.5.1ac: Refactor newCategory and add editCategory
                 sortCategories(): Add isFirst, isLast (for not displaying move controls)
+3-Jan-2021      0.5.2a: Switch categorizeSpells() and filterSPells() to property-oriented labelFilterSets                
 */
 
 import {SpellBetterCharacterSheet} from "./SpellBetter.js";
@@ -43,7 +44,7 @@ export class InventoryPlusForSpells {
         this.allCategories = mergeObject(customCategories, SPELL_BETTER.standardCategories);
         //And now apply info about collapsed/shown (the only reason we saved)
         for (const category of Object.keys(this.allCategories)) {
-            if (savedCategories[category]) {
+            if (savedCategories && savedCategories[category]) {
                 this.allCategories[category].isCollapsed = savedCategories[category].isCollapsed;
             }
         }
@@ -70,34 +71,31 @@ export class InventoryPlusForSpells {
     }
 
     static filterSpells(spells, appliedFilterSets) {
-        const labelFilterSets = Object.keys(SPELL_BETTER.labelFilterSets);
         return spells.filter(spell => {
-            const {labels, flags} = spell;  //include spell for debugging
             let includeSpell = true;
             //0.5.1i: Instead of working off SPELL_BETTER.filters, just use the available filterSets
-            //LabelFilters are gainst standard things (levels, schools...) that are in the labels
-
-            const appliedLabelFilterSets = appliedFilterSets.filter(afs => labelFilterSets.includes(afs.filterSet));
-            for (const afs of appliedLabelFilterSets) {
-                const matches = afs.filters?.filter(f =>  Object.values(labels).includes(f));
-                includeSpell = includeSpell && (matches.length > 0);
+            //LabelFilters are against standard things (levels, schools...) that are in the labels
+            for (const [filterSetKey, filters] of Object.entries(appliedFilterSets)) {
+                if (!Object.keys(SPELL_BETTER.labelFilterSets).includes(filterSetKey)) continue;
+                const isInSpellLabels = filters?.filter(f =>  Object.values(spell.labels).includes(f));
+                includeSpell = includeSpell && (isInSpellLabels?.length > 0);
                 if (!includeSpell) break;
             }//end for labelFilters
 
             //Apply the flagFilters only if the spell is already included
             if (includeSpell) {
-                const appliedFlagFilterSets =  appliedFilterSets.filter(afs => !labelFilterSets.includes(afs.filterSet));
                 //If we have flagFilterSets, but no flags, might be an exclude (indicated by empty filter list)
                 //so we have to process
-                for (const afs of appliedFlagFilterSets) {
+                for (const [filterSetKey, filters] of Object.entries(appliedFilterSets)) {
+                    if (Object.keys(SPELL_BETTER.labelFilterSets).includes(filterSetKey)) continue;
                     //0.5.1: Just a single flag per flag label for now
-                    const flagForFilterSet =  (flags && flags[MODULE_ID]) ? flags[MODULE_ID][afs.filterSet] : null;
+                    const flagForFilterSet =  (spell.flags && spell.flags[MODULE_ID]) ? spell.flags[MODULE_ID][filterSetKey] : null;
                     //Possibilities:
                     //flagForFilterSet is null AND afs.filters is [] => INCLUDE
                     //flagForFilterSet exists and is included in afs.filters => INCLUDE
                     //flagForFilterSet exists and afs.filters doesn't include the flag => EXCLUDE
-                    const includedInFilterSet = (!flagForFilterSet && !afs.filters?.length) 
-                                                || (flagForFilterSet && afs.filters?.includes(flagForFilterSet))
+                    const includedInFilterSet = (!flagForFilterSet && !filters?.length) 
+                                                || (flagForFilterSet && filters?.includes(flagForFilterSet))
                     includeSpell = includeSpell && includedInFilterSet;
                     if (!includeSpell) break;
                 }//end for flagFilters
@@ -116,8 +114,7 @@ export class InventoryPlusForSpells {
             //0.5.1aa: If the showOnlyInCategory flag is set, create a flagFilterSet to represent that
             let augmentedFilterSets = duplicate(value.filterSets);
             if (value.showOnlyInCategory) {
-                const categoryFilterSet = {filterSet: "category", filters: [category]}
-                augmentedFilterSets.push(categoryFilterSet);
+                augmentedFilterSets["category"] = [category];
             }
             for (const section of spellbook) {
                 const filteredSpells = InventoryPlusForSpells.filterSpells(section.spells, augmentedFilterSets);
