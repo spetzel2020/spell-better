@@ -100,10 +100,6 @@
             {{/if}}
             <h4>{{localize section.label}}</h4>
 
-            {{#unless isFirst}}<a class="inv-plus-stuff shuffle-up" title={{localize "SPELL_BETTER.MoveCategoryUp"}}><i class="fas fa-chevron-up"></i></a>{{/unless}}
-            {{#unless isLast}}<a class="inv-plus-stuff shuffle-down" title={{localize "SPELL_BETTER.MoveCategoryDown"}}><i class="fas fa-chevron-down"></i></a>{{/unless}}
-            {{#if isCustom}}<a class="inv-plus-stuff customize-category"><i class="fas fa-edit"></i></a>{{/if}}
-
             {{#if section.usesSlots}}
                 <div class="spell-slots">
                 <input type="text" name="data.spells.{{section.prop}}.value" value="{{section.uses}}" placeholder="0" data-dtype="Number" />
@@ -122,6 +118,11 @@
             {{/if}}
 
             <hr />
+
+            {{#unless isFirst}}<a class="inv-plus-stuff shuffle-up" title={{localize "SPELL_BETTER.MoveCategoryUp"}}><i class="fas fa-chevron-up"></i></a>{{/unless}}
+            {{#unless isLast}}<a class="inv-plus-stuff shuffle-down" title={{localize "SPELL_BETTER.MoveCategoryDown"}}><i class="fas fa-chevron-down"></i></a>{{/unless}}
+            {{#if isCustom}}<a class="inv-plus-stuff customize-category"><i class="fas fa-edit"></i></a>{{/if}}
+
 
             <div class="item-controls">
                 {{#if section.canCreate}}
