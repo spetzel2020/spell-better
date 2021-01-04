@@ -38,13 +38,13 @@
 {{#unless filtersIsCollapsed}}    
 <div class="inventory-filters spellbook-filters flexcol">    
     <ul class="filter-list flexrow" data-filter="spellbook">
-        <li class="filter-set "><h4>{{localize "SPELL_BETTER.CastingTime"}}:</h4></li>
+        <li class="filter-set ">{{localize "SPELL_BETTER.CastingTime"}}:</li>
         {{#each filters.choices.castingTimes as |fct|}}
             <li class="filter-item tag" data-filter="{{fct.label}}">{{localize fct.name}}</li>
         {{/each}} 
     </ul>
     <ul class="filter-list flexrow" data-filter="spellbook">
-        <li class="filter-set "><h4>{{localize "SPELL_BETTER.OtherAnd"}}:</h4></li>
+        <li class="filter-set">{{localize "SPELL_BETTER.OtherAnd"}}:</li>
         <li class="filter-item tag" data-filter="concentration">{{localize "DND5E.Concentration"}}</li>
         <li class="filter-item tag" data-filter="ritual">{{localize "DND5E.Ritual"}}</li>
         <li class="filter-item tag" data-filter="prepared">{{localize "DND5E.Prepared"}}
@@ -56,13 +56,13 @@
         </li>
     </ul>
     <ul class="filter-list flexrow" data-filter="spellbook">
-        <li class="filter-set "><h4>{{localize "SPELL_BETTER.DurationOr"}}:</h4></li>
+        <li class="filter-set">{{localize "SPELL_BETTER.DurationOr"}}:</li>
         {{#each filters.choices.durations as |fd|}}
             <li class="filter-item tag" data-filter="{{fd.label}}">{{localize fd.name}}</li>
         {{/each}}          
     </ul>
         <ul class="filter-list flexrow" data-filter="spellbook">    
-        <li class="filter-set "><h4>{{localize "SPELL_BETTER.LevelOr"}}:</h4></li>
+        <li class="filter-set">{{localize "SPELL_BETTER.LevelOr"}}:</li>
         {{#each filters.choices.levels as |fl|}}
             <li class="filter-item tag" data-filter="{{fl.label}}">
                 {{localize fl.name}} {{#if @index}}{{#with (lookup @root.spellbook @index)}} {{uses}}/{{slots}} {{/with}}{{/if}}
@@ -70,7 +70,7 @@
         {{/each}}       
     </ul>
     <ul class="filter-list flexrow" data-filter="spellbook">    
-        <li class="filter-set "><h4>{{localize "SPELL_BETTER.SchoolOr"}}:</h4></li>
+        <li class="filter-set ">{{localize "SPELL_BETTER.SchoolOr"}}:</li>
         {{#each filters.choices.schools as |fs|}}
             <li class="filter-item tag" data-filter="{{fs.label}}">{{localize fs.name}}</li>
         {{/each}}        

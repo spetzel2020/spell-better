@@ -516,13 +516,34 @@
   margin-right: 5px;
 }
 
-.dnd5e.sheet.actor.character.spell-better-sheet .filter-list {
+.dnd5e.sheet.actor.character.spell-better-sheet .spellbook-filters .filter-list {
     max-width: 100%;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    line-height: normal;
+    margin-bottom: 2px;
+}
+.dnd5e.sheet.actor.character.spell-better-sheet .spellbook-filters .filter-list > :not(:last-child) {
+  margin-right: 5px;
 }
 
-.dnd5e.sheet.actor.character.spell-better-sheet.character.spell-better-sheet .filter-list .custom-category{
-    flex-grow: 2;
+.dnd5e.sheet.actor.character.spell-better-sheet .filter-item {
+  border-bottom: 1px groove var(--groove-gray);
+  display: flex;
+  align-content: center;
 }
+.dnd5e.sheet.actor.character.spell-better-sheet .filter-set {
+  margin-left: 4px;
+  flex: 0 1 auto;
+}
+
+.dnd5e.sheet.actor.character.spell-better-sheet  .custom-category{
+    flex-grow: 2;
+    margin-left: 4px;
+}
+
+
 
 .dnd5e.sheet.actor.character.spell-better-sheet .items-list .item-controls .remove-category {
     flex: 0 0 100%;
@@ -917,26 +938,6 @@
 }
 
 
-.dnd5e.sheet.actor.character.spell-better-sheet .filter-list {
-  line-height: normal;
-}
-.dnd5e.sheet.actor.character.spell-better-sheet .filter-list > :not(:last-child) {
-  margin-right: 5px;
-}
-.dnd5e.sheet.actor.character.spell-better-sheet .filter-item {
-  border-bottom: 1px groove var(--groove-gray);
-  display: flex;
-  align-content: center;
-}
-.dnd5e.sheet.actor.character.spell-better-sheet .filter-set {
-  display: flex;
-  align-content: center;
-  place-content: center;
-  place-items: center;
-  line-height: normal;
-  margin: 0;
-  flex: 0 1 auto;
-}
 .dnd5e.sheet.actor.character.spell-better-sheet .tab > :not(:last-child) {
   margin-bottom: 5px;
 }
