@@ -3,6 +3,10 @@
 
 
 # FEATURES
+- New Category Dialog:
+    - Choose either Filter or Spellbook, with appropriate explanations
+    - A Filter you just Preset some filter combinations, or drag specific Spells in as a different View on your Known Spells
+    - A Spellbook is a separate list of spells, possibly duplicating your Known spells (like Wanted or The Brown Spellbook)
 - Filter selection should be multi-select: use tag display like on main page?
 - Need examples of how to use:
     - Wanted Spells: Create a custom category called Wanted, and check the Show Only in Category checkbox

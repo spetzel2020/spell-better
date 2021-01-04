@@ -13,6 +13,7 @@
    "SPELL_BETTER.HideCategoryWithNoSpells.NAME": "Hide categories with no spells",
   "SPELL_BETTER.HideCategoryWithNoSpells.HINT": "Hide standard categories with no spells; custom categories are always shown.",
 
+    "SPELL_BETTER.SpellFilters" : "Spell Filters",
   "SPELL_BETTER.CastingTime" : "Usage (Or)",
   "SPELL_BETTER.OtherAnd" : "Other (And)",
   "SPELL_BETTER.LevelOr" : "Level (Or)",

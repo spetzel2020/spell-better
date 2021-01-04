@@ -495,6 +495,15 @@
 }
 
 
+.dnd5e.sheet.actor.character.spell-better-sheet .toggle-line {
+    flex:0;
+    opacity:0.5;
+}
+.dnd5e.sheet.actor.character.spell-better-sheet .toggle-line .toggle-filters {
+    flex:0;
+    font-size: 18px;
+    margin-left:4px;
+}
 
 
 .dnd5e.sheet.actor.character.spell-better-sheet .items-list .item-name {

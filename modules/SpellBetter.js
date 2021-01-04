@@ -357,9 +357,10 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
         let appliedFilterSets = [];
         const taggedFilters = Array.from(sheetData.filters.spellbook);
         for (const [filterSet, filters] of Object.entries(sheetData.filters.choices)) {
-            const appliedFilters = filters.map(f => f.filter).filter(f => taggedFilters.includes(f));
+            const filterLabelsArray = Object.values(filters).map(v => v.label);
+            const appliedFilters = filterLabelsArray.filter(fl => taggedFilters.includes(fl));
             if (appliedFilters.length) {
-                appliedFilterSets.push({filterSet, filters: appliedFilters});
+                appliedFilterSets[filterSet] = appliedFilters;
             }
         }
         sheetData?.spellbook.forEach((sbi, index) => {

@@ -114,12 +114,13 @@ export class InventoryPlusForSpells {
             //0.5.1aa: If the showOnlyInCategory flag is set, create a flagFilterSet to represent that
             const labelFilterSets = value.labelFilterSets ? duplicate(value.labelFilterSets) : {};
             let flagFilterSets = value.flagFilterSets ? duplicate(value.flagFilterSets) : {};
-            if (value.showOnlyInCategory) {
-                flagFilterSets["category"] = [category];
-            }
             if (!value.showAnyCategory) {
                 flagFilterSets["category"] = [];
             }
+            if (value.showOnlyInCategory) {
+                flagFilterSets["category"] = [category];
+            }
+
             for (const section of spellbook) {
                 const filteredSpells = InventoryPlusForSpells.filterSpells(section.spells, labelFilterSets, flagFilterSets);
                 categories[category].spells.push(...filteredSpells);

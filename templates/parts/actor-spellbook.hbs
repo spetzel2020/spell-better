@@ -30,11 +30,20 @@
 
 </div>
 
-<div class="inventory-filters spellbook-filters flexcol">
+<span class="toggle-line">
+    {{#if filtersIsCollapsed}}
+        <a class="toggle-filters"><i class="fas fa-caret-right"></i></a>
+    {{else}}
+        <a class="toggle-filters"><i class="fas fa-caret-down"></i></a>
+    {{/if}}
+    {{localize "SPELL_BETTER.SpellFilters"}}
+</span>    
+    
+<div class="inventory-filters spellbook-filters flexcol">    
     <ul class="filter-list flexrow" data-filter="spellbook">
         <li class="filter-set "><h4>{{localize "SPELL_BETTER.CastingTime"}}:</h4></li>
         {{#each filters.choices.castingTimes as |fct|}}
-            <li class="filter-item tag" data-filter="{{fct.filter}}">{{localize fct.name}}</li>
+            <li class="filter-item tag" data-filter="{{fct.label}}">{{localize fct.name}}</li>
         {{/each}} 
     </ul>
     <ul class="filter-list flexrow" data-filter="spellbook">
@@ -52,13 +61,13 @@
     <ul class="filter-list flexrow" data-filter="spellbook">
         <li class="filter-set "><h4>{{localize "SPELL_BETTER.DurationOr"}}:</h4></li>
         {{#each filters.choices.durations as |fd|}}
-            <li class="filter-item tag" data-filter="{{fd.filter}}">{{localize fd.name}}</li>
+            <li class="filter-item tag" data-filter="{{fd.label}}">{{localize fd.name}}</li>
         {{/each}}          
     </ul>
         <ul class="filter-list flexrow" data-filter="spellbook">    
         <li class="filter-set "><h4>{{localize "SPELL_BETTER.LevelOr"}}:</h4></li>
         {{#each filters.choices.levels as |fl|}}
-            <li class="filter-item tag" data-filter="{{fl.filter}}">
+            <li class="filter-item tag" data-filter="{{fl.label}}">
                 {{localize fl.name}} {{#if @index}}{{#with (lookup @root.spellbook @index)}} {{uses}}/{{slots}} {{/with}}{{/if}}
             </li>
         {{/each}}       
@@ -66,7 +75,7 @@
     <ul class="filter-list flexrow" data-filter="spellbook">    
         <li class="filter-set "><h4>{{localize "SPELL_BETTER.SchoolOr"}}:</h4></li>
         {{#each filters.choices.schools as |fs|}}
-            <li class="filter-item tag" data-filter="{{fs.filter}}">{{localize fs.name}}</li>
+            <li class="filter-item tag" data-filter="{{fs.label}}">{{localize fs.name}}</li>
         {{/each}}        
     </ul>
 </div>
