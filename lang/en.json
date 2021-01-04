@@ -13,6 +13,9 @@
    "SPELL_BETTER.HideCategoryWithNoSpells.NAME": "Hide categories with no spells",
   "SPELL_BETTER.HideCategoryWithNoSpells.HINT": "Hide standard categories with no spells; custom categories are always shown.",
 
+   "SPELL_BETTER.SubstituteForSpellbook.NAME" : "Substitute for Spellbook",
+    "SPELL_BETTER.SubstituteForSpellbook.HINT" : "On supported Character Sheets, when you click on the Spellbook tab, Spell Better will open instead of the sheet Spellbook",
+
     "SPELL_BETTER.SpellFilters" : "Spell Filters (applied to all visible spells)",
   "SPELL_BETTER.CastingTime" : "Usage (Or)",
   "SPELL_BETTER.OtherAnd" : "Other (And)",

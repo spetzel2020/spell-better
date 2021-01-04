@@ -14,7 +14,8 @@
                 Don't overwrite spellbook; just add categories    
 2-Jan-2021      0.5.1ab: Add Move Category up/down controls      
                 0.5.1ac: Add Edit Category control; remove down or up at top of list    
-3-Jan-2021      0.5.2e: Add toggle Filter visibility                      
+3-Jan-2021      0.5.2e: Add toggle Filter visibility    
+4-Jan-2021      0.5.3: Standalone version that will pop up from Spellbook tab                                  
 */
 
 import { log, getActivationType, getWeaponRelevantAbility, hasAttack, hasDamage } from './helpers.js';
@@ -53,26 +54,41 @@ Handlebars.registerHelper('ogl5e-sheet-isEmpty',(input) => {
 });
 
 export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
-  get template() {
-    //@ts-ignore
-    if (!game.user.isGM && this.actor.limited && !game.settings.get(MODULE_ID, SPELL_BETTER.expandedLimited)) {
-      return `modules/${MODULE_ID}/templates/character-sheet-ltd.hbs`;
+    constructor(actor, options) {
+        super(actor, options)
+
+        game.users.apps.push(this);
     }
 
-    return `modules/${MODULE_ID}/templates/character-sheet.hbs`;
-  }
 
-  static get defaultOptions() {
-    const options = super.defaultOptions;
 
-    mergeObject(options, {
-      classes: ['dnd5e', 'sheet', 'actor', 'character', 'spell-better-sheet'],
-      height: 680,
-      width: 830,
-    });
+    get template() {
+        //@ts-ignore
+        if (!game.user.isGM && this.actor.limited && !game.settings.get(MODULE_ID, SPELL_BETTER.expandedLimited)) {
+        return `modules/${MODULE_ID}/templates/character-sheet-ltd.hbs`;
+        }
 
-    return options;
-  }
+        return `modules/${MODULE_ID}/templates/character-sheet.hbs`;
+    }
+
+    /** @override */
+    //Create a different id for this sheet - otherwise it replaces the underlying sheet
+    get id() {
+        const id = `${MODULE_ID}-${this.actor.id}`;
+        return id;
+    }
+
+    static get defaultOptions() {
+        const options = super.defaultOptions;
+
+        mergeObject(options, {
+        classes: ['dnd5e', 'sheet', 'actor', 'character', 'spell-better-sheet'],
+        height: 680,
+        width: 830,
+        });
+
+        return options;
+    }
 
   /**
    * Handle rolling an Ability check, either a test or a saving throw
@@ -593,6 +609,24 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
 
     return sheetData;
   }
+
+    static addSBSheet(app, html, data) {
+        if (!app.actor) return;
+        //Create or reference the parallel SpellBetter sheet
+        if (!app.actor.sbSheet) {
+            app.actor.sbSheet = new SpellBetterCharacterSheet(app.actor);
+        }
+
+        //Substitute the SpellBetter spellbook for the standard tab
+        const spellbookTab = html.find('.tabs[data-group="primary"]').find('a[data-tab="spellbook"]');
+        if (spellbookTab.length > 0) {
+            spellbookTab.click(ev => {
+                app.actor.sbSheet.render(true);
+            });
+        }
+    }
+
+
 }
 
 /* ------------------------------------ */
@@ -628,3 +662,11 @@ Actors.registerSheet('dnd5e', SpellBetterCharacterSheet, {
 /* ------------------------------------ */
 // Hooks.once('ready', function () {
 // });
+
+//Replace the normal Spellbook tab with opening this sheet as a pop-up
+Hooks.on(`renderActorSheet`, (app, html, data) => {
+    //Don't do recursive creation of SBSheet
+    if (!(app instanceof SpellBetterCharacterSheet) && game.settings.get(MODULE_ID, SPELL_BETTER.substituteForSpellbook)) {
+        SpellBetterCharacterSheet.addSBSheet(app, html, data);
+    }
+});

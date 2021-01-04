@@ -5,6 +5,7 @@
                         (if not present then use filter value instead)
 3-Jan-2021  0.5.2a: Switch labelFilterSets and standard categories to a format more consistent with foundry.js#selectOptions
             0.5.2b: SPELL_BETTER.standardCategories: Separate labelFilters and categoryFilters; add showOnlyNoCategory
+4-Jan-2021  0.5.3: Substitute for the regular spellbook tab on supported sheets            
 */
 
 
@@ -17,6 +18,7 @@ export const SPELL_BETTER = {
     showIconsOnInventoryList : 'show-icons-on-inventory-list',
     expandedLimited : 'expanded-limited',
     hideCategoryWithNoSpells : "hide-category-with-no-spells",
+    substituteForSpellbook: "substitute-for-spellbook",
     labelFilterSets :  {
         castingTimes : {
             _1_Action : {label: "1 Action", name: "DND5E.Action"},         

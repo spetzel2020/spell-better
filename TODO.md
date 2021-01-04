@@ -1,5 +1,6 @@
 # BUGS
-
+- Either remove Print in border, or get it working (does a PopOut and then a print)
+    - will need to check that PopOut! is enabled
 
 
 # FEATURES

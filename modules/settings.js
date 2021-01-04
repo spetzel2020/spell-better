@@ -1,3 +1,9 @@
+/*
+4-Jan-2021  0.5.3: Add substituteForSpellbook (whether we should pop up Spell Better instead of a regular spellbook tab)
+
+
+*/
+
 import { SPELL_BETTER, MODULE_ID } from './constants.js';
 
 export const registerSettings = function () {
@@ -37,5 +43,13 @@ export const registerSettings = function () {
         scope: 'world',
         config: true,
         hint:  "SPELL_BETTER.HideCategoryWithNoSpells.HINT",
+     });
+    game.settings.register(MODULE_ID, SPELL_BETTER.substituteForSpellbook, {
+        name:  "SPELL_BETTER.SubstituteForSpellbook.NAME",
+        default: true,
+        type: Boolean,
+        scope: 'world',
+        config: true,
+        hint:  "SPELL_BETTER.SubstituteForSpellbook.HINT",
      });
 };
