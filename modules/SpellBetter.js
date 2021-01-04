@@ -13,7 +13,8 @@
 30-Dec-2020     0.5.1w: Add Delete Custom Category control         
                 Don't overwrite spellbook; just add categories    
 2-Jan-2021      0.5.1ab: Add Move Category up/down controls      
-                0.5.1ac: Add Edit Category control; remove down or up at top of list          
+                0.5.1ac: Add Edit Category control; remove down or up at top of list    
+3-Jan-2021      0.5.2e: Add toggle Filter visibility                      
 */
 
 import { log, getActivationType, getWeaponRelevantAbility, hasAttack, hasDamage } from './helpers.js';
@@ -247,6 +248,28 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     html.find(".custom-category").click(async ev => {
        this.inventoryPlusForSpells?.newCategory();
     });
+
+    //Toggle control on filters list (always starts shown)
+    const toggleFilters = html.find(".toggle-line");
+    if ((this.actor.filtersIsCollapsed === null) || (this.actor.filtersIsCollapsed === undefined)) {this.actor.filtersIsCollapsed = false;}
+    const thisActor = this.actor;
+    if (toggleFilters.length) {
+        const caretDown = toggleFilters.find("#caret-down");
+        const caretRight = toggleFilters.find("#caret-right");
+        toggleFilters.click(async ev => {
+            thisActor.filtersIsCollapsed = !thisActor.filtersIsCollapsed;
+            const inventoryFilters = html.find(".inventory-filters");
+            if (thisActor.filtersIsCollapsed) {
+                inventoryFilters.hide();
+                caretDown.hide();
+                caretRight.show();
+            } else {
+                inventoryFilters.show();
+                caretDown.show();
+                caretRight.hide();            
+            }
+        });
+    }
 
     //Attach listeners to toggle category collapsed/shown and move up/down - loop through
     const categoryHeaders = html.find(".sub-header");
@@ -566,6 +589,7 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
         this.inventoryPlusForSpells = new InventoryPlusForSpells(this.actor);
     }
     sheetData.categories = this.inventoryPlusForSpells.categorizeSpells(sheetData?.spellbook);
+    sheetData.filtersIsCollapsed = this.actor.filtersIsCollapsed ?? false;
 
     return sheetData;
   }

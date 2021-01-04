@@ -31,14 +31,11 @@
 </div>
 
 <span class="toggle-line">
-    {{#if filtersIsCollapsed}}
-        <a class="toggle-filters"><i class="fas fa-caret-right"></i></a>
-    {{else}}
-        <a class="toggle-filters"><i class="fas fa-caret-down"></i></a>
-    {{/if}}
+    <a id="caret-right" class="toggle-filters" {{#unless filtersIsCollapsed}}style="display: none;"{{/unless}}><i class="fas fa-caret-right"></i></a>
+    <a id="caret-down" class="toggle-filters" {{#if filtersIsCollapsed}}style="display: none;"{{/if}}><i class="fas fa-caret-down"></i></a>
     {{localize "SPELL_BETTER.SpellFilters"}}
 </span>    
-    
+{{#unless filtersIsCollapsed}}    
 <div class="inventory-filters spellbook-filters flexcol">    
     <ul class="filter-list flexrow" data-filter="spellbook">
         <li class="filter-set "><h4>{{localize "SPELL_BETTER.CastingTime"}}:</h4></li>
@@ -79,6 +76,7 @@
         {{/each}}        
     </ul>
 </div>
+{{/unless}}
 
 <a class="custom-category"><i class="fas fa-plus"></i>{{localize "SPELL_BETTER.AddCustomCategory.LINK"}}</a>
 
