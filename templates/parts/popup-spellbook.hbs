@@ -1,0 +1,216 @@
+<div class="spellcasting-ability">
+    <div>
+        {{#if isNPC}}
+            <label>{{localize "DND5E.Level"}}</label>
+            <input class="spellcasting-level" type="text" name="data.details.spellLevel" value="{{data.details.spellLevel}}" data-dtype="Number" placeholder="0" />
+        {{else}}
+            <label>{{localize "DND5E.SpellAbility"}}</label>
+        {{/if}}
+        <select name="data.attributes.spellcasting" data-type="String">
+            {{#select data.attributes.spellcasting}}
+            <option value="">{{localize "DND5E.None"}}</option>
+            {{#each data.abilities as |abl a|}}
+            <option value="{{a}}">{{abl.label}}</option>
+            {{/each}}
+            {{/select}}
+        </select>
+    </div>
+    <div>
+        <label>{{localize "DND5E.ItemTypeSpell"}} {{localize "DND5E.Attack"}}</label>
+        <span>
+            {{#with (lookup data.abilities data.attributes.spellcasting)}}
+            {{numberFormat (ogl5e-sheet-add mod ../data.attributes.prof) decimals=0 sign=true}}
+            {{/with}}
+        </span>
+    </div>
+    <div>
+        <label>{{localize "DND5E.SpellDC"}}</label>
+        <span>{{data.attributes.spelldc}}</span>
+    </div>
+
+</div>
+
+<span class="toggle-line">
+    <a id="caret-right" class="toggle-filters" {{#unless filtersIsCollapsed}}style="display: none;"{{/unless}}><i class="fas fa-caret-right"></i></a>
+    <a id="caret-down" class="toggle-filters" {{#if filtersIsCollapsed}}style="display: none;"{{/if}}><i class="fas fa-caret-down"></i></a>
+    {{localize "SPELL_BETTER.SpellFilters"}}
+</span>    
+{{#unless filtersIsCollapsed}}    
+<div class="inventory-filters spellbook-filters flexcol">    
+    <ul class="filter-list flexrow" data-filter="spellbook">
+        <li class="filter-set ">{{localize "SPELL_BETTER.CastingTime"}}:</li>
+        {{#each filters.choices.castingTimes as |fct|}}
+            <li class="filter-item tag" data-filter="{{fct.label}}">{{localize fct.name}}</li>
+        {{/each}} 
+    </ul>
+    <ul class="filter-list flexrow" data-filter="spellbook">
+        <li class="filter-set">{{localize "SPELL_BETTER.OtherAnd"}}:</li>
+        <li class="filter-item tag" data-filter="concentration">{{localize "DND5E.Concentration"}}</li>
+        <li class="filter-item tag" data-filter="ritual">{{localize "DND5E.Ritual"}}</li>
+        <li class="filter-item tag" data-filter="prepared">{{localize "DND5E.Prepared"}}
+            {{#if preparedSpells}}({{preparedSpells}}/
+                {{#with (lookup data.abilities data.attributes.spellcasting)}}
+                    {{numberFormat (ogl5e-sheet-add mod ../data.details.level) decimals=0}}
+                {{/with}})
+            {{/if}}
+        </li>
+    </ul>
+    <ul class="filter-list flexrow" data-filter="spellbook">
+        <li class="filter-set">{{localize "SPELL_BETTER.DurationOr"}}:</li>
+        {{#each filters.choices.durations as |fd|}}
+            <li class="filter-item tag" data-filter="{{fd.label}}">{{localize fd.name}}</li>
+        {{/each}}          
+    </ul>
+        <ul class="filter-list flexrow" data-filter="spellbook">    
+        <li class="filter-set">{{localize "SPELL_BETTER.LevelOr"}}:</li>
+        {{#each filters.choices.levels as |fl|}}
+            <li class="filter-item tag" data-filter="{{fl.label}}">
+                {{localize fl.name}} {{#if @index}}{{#with (lookup @root.spellbook @index)}} {{uses}}/{{slots}} {{/with}}{{/if}}
+            </li>
+        {{/each}}       
+    </ul>
+    <ul class="filter-list flexrow" data-filter="spellbook">    
+        <li class="filter-set ">{{localize "SPELL_BETTER.SchoolOr"}}:</li>
+        {{#each filters.choices.schools as |fs|}}
+            <li class="filter-item tag" data-filter="{{fs.label}}">{{localize fs.name}}</li>
+        {{/each}}        
+    </ul>
+</div>
+{{/unless}}
+
+<a class="custom-category"><i class="fas fa-plus"></i>{{localize "SPELL_BETTER.AddCustomCategory.LINK"}}</a>
+
+<ol class="inventory-list items-list">
+    <li class="flexrow items-header spellbook-header">
+        <div class="item-name flexrow">
+        <h3>{{localize "DND5E.Spellbook"}}</h3>
+        </div>
+
+        <div class="spell-comps">
+        {{localize "DND5E.SpellComponents"}}
+        </div>
+
+        <div class="spell-action">{{localize "DND5E.SpellUsage"}}</div>
+        <div class="spell-target">{{localize "DND5E.SpellTarget"}} / {{localize "DND5E.Range"}}</div>
+        <div class="spell-school">{{localize "DND5E.SpellSchool"}}</div>
+
+        <div class="item-controls">
+        </div>
+    </li>
+
+    {{#each categories as |section|}}
+        <li class="sub-header spellbook-header" data-category="{{@key}}">
+            {{#if section.isCollapsed}}
+                <a class="toggle-collapse"><i class="fas fa-caret-right"></i></a>
+            {{else}}
+                <a class="toggle-collapse"><i class="fas fa-caret-down"></i></a>
+            {{/if}}
+            <h4>{{localize section.label}}</h4>
+
+            {{#if section.usesSlots}}
+                <div class="spell-slots">
+                <input type="text" name="data.spells.{{section.prop}}.value" value="{{section.uses}}" placeholder="0" data-dtype="Number" />
+                <span class="sep"> / </span>
+                <span class="spell-max" data-level="{{section.prop}}" data-slots="{{section.slots}}">{{{section.slots}}}
+                {{#if ../editable}}
+                    <a class="slot-max-override" title="{{localize 'DND5E.SpellProgOverride'}}">
+                    <i class="fas fa-edit"></i>
+                    </a>
+                {{/if}}
+                </div>
+            {{ else }}
+                <span>{{{section.uses}}}</span>
+                <span class="sep"> / </span>
+                <span class="spell-max">{{{section.slots}}}</span>
+            {{/if}}
+
+            <hr />
+
+            {{#unless isFirst}}<a class="inv-plus-stuff shuffle-up" title={{localize "SPELL_BETTER.MoveCategoryUp"}}><i class="fas fa-chevron-up"></i></a>{{/unless}}
+            {{#unless isLast}}<a class="inv-plus-stuff shuffle-down" title={{localize "SPELL_BETTER.MoveCategoryDown"}}><i class="fas fa-chevron-down"></i></a>{{/unless}}
+            {{#if isCustom}}<a class="inv-plus-stuff customize-category"><i class="fas fa-edit"></i></a>{{/if}}
+
+
+            <div class="item-controls">
+                {{#if section.canCreate}}
+                    <a class="spell-control spell-create" title="{{localize 'DND5E.SpellCreate'}}" data-category="{{@key}}">
+                        <i class="fas fa-plus"></i> {{localize "DND5E.Add"}}
+                    </a>
+                {{/if}}
+                {{#if section.isCustom}}
+                    <a class="spell-control remove-category" title="{{localize "SPELL_BETTER.DeleteCustomCategory.LINK"}}" data-category="{{@key}}">
+                        <i class="fas fa-minus"></i> {{localize "SPELL_BETTER.Del"}}
+                    </a>
+                {{/if}}
+            </div>
+        </li>
+        {{#unless section.isCollapsed}}
+            <ol class="item-list"  data-category="{{@key}}">
+                {{#each section.spells as |item i|}}
+                    <li class="item flexrow" data-item-id="{{item._id}}">
+                    <div class="item-name flexrow rollable">
+                        <div class="item-image" style="background-image: url({{item.img}})"></div>
+                        <div class="item-shortcuts flexrow">
+                            {{#if item.hasAttack}} <span class="tag rollable spellAttack" title="Roll Attack"><i class="fas fa-bullseye"></i></span> {{/if}}
+                            {{#if item.hasDamage}} <span class="tag rollable spellDamage" title="Roll Damage"><i class="fas fa-tint"></i></span> {{/if}}
+                        </div>
+                        <h4>{{item.name}}</h4>
+                        {{#if item.data.uses.per }}
+                        <div class="item-detail spell-uses">Uses {{item.data.uses.value}} / {{item.data.uses.max}}</div>
+                        {{/if}}
+                    </div>
+
+                    <div class="spell-comps">
+                        {{#each labels.components}}
+                        <span class="spell-component {{this}}">{{this}}</span>
+                        {{/each}}
+                    </div>
+
+                    <div class="spell-action">{{labels.activation}}</div>
+
+                    <div class="spell-target" title="{{localize 'DND5E.Range'}}: {{labels.range}}">
+                        <span>{{labels.range}}</span>
+                        {{#if labels.target}}
+                        {{#unless (eq labels.target labels.range)}}
+                        <small>
+                        {{labels.target}}
+                        </small>
+                        {{/unless}}
+                        {{/if}}
+                    </div>
+
+                    <div class="spell-school">{{labels.school}}</div>
+
+
+                    {{#if ../../owner}}
+                        <div class="item-controls">
+                            {{#if section.canPrepare}}
+                            <a class="spell-control item-toggle {{item.toggleClass}}" title="{{item.toggleTitle}}"><i class="fas fa-sun"></i></a>
+                            {{/if}}
+                            <a class="spell-control item-edit" title="{{localize 'SPELL_BETTER.EditSpell'}}"><i class="fas fa-edit"></i></a>
+                            <a class="spell-control item-delete" title="{{localize 'SPELL_BETTER.DeleteSpell'}}"><i class="fas fa-trash"></i></a>
+                        </div>
+                    {{/if}}
+                    </li>
+                {{/each}}
+            </ol>
+        {{/unless}}
+        {{#if owner}}
+            {{#if filters.spellbook.size}}
+            <li class="item flexrow">
+                <p class="notes">{{localize "DND5E.FilterNoSpells"}}</p>
+            </li>
+            {{else}}
+            <li class="item flexrow spellbook-header spellbook-empty">
+                <div class="item-controls">
+                <a class="spell-control item-create" title="{{localize 'DND5E.SpellCreate'}}" data-type="spell"
+                    data-level="{{lvl}}"><i class="fas fa-plus"></i> {{localize "DND5E.SpellAdd"}}</a>
+                </div>
+            </li>
+            <li class="item flexrow">
+                <p class="notes">{{localize "DND5E.NoSpellLevels"}}</p>
+            </li>
+            {{/if}}
+        {{/if}}
+    {{/each}}
+</ol>

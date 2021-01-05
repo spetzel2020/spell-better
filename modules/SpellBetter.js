@@ -15,7 +15,9 @@
 2-Jan-2021      0.5.1ab: Add Move Category up/down controls      
                 0.5.1ac: Add Edit Category control; remove down or up at top of list    
 3-Jan-2021      0.5.2e: Add toggle Filter visibility    
-4-Jan-2021      0.5.3: Standalone version that will pop up from Spellbook tab                                  
+4-Jan-2021      0.5.3: Standalone version that will pop up from Spellbook tab      
+                0.5.3c: Remove header from popup spellbook
+
 */
 
 import { log, getActivationType, getWeaponRelevantAbility, hasAttack, hasDamage } from './helpers.js';
@@ -65,7 +67,7 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     get template() {
         //@ts-ignore
         if (!game.user.isGM && this.actor.limited && !game.settings.get(MODULE_ID, SPELL_BETTER.expandedLimited)) {
-        return `modules/${MODULE_ID}/templates/character-sheet-ltd.hbs`;
+            return `modules/${MODULE_ID}/templates/character-sheet-ltd.hbs`;
         }
 
         return `modules/${MODULE_ID}/templates/character-sheet.hbs`;
@@ -183,14 +185,20 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
             class: "entry-image",
             icon: "fas fa-print",
             onclick: ev => {
-                const bodyCopy = this.element[0].parentElement.cloneNode(true);//.find("article.spellbook");
+                this.createWindowedSheet(this.id);
+
+/*                
+                //Can't just grab the spellbook window, because all the styles are at the top
+                const documentCopy = document.cloneNode(true);
+                const bodyCopy = $(documentCopy).find("body")[0];//.find("article.spellbook");
                 if (!bodyCopy) return;
                 //Now remove all elements except this Actor sheet (but keep styles etc)
                 const uuid = this.element[0].id;
                 const actorCopy = $(bodyCopy).find("#"+uuid);
                 SpellBetterCharacterSheet.removeAllChildrenExcept(bodyCopy, uuid);
 
-                this.printContent(bodyCopy)
+                this.printContent(documentCopy);
+*/                
             }
         })
         return buttons;
@@ -205,8 +213,167 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
         }
     }
 
-    async printContent(bodyCopy) {
-        const printableContent = bodyCopy.outerHTML;
+    /*---------------
+    /* PINCHED from popout.js
+    /*----------------*/
+    windowFeatures(app) {
+        let windowFeatures = undefined;
+        if (game.settings.get("popout", "useWindows")) {
+            const padding = 30;
+            const innerWidth = app.element.innerWidth() + padding * 2;
+            const innerHeight = app.element.innerHeight() + padding * 2;
+            const position = app.element.position(); // JQuery position function.
+            const left = window.screenX + position.left - padding;
+            const top = window.screenY + position.top - padding;
+            windowFeatures = `toolbar=0, location=0, menubar=0, titlebar=0, scrollbars=1, innerWidth=${innerWidth}, innerHeight=${innerHeight}, left=${left}, top=${top}`;
+        }
+        return windowFeatures;
+    }
+
+    createWindow(features) {
+        const popout = window.open("about:blank", "_blank", features);
+        popout.location.hash = "popout";
+        popout._rootWindow = window;
+        //this.log("Window opened", popout);
+        return popout;
+    }
+
+    createDocument() {
+        // Create the new document.
+        // Currently using raw js apis, since I need to ensure
+        // jquery isn't doing something sneaky underneath.
+        // In particular it makes some assumptions about there
+        // being a single document.
+        // We do this before opening the window because technically writing
+        // to the new window is race condition with the page load.
+        // But since we are directing to a placeholder file, it doesn't matter other than for UX purposes.
+        const html = document.createElement("html");
+        const head = document.importNode(document.getElementsByTagName("head")[0], true);
+        const body = document.importNode(document.getElementsByTagName("body")[0], false);
+
+        for (const child of [...head.children]) {
+            if (child.nodeName === "SCRIPT" && child.src) {
+                const src = child.src.replace(window.location.origin, "");
+                if (!src.match(/tinymce|jquery|webfont|pdfjs/)) {
+                    child.remove();
+                }
+            }
+        }
+
+        html.appendChild(head);
+        html.appendChild(body);
+        return html;
+    }
+
+    createWindowedSheet(domID) {
+        const app = this;
+        const windowFeatures = this.windowFeatures(app);
+
+        // -------------------- Obtain application --------------------
+        const state = {
+            app: app,
+            node: app.element[0],
+            position: duplicate(app.position),
+            minimized: app._minimized,
+            display: app.element[0].style.display,
+            css: app.element[0].style.cssText,
+            children: [],
+        };
+
+/*Don't hide the original (because we're just printing)
+        // Hide the original node;
+        state.node.style.display = "none";
+*/
+        // --------------------------------------------------------
+
+        const popout = this.createWindow(windowFeatures);
+
+        if (!popout) {
+            this.log("Failed to open window", popout);
+            state.node.style.display = state.display;
+            state.node._minimized = false;
+            ui.notifications.warn(game.i18n.localize("POPOUT.failureWarning"));
+            return;
+        }
+
+        // This is fiddly and probably not that robust to other modules.
+        // But does provide behavior closer to the vanilla fvtt iterations.
+        state.header = state.node.querySelector(".window-header");
+        if (state.header) {
+            state.header.remove();
+        }
+
+        state.handle = state.node.querySelector(".window-resizable-handle");
+        if (state.handle) {
+            state.handle.remove();
+        }
+
+        // We have to clone the header element and then remove the children
+        // into it to ensure that the drag behavior is ignored.
+        // however we have to manually move the actual controls over,
+        // so that their event handlers are preserved.
+/*        
+        const shallowHeader = state.header.cloneNode(false);
+        shallowHeader.classList.remove("draggable");
+        for (const child of [...state.header.children]) {
+            if (child.id == domID) {
+                // Change Close button
+                $(child).html(`<i class="fas fa-sign-in-alt"></i>${game.i18n.localize("POPOUT.PopIn")}`).off('click').on('click', ev => {
+                    popout._popout_dont_close = true;
+                    popout.close();
+                })
+            }
+            shallowHeader.appendChild(child);
+        }
+        // re-parent the new shallow header to the app node.
+        state.node.insertBefore(shallowHeader, state.node.children[0]);
+*/
+        // -------------------- Write document --------------------
+
+        const serializer = new XMLSerializer();
+        const doctype = serializer.serializeToString(document.doctype);
+
+        const srcDoc = this.createDocument();
+        const targetDoc = popout.document;
+
+        targetDoc.open();
+        targetDoc.write(doctype);
+        targetDoc.write(srcDoc.outerHTML);
+        targetDoc.close();
+        targetDoc.title = app.title;
+
+              // We wait longer than just the DOMContentLoaded
+        // because of how the document is constructed manually.
+        popout.addEventListener("load", async (event) => {
+            const body = event.target.getElementsByTagName("body")[0];
+            const node = targetDoc.adoptNode(state.node);
+
+            body.style.overflow = "auto";
+            body.append(state.node);
+
+            state.node.style.cssText = `
+                display: flex;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                margin: 0 !important;
+                border-radius: 0 !important;
+                cursor: auto !important;
+            `; // Fullscreen
+            app.setPosition({ width: "100%", height: "100%", top: 0, left: 0 });
+            app._minimized = null;
+
+        });
+        
+        popout.print();
+
+  
+    }
+
+
+    async printContent(document) {
+        const printableContent = document.children[0].outerHTML;
         const printWindow = window.open("", "Print_Content", 'scrollbars=1,width=900,height=900,top=' + (screen.height - 700) / 2 + ',left=' + (screen.width - 700) / 2);
         if (!printWindow) return false;
         printWindow.document.write(printableContent);
