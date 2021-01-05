@@ -1,0 +1,18 @@
+{{!-- Sheet Header --}}
+<header class="sheet-header">
+  <h1>
+    <input name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'DND5E.Name' }}" />
+  </h1>
+
+</header>
+
+<div class="header-actions">
+  <div class="rest-buttons">
+    <a class="rest short-rest">{{ localize 'DND5E.RestS' }}<i class="fas fa-hourglass-half"></i></a>
+    <a class="rest long-rest">{{ localize 'DND5E.RestL' }}<i class="fas fa-hourglass-end"></i></a>
+  </div>
+  {{!-- NPC Sheet Navigation --}}
+  <nav class="sheet-navigation tabs" data-group="primary">
+    <a class="item" data-tab="spellbook"></a>
+  </nav>
+</div>

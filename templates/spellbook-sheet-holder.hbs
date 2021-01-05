@@ -1,0 +1,13 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+  {{> (spell-better-sheet-path "templates/parts/spellbook-sheet-header.hbs")}}
+
+  <main class="sheet-body">
+
+    {{!-- Spellbook Tab --}}
+    <article class="tab spellbook flexcol" data-group="primary" data-tab="spellbook">
+      {{> (spell-better-sheet-path "templates/parts/actor-spellbook.hbs")}}
+    </article>
+
+  </main>
+</form>

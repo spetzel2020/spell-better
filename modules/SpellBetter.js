@@ -17,6 +17,7 @@
 3-Jan-2021      0.5.2e: Add toggle Filter visibility    
 4-Jan-2021      0.5.3: Standalone version that will pop up from Spellbook tab      
                 0.5.3c: Remove header from popup spellbook
+                0.5.3d: Basic working pop-up spell sheet from other Character Sheets
 
 */
 
@@ -55,14 +56,8 @@ Handlebars.registerHelper('ogl5e-sheet-isEmpty',(input) => {
   return isObjectEmpty(input);
 });
 
+
 export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
-    constructor(actor, options) {
-        super(actor, options)
-
-        game.users.apps.push(this);
-    }
-
-
 
     get template() {
         //@ts-ignore
@@ -73,12 +68,6 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
         return `modules/${MODULE_ID}/templates/character-sheet.hbs`;
     }
 
-    /** @override */
-    //Create a different id for this sheet - otherwise it replaces the underlying sheet
-    get id() {
-        const id = `${MODULE_ID}-${this.actor.id}`;
-        return id;
-    }
 
     static get defaultOptions() {
         const options = super.defaultOptions;
@@ -185,32 +174,10 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
             class: "entry-image",
             icon: "fas fa-print",
             onclick: ev => {
-                this.createWindowedSheet(this.id);
-
-/*                
-                //Can't just grab the spellbook window, because all the styles are at the top
-                const documentCopy = document.cloneNode(true);
-                const bodyCopy = $(documentCopy).find("body")[0];//.find("article.spellbook");
-                if (!bodyCopy) return;
-                //Now remove all elements except this Actor sheet (but keep styles etc)
-                const uuid = this.element[0].id;
-                const actorCopy = $(bodyCopy).find("#"+uuid);
-                SpellBetterCharacterSheet.removeAllChildrenExcept(bodyCopy, uuid);
-
-                this.printContent(documentCopy);
-*/                
+                this.createWindowedSheet(this.id);              
             }
         })
         return buttons;
-    }
-
-    static removeAllChildrenExcept(parent, exceptId) {
-        //
-        while (parent.childNodes.length > 1) {
-            if (parent.firstChild.id !== exceptId) {
-                parent.removeChild(parent.firstChild);
-            }
-        }
     }
 
     /*---------------
@@ -364,7 +331,7 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
   
     }
 
-
+    //DEPRECATED
     async printContent(document) {
         const printableContent = document.children[0].outerHTML;
         const printWindow = window.open("", "Print_Content", 'scrollbars=1,width=900,height=900,top=' + (screen.height - 700) / 2 + ',left=' + (screen.width - 700) / 2);
@@ -770,11 +737,35 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     return sheetData;
   }
 
+
+
+}
+
+
+export class SpellBetterPlugin extends SpellBetterCharacterSheet {
+    constructor(actor, options) {
+        super(actor, options)
+
+        game.users.apps.push(this);
+    }
+
+    /** @override */
+    //Create a different id for this sheet - otherwise it replaces the underlying sheet
+    get id() {
+        const id = `${MODULE_ID}-${this.actor.id}`;
+        return id;
+    }
+    
+    get template() {
+        return `modules/${MODULE_ID}/templates/spellbook-sheet-holder.hbs`;
+    }
+
+
     static addSBSheet(app, html, data) {
         if (!app.actor) return;
         //Create or reference the parallel SpellBetter sheet
         if (!app.actor.sbSheet) {
-            app.actor.sbSheet = new SpellBetterCharacterSheet(app.actor);
+            app.actor.sbSheet = new SpellBetterPlugin(app.actor);
         }
 
         //Substitute the SpellBetter spellbook for the standard tab
@@ -785,9 +776,8 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
             });
         }
     }
-
-
 }
+
 
 /* ------------------------------------ */
 /* Initialize module					*/
@@ -827,6 +817,6 @@ Actors.registerSheet('dnd5e', SpellBetterCharacterSheet, {
 Hooks.on(`renderActorSheet`, (app, html, data) => {
     //Don't do recursive creation of SBSheet
     if (!(app instanceof SpellBetterCharacterSheet) && game.settings.get(MODULE_ID, SPELL_BETTER.substituteForSpellbook)) {
-        SpellBetterCharacterSheet.addSBSheet(app, html, data);
+        SpellBetterPlugin.addSBSheet(app, html, data);
     }
 });
