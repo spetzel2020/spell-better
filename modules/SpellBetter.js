@@ -280,32 +280,13 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
             children: [],
         };
 
-/*Don't hide the original (because we're just printing)
-        // Hide the original node;
-        state.node.style.display = "none";
-*/
         // --------------------------------------------------------
 
         const popout = this.createWindow(windowFeatures);
 
         if (!popout) {
-            this.log("Failed to open window", popout);
-            state.node.style.display = state.display;
-            state.node._minimized = false;
             ui.notifications.warn(game.i18n.localize("POPOUT.failureWarning"));
             return;
-        }
-
-        // This is fiddly and probably not that robust to other modules.
-        // But does provide behavior closer to the vanilla fvtt iterations.
-        state.header = state.node.querySelector(".window-header");
-        if (state.header) {
-            state.header.remove();
-        }
-
-        state.handle = state.node.querySelector(".window-resizable-handle");
-        if (state.handle) {
-            state.handle.remove();
         }
 
         // We have to clone the header element and then remove the children
@@ -342,16 +323,27 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
         targetDoc.close();
         targetDoc.title = app.title;
 
-              // We wait longer than just the DOMContentLoaded
+        // We wait longer than just the DOMContentLoaded
         // because of how the document is constructed manually.
+       
         popout.addEventListener("load", async (event) => {
             const body = event.target.getElementsByTagName("body")[0];
-            const node = targetDoc.adoptNode(state.node);
+            const importedNode = targetDoc.importNode(state.node, true);
+            //Remove the header controls and the draggable handle
+            const header = importedNode.querySelector(".window-header");
+            if (header) {
+                header.remove();
+            }
+
+            const handle = importedNode.querySelector(".window-resizable-handle");
+            if (handle) {
+                handle.remove();
+            }
 
             body.style.overflow = "auto";
-            body.append(state.node);
+            body.append(importedNode);
 
-            state.node.style.cssText = `
+            importedNode.style.cssText = `
                 display: flex;
                 top: 0;
                 left: 0;
@@ -361,13 +353,14 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
                 border-radius: 0 !important;
                 cursor: auto !important;
             `; // Fullscreen
+/*            
             app.setPosition({ width: "100%", height: "100%", top: 0, left: 0 });
             app._minimized = null;
-
+*/
         });
         
-        popout.print();
-
+        //Wait 3 seconds, then print; there is probably a hook to wait for full rendering
+        setTimeout(() => {popout.print()}, 3000);
   
     }
 
