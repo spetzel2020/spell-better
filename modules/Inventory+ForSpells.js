@@ -117,7 +117,7 @@ export class InventoryPlusForSpells {
             if (!value.showAnyCategory) {
                 flagFilterSets["category"] = [];
             }
-            if (value.showOnlyInCategory) {
+            if (value.viewOrSpellbook === "spellbook") {
                 flagFilterSets["category"] = [category];
             }
 
@@ -183,7 +183,8 @@ export class InventoryPlusForSpells {
             let type = InventoryPlusForSpells.getSpellCategory(spell);
             if (type === categoryKey) {
                 const unsetFlag =  `-=flags.${MODULE_ID}`;
-                const changedItem = {_id: spell.id}
+                //0.5.3e: Changed spell.id to spell._id, but not clear why this ever worked
+                const changedItem = {_id: spell._id}
                 changedItem[unsetFlag] = null;
                 changedItems.push(changedItem);
             }

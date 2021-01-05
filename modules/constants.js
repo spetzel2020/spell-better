@@ -5,7 +5,8 @@
                         (if not present then use filter value instead)
 3-Jan-2021  0.5.2a: Switch labelFilterSets and standard categories to a format more consistent with foundry.js#selectOptions
             0.5.2b: SPELL_BETTER.standardCategories: Separate labelFilters and categoryFilters; add showOnlyNoCategory
-4-Jan-2021  0.5.3: Substitute for the regular spellbook tab on supported sheets            
+4-Jan-2021  0.5.3: Substitute for the regular spellbook tab on supported sheets      
+5-Jan-2021  0.5.3e: Use viewOrSpellbook choice      
 */
 
 
@@ -156,7 +157,7 @@ export const SPELL_BETTER = {
                 order: 999, usesSlots: false, type: "spell",  isCollapsed: true },                                                                                                                                                       
         wanted: { label: "SPELL_BETTER.Category.Wanted", isCustom: true, 
                 templateItemData: {level: 9}, templateFlags: {"category": "wanted"},
-                labelFilterSets: {}, showOnlyInCategory: true, 
+                labelFilterSets: {}, viewOrSpellbook: "spellbook", 
                 canCreate: true, canPrepare : false,           
                 order: 1000, usesSlots: false, type: "spell",  isCollapsed: true },
         //ALL category to make sure setting a flag doesn't hide a spell completely                

@@ -78,12 +78,12 @@
 </div>
 {{/unless}}
 
-<a class="custom-category"><i class="fas fa-plus"></i>{{localize "SPELL_BETTER.AddCustomCategory.LINK"}}</a>
+<a class="custom-category"><i class="fas fa-plus"></i>{{localize "SPELL_BETTER.AddCustom.LINK"}}</a>
 
 <ol class="inventory-list items-list">
     <li class="flexrow items-header spellbook-header">
         <div class="item-name flexrow">
-        <h3>{{localize "DND5E.Spellbook"}}</h3>
+        <h3>{{localize "SPELL_BETTER.Category.Spellbooks"}}</h3>
         </div>
 
         <div class="spell-comps">
@@ -138,8 +138,8 @@
                     </a>
                 {{/if}}
                 {{#if section.isCustom}}
-                    <a class="spell-control remove-category" title="{{localize "SPELL_BETTER.DeleteCustomCategory.LINK"}}" data-category="{{@key}}">
-                        <i class="fas fa-minus"></i> {{localize "SPELL_BETTER.Del"}}
+                    <a class="spell-control remove-category" title="{{localize "SPELL_BETTER.DeleteCustom.LINK"}}" data-category="{{@key}}">
+                        <i class="fas fa-minus"></i> {{localize "SPELL_BETTER.DeleteCustom.TOOLTIP"}}
                     </a>
                 {{/if}}
             </div>

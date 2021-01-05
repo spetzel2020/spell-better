@@ -6,6 +6,7 @@
                 0.5.1ad: Create choices structure to make mapping suitable for selectOptions Handlebars
                 0.5.1ae findFilterSet(): Quick hack to check the constructed choice field too    
 3-Jan-2021      0.5.2a: Switch to SPELL_BETTER.labelFilterSets format more consistent with selectOPtions
+5-Jan-2021      0.5.3e: Change to a simple View or Spellbook selector
 */
 
 import { MODULE_ID, SPELL_BETTER } from './constants.js';
@@ -41,13 +42,17 @@ export class Category extends FormApplication {
     async getData(options) {
         //0.5.1ae: Populate selectedArray to pre-select for existing categories
 
-        let selectedOptions = [];
+        let selectedFilters = [];
         if (this.object) {
             for (const [filterSetKey, filters] of Object.entries(this.object?.labelFilterSets)) {
                 const sbEntries = Object.entries(SPELL_BETTER.labelFilterSets[filterSetKey]);
                 const labels = sbEntries.filter(entry => filters.includes(entry[1].label)).map(entry => entry[0]);
-                selectedOptions = selectedOptions.concat(labels);
+                selectedFilters = selectedFilters.concat(labels);
             }
+        }
+        const types = {
+            view:  "SPELL_BETTER.NewCategory.ViewOrSpellbook.VIEW",
+            spellbook: "SPELL_BETTER.NewCategory.ViewOrSpellbook.SPELLBOOK"
         }
 
         const templateData = {
@@ -55,8 +60,9 @@ export class Category extends FormApplication {
             isCustom: this.object?.isCustom,
             label: this.object?.label,
             labelFilterSets : this.choices ,
-            selectedOptions: selectedOptions,
-            showOnlyInCategory: this.object?.showOnlyInCategory ?? false
+            selectedFilters: selectedFilters,
+            types: types,
+            selectedType: this.object?.viewOrSpellbook
         }
         return templateData;
     }
@@ -83,6 +89,7 @@ export class Category extends FormApplication {
             canCreate: false,   //Not the place to create new spells
             canPrepare: true,
             isCollapsed: false,
+            viewOrSpellbook: "view",
             order: this.inventoryPlusForSpells?.getHighestSortFlag() + 1000
         }
 
@@ -101,6 +108,11 @@ export class Category extends FormApplication {
                     newCategory[input] = value;
                 }
             }
+        }
+
+        //0.5.3e If this is a spellbook, then set appropriate templateFlags
+        if (newCategory.viewOrSpellbook === "spellbook") {
+            newCategory.templateFlags = {category: categoryKey}
         }
         if (this.inventoryPlusForSpells) {
             this.inventoryPlusForSpells.allCategories[categoryKey] = newCategory;

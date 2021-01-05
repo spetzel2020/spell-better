@@ -4,6 +4,17 @@
         <label for="label">{{localize "SPELL_BETTER.NewCategory.NAME"}}</label>
         <input type="String" name="label" value="{{label}}" data-dtype="String"/>
     </div>
+
+    <div class="form-group">
+        <label for="viewOrSpellbook">{{localize "SPELL_BETTER.NewCategory.ViewOrSpellbook.NAME"}}</label>
+        <div class="form-fields">
+            <select name="viewOrSpellbook">
+                {{selectOptions types selected=selectedType localize=true}}
+            </select>
+        </div>    
+        <p class="notes">{{{localize "SPELL_BETTER.NewCategory.ViewOrSpellbook.HINT"}}}</p>
+    </div>
+    
     <div class="form-group">
         <label for="filter">{{localize "SPELL_BETTER.NewCategory.Filter.LABEL"}}</label>
         <div class="form-fields">
@@ -11,20 +22,12 @@
                 <option value="">None</option>
                 {{#each labelFilterSets}}
                 <optgroup label="{{@key}}">
-                    {{selectOptions this selected=../selectedOptions localize=true}}
+                    {{selectOptions this selected=../selectedFilters localize=true}}
                 </optgroup>
                 {{/each}}
             </select>
         </div>
         <p class="notes">{{localize  "SPELL_BETTER.NewCategory.Filter.HINT"}}</p>
-    </div>
-
-    <div class="form-group">
-        <label for="useCategory">{{localize "SPELL_BETTER.NewCategory.ShowOnlyInCategory.NAME"}}</label>
-        <div class="form-fields">
-            <input type="checkbox" name="showOnlyInCategory" {{checked showOnlyInCategory}} data-dtype="Boolean"/>
-        </div>    
-        <p class="notes">{{{localize "SPELL_BETTER.NewCategory.ShowOnlyInCategory.HINT"}}}</p>
     </div>
 
     <button type="submit" name="submit">
