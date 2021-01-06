@@ -18,7 +18,8 @@
 4-Jan-2021      0.5.3: Standalone version that will pop up from Spellbook tab      
                 0.5.3c: Remove header from popup spellbook
                 0.5.3d: Basic working pop-up spell sheet from other Character Sheets
-5-Jan-2021      0.5.3f: Add/remove categories when you drop a spell in a new place                
+5-Jan-2021      0.5.3f: Add/remove categories when you drop a spell in a new place      
+                0.5.3g: getData(): Moved initialization of inventoryPlusForSpells here because we need it for calling filterSpells          
 
 */
 
@@ -490,6 +491,10 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     //This is purely for Handlebars to generate the right output - the filter tags at the top of the page
     //FIXME: May want to add the list of custom tags
     sheetData.filters.choices = SPELL_BETTER.labelFilterSets;
+    //0.5.3g: Moved initialization of inventoryPlusForSpells here because we need it for calling filterSpells
+    if (!this.inventoryPlusForSpells) {
+        this.inventoryPlusForSpells = new InventoryPlusForSpells(this.actor);
+    }
 
     //To make filtering easier we decorate each spell with labels here for Activation type and Other (Concentration, Prepared, Ritual)
     try {
@@ -737,9 +742,6 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     }
 
     //0.5.1: Now that spells have been appropriately filtered and munged, add categories
-    if (!this.inventoryPlusForSpells) {
-        this.inventoryPlusForSpells = new InventoryPlusForSpells(this.actor);
-    }
     sheetData.categories = this.inventoryPlusForSpells.categorizeSpells(sheetData?.spellbook);
     sheetData.filtersIsCollapsed = this.actor.filtersIsCollapsed ?? false;
 

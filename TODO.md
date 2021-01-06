@@ -1,9 +1,11 @@
 # BUGS
-
+- Performance on show/hide a category is terrible
+    - Can we speed it up or convert to simple show/hide on the HTML and record the setting
 
 
 # FEATURES
 - Move the Print features into a separate Class
+    - Try the method mentioned in 
 - New Category Dialog:
     - Choose either Filter or Spellbook, with appropriate explanations
     - A Filter you just Preset some filter combinations, or drag specific Spells in as a different View on your Known Spells
@@ -33,8 +35,22 @@ FIXED - Default should be that OTHER filters (even without a custom category) do
 FIXED Need Edit for custom catgeories
 FIXED- Either remove Print in border, or get it working (does a PopOut and then a print)
     - will need to check that PopOut! is enabled
+FIXED 0.5.3g When you first open the Spellbook, it dies with spells = null    
 # COMPLETED FEATURES
 0.5.1r:  Need to store version in the flags so that we know whether they need to be upgraded in place    
 - Dialog to create a new category with filters and templates
 0.5.2: Refactor the filter/view design to look like the constants without the extraneous filterSet: and filters:
 0.5.2: - Make Rituals a standard Category
+
+PRINT SOLUTION (from @Sunspots)
+Can't you use CSS only to exclude everything but the desired element? Add a class to the window you want to print and in the print css something like
+body > *:not(.print) { display:none; } 
+[12:54 AM] Sunspots: Since windows are direct descendants to the body.
+[1:04 AM] Sunspots: @Spetzel Add the class print to the window you want to print, and inject this style element:
+
+    $(document.body).append(`<style media="print">
+    body > *:not(.print) { display:none !important; }
+    .print { width: 100% !important; height: 100% !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; }
+    </style>`)
+
+You can of course add more CSS to descendants of .print to hide header etc.
