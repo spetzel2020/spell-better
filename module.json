@@ -1,7 +1,7 @@
 {
 	"name": "spell-better",
 	"title": "Spetzel's Spell Better",
-	"description": "The ultimate detachable spellbook for Wizards and other lesser prepared-spell casters (Druids, Clerics, Paladins). All the flexibility you as a Wizard need with your Spellbook!<ul><li>Filter your spell list by level, school, usage, duration, concentration, and ritual</ul>",
+	"description": "The ultimate detachable spellbook for Wizards and other lesser prepared-spell casters (Druids, Clerics, Paladins).<ul><li>Detach the Spell Better Spellbook by clicking the Spellbook tab from any supported character sheet</li><li>OR switch your character sheet to the Spell Better sheet for a full OGL-5e sheet with Spell Better spellbook</li><li>See a one-line spell-slot summary as well as how many spells you can and have prepared</li><li>Filter your spell list by level, school, usage, duration, prepared, concentration, and ritual</li><li>Create custom Views like <strong>Utility Spells</strong>, <strong>AoE Nukes</strong>, or <strong>Multi-Round</strong></li><li>Create separate Spellbooks like <strong>Wanted</strong>, <strong>Found Scrolls</strong>, or <strong>Green Spellbook(deciphered)</strong></li><li>Easily print your Spellbook with custom views and sub-spellbooks, for quick reference at the screen or at the table</li></ul>",
 	"systems": ["dnd5e"],
 	"version": "0.7.0",
 	"author": "Spetzel#0103",
