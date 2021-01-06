@@ -2,31 +2,34 @@
 [![ko-fi](https://img.shields.io/badge/-buy%20me%20a%20coffee-%23FF5E5B)](https://ko-fi.com/spetzel)
 
 # Spetzel's Spell Better
-The ultimate detachable spellbook for Wizards and other lesser prepared-spell casters (Druids, Clerics, Paladins)
+The ultimate detachable spellbook for Wizards and other lesser prepared-spell casters (Druids, Clerics, Paladins).
 
-A freely-forked version of https://github.com/ElfFriend-DnD/foundryvtt-5eOGLCharacterSheet, itself "heavily inspired by the Official 5e Character Sheet and the Roll20 default 5e Sheet. This sheet is chaotic and packed with information all on one screen, but it does have the advantage of having some muscle memory if you're coming from either pen and paper or Roll20."
+- Detach the Spell Better Spellbook by clicking the Spellbook tab from any supported character sheet
+- OR switch your character sheet to the Spell Better sheet for a full OGL-5e sheet with Spell Better spellbook
+- See a one-line spell-slot summary as well as how many spells you can and have prepared
+- Filter your spell list by level, school, usage, duration, prepared, concentration, and ritual
+- Create custom Views like <strong>Utility Spells</strong>, <strong>AoE Nukes</strong>, <strong>Traveling</strong>, or <strong>Dungeoneering</strong>
+- Create separate Spellbooks like <strong>Wanted</strong>, <strong>Found Scrolls</strong>, or <strong>Green Spellbook(deciphered)</strong>
+- Easily print your Spellbook with custom views and sub-spellbooks, for quick reference at the screen or at the table
 
-Spell Better gives Wizards (and other prepared-spell casters like Druids, Clerics, and Paladins) a flexible spellbook for sorting, filtering, and grouping, their spells:
-- grouping, filtering, and sorting by existing tags or your own created ones
-- "saved" groups of spells (for example, traveling vs. dungeoneering, wanted vs. known)
-- rituals
-- clearer available spell slots
+## Summary
+* **Authors**: Discord: Spetzel#0103, [Calego#0914](https://github.com/ElfFriend-DnD)
+* **Version**: 0.7.0
+* **Foundry VTT Compatibility**: 0.7.2-0.7.9
+* **System Compatibility (If applicable)**: dnd5e
+* **Translation Support**: en
 
+Spell Better is a forked version of https://github.com/ElfFriend-DnD/foundryvtt-5eOGLCharacterSheet, itself "heavily inspired by the Official 5e Character Sheet and the Roll20 default 5e Sheet. This sheet is chaotic and packed with information all on one screen, but it does have the advantage of having some muscle memory if you're coming from either pen and paper or Roll20."
 ## Installation
-
+1. Go to the Add-on Modules tab in Foundry Setup
+2. Click Install Module and search for **Spetzel's Spell Better** OR paste this link: `https://github.com/spetzel2020/spell-better/releases/download/latest/module.json`
+3. Open your world and go to Settings>Manage Modules and enable Spetzel's Spell Better
 Module JSON:
 
-```
-https://github.com/spetzel2020/spell-better/releases/download/latest/module.json
-```
-
 ## Gallery
-
-
-[<img src="readme-img/main-top.png" width="30%"></img>](readme-img/main-top.png)
-[<img src="readme-img/main-bottom.png" width="30%"></img>](readme-img/main-bottom.png)
 [<img src="readme-img/spellbook.png" width="30%"></img>](readme-img/spellbook.png)
-[<img src="readme-img/biography.png" width="30%"></img>](readme-img/biography.png)
+
+See the github for the [5e-OGL-Character-Sheet](https://github.com/ElfFriend-DnD/foundryvtt-5eOGLCharacterSheet) for gallery of non-spellbook portions of the sheet.
 
 Click to view bigger.
 
