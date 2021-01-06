@@ -612,6 +612,7 @@
       "categories": {
         "spell0": {
           "label": "DND5E.SpellLevel0",
+          "categoryType": "filter",
           "templateItemData": {
             "level": 0
           },
@@ -620,7 +621,6 @@
               "Cantrip"
             ]
           },
-          "showAnyCategory": false,
           "prop": "spell0",
           "canCreate": true,
           "canPrepare": false,
@@ -629,12 +629,13 @@
           "usesSlots": false,
           "order": 0,
           "type": "spell",
-          "isCollapsed": true,
+          "isCollapsed": false,
           "isFirst": true,
           "isLast": false
         },
         "spell1": {
           "label": "SPELL_BETTER.SpellLevel1",
+          "categoryType": "filter",
           "templateItemData": {
             "level": 1
           },
@@ -643,7 +644,6 @@
               "1st Level"
             ]
           },
-          "showAnyCategory": false,
           "prop": "spell1",
           "canCreate": true,
           "canPrepare": true,
@@ -652,12 +652,13 @@
           "usesSlots": true,
           "order": 10,
           "type": "spell",
-          "isCollapsed": true,
+          "isCollapsed": false,
           "isFirst": false,
           "isLast": false
         },
         "spell2": {
           "label": "SPELL_BETTER.SpellLevel2",
+          "categoryType": "filter",
           "templateItemData": {
             "level": 2
           },
@@ -666,7 +667,6 @@
               "2nd Level"
             ]
           },
-          "showAnyCategory": false,
           "prop": "spell2",
           "canCreate": true,
           "canPrepare": true,
@@ -675,12 +675,13 @@
           "usesSlots": true,
           "order": 20,
           "type": "spell",
-          "isCollapsed": true,
+          "isCollapsed": false,
           "isFirst": false,
           "isLast": false
         },
         "spell3": {
           "label": "SPELL_BETTER.SpellLevel3",
+          "categoryType": "filter",
           "templateItemData": {
             "level": 3
           },
@@ -689,7 +690,6 @@
               "3rd Level"
             ]
           },
-          "showAnyCategory": false,
           "prop": "spell3",
           "canCreate": true,
           "canPrepare": true,
@@ -698,12 +698,13 @@
           "usesSlots": true,
           "order": 30,
           "type": "spell",
-          "isCollapsed": true,
+          "isCollapsed": false,
           "isFirst": false,
           "isLast": false
         },
         "spell4": {
           "label": "SPELL_BETTER.SpellLevel4",
+          "categoryType": "filter",
           "templateItemData": {
             "level": 4
           },
@@ -712,7 +713,6 @@
               "4th Level"
             ]
           },
-          "showAnyCategory": false,
           "prop": "spell4",
           "canCreate": true,
           "canPrepare": true,
@@ -727,6 +727,7 @@
         },
         "spell5": {
           "label": "SPELL_BETTER.SpellLevel5",
+          "categoryType": "filter",
           "templateItemData": {
             "level": 5
           },
@@ -735,7 +736,6 @@
               "5th Level"
             ]
           },
-          "showAnyCategory": false,
           "prop": "spell5",
           "canCreate": true,
           "canPrepare": true,
@@ -744,12 +744,13 @@
           "usesSlots": true,
           "order": 50,
           "type": "spell",
-          "isCollapsed": false,
+          "isCollapsed": true,
           "isFirst": false,
           "isLast": false
         },
         "spell6": {
           "label": "SPELL_BETTER.SpellLevel6",
+          "categoryType": "filter",
           "templateItemData": {
             "level": 6
           },
@@ -758,7 +759,6 @@
               "6th Level"
             ]
           },
-          "showAnyCategory": false,
           "prop": "spell6",
           "canCreate": true,
           "canPrepare": true,
@@ -773,6 +773,7 @@
         },
         "spell7": {
           "label": "SPELL_BETTER.SpellLevel7",
+          "categoryType": "filter",
           "templateItemData": {
             "level": 7
           },
@@ -781,7 +782,6 @@
               "7th Level"
             ]
           },
-          "showAnyCategory": false,
           "prop": "spell7",
           "canCreate": true,
           "canPrepare": true,
@@ -796,6 +796,7 @@
         },
         "spell8": {
           "label": "SPELL_BETTER.SpellLevel8",
+          "categoryType": "filter",
           "templateItemData": {
             "level": 8
           },
@@ -804,7 +805,6 @@
               "8th Level"
             ]
           },
-          "showAnyCategory": false,
           "prop": "spell8",
           "canCreate": true,
           "canPrepare": true,
@@ -819,6 +819,7 @@
         },
         "spell9": {
           "label": "SPELL_BETTER.SpellLevel9",
+          "categoryType": "filter",
           "templateItemData": {
             "level": 9
           },
@@ -827,7 +828,6 @@
               "9th Level"
             ]
           },
-          "showAnyCategory": false,
           "prop": "spell9",
           "canCreate": true,
           "canPrepare": true,
@@ -843,6 +843,7 @@
         "rituals": {
           "label": "SPELL_BETTER.Rituals",
           "isCustom": true,
+          "categoryType": "filter",
           "templateItemData": {
             "level": 1
           },
@@ -851,7 +852,6 @@
               "ritual"
             ]
           },
-          "showAnyCategory": false,
           "canCreate": false,
           "canPrepare": false,
           "order": 900,
@@ -864,6 +864,7 @@
         "wanted4": {
           "label": "Wanted (4th)",
           "isCustom": true,
+          "categoryType": "spellbook",
           "templateItemData": {
             "level": 9
           },
@@ -873,11 +874,6 @@
           "labelFilterSets": {
             "levels": [
               "4th Level"
-            ]
-          },
-          "flagFilterSets": {
-            "category": [
-              "wanted"
             ]
           },
           "canCreate": false,
@@ -892,6 +888,7 @@
         "wanted": {
           "label": "SPELL_BETTER.Category.Wanted",
           "isCustom": true,
+          "categoryType": "spellbook",
           "templateItemData": {
             "level": 9
           },
@@ -899,7 +896,6 @@
             "category": "wanted"
           },
           "labelFilterSets": {},
-          "showOnlyInCategory": true,
           "canCreate": true,
           "canPrepare": false,
           "order": 1000,
@@ -907,56 +903,37 @@
           "type": "spell",
           "isCollapsed": true,
           "isFirst": false,
-          "isLast": false,
-          "viewOrSpellbook": "spellbook"
-        },
-        "all": {
-          "label": "SPELL_BETTER.Category.All",
-          "templateItemData": {
-            "level": 9
-          },
-          "labelFilterSets": {},
-          "showAnyCategory": true,
-          "canCreate": true,
-          "canPrepare": true,
-          "order": 9000,
-          "usesSlots": false,
-          "type": "spell",
-          "isCollapsed": true,
-          "isFirst": false,
           "isLast": false
         },
-        "2qox9e9": {
-          "label": "Concentration",
-          "labelFilterSets": {
-            "otherConcentration": [
-              "concentration"
-            ]
-          },
-          "type": "spell",
-          "isCustom": true,
-          "canCreate": false,
-          "canPrepare": true,
-          "isCollapsed": true,
-          "order": 10000,
-          "categoryKey": "2qox9e9",
-          "showOnlyInCategory": false,
-          "isFirst": false,
-          "isLast": false
-        },
-        "15m1e8u": {
+        "4i20cnm": {
           "label": "Vel's Spellbook",
           "labelFilterSets": {},
           "type": "spell",
           "isCustom": true,
           "canCreate": false,
           "canPrepare": true,
-          "isCollapsed": true,
-          "viewOrSpellbook": "spellbook",
-          "order": 11000,
+          "isCollapsed": false,
+          "categoryType": "spellbook",
+          "order": 8999,
           "templateFlags": {
-            "category": "15m1e8u"
+            "category": "4i20cnm"
           },
+          "isFirst": false,
+          "isLast": false
+        },
+        "all": {
+          "label": "SPELL_BETTER.Category.All",
+          "categoryType": "all",
+          "templateItemData": {
+            "level": 9
+          },
+          "labelFilterSets": {},
+          "canCreate": true,
+          "canPrepare": true,
+          "order": 9000,
+          "usesSlots": false,
+          "type": "spell",
+          "isCollapsed": true,
           "isFirst": false,
           "isLast": true
         }
@@ -12159,33 +12136,7 @@
         }
       },
       "img": "systems/dnd5e/icons/spells/runes-royal-3.jpg",
-      "effects": [],
-      "labels": {
-        "level": "1st Level",
-        "school": "Divination",
-        "components": [
-          "V",
-          "S",
-          "R",
-          "C"
-        ],
-        "materials": "",
-        "activation": "1 Action",
-        "target": "30 Feet Radius",
-        "range": "Self",
-        "duration": "10 Minutes",
-        "recharge": "Recharge [undefined]",
-        "damage": "",
-        "damageTypes": "",
-        "activationAbbrev": "1 A",
-        "ritual": "ritual",
-        "concentration": "concentration"
-      },
-      "isStack": false,
-      "hasUses": false,
-      "hasTarget": true,
-      "toggleClass": "",
-      "toggleTitle": "Unprepared"
+      "effects": []
     },
     {
       "_id": "p2LRTyzNzxfGzidJ",
@@ -12280,30 +12231,7 @@
         }
       },
       "img": "systems/dnd5e/icons/spells/protect-blue-1.jpg",
-      "effects": [],
-      "labels": {
-        "level": "1st Level",
-        "school": "Abjuration",
-        "components": [
-          "V",
-          "S",
-          "M"
-        ],
-        "materials": "A piece of cured leather",
-        "activation": "1 Action",
-        "target": "1 Creature",
-        "range": "Touch",
-        "duration": "8 Hours",
-        "recharge": "Recharge [undefined]",
-        "damage": "",
-        "damageTypes": "",
-        "activationAbbrev": "1 A"
-      },
-      "isStack": false,
-      "hasUses": false,
-      "hasTarget": true,
-      "toggleClass": "",
-      "toggleTitle": "Unprepared"
+      "effects": []
     },
     {
       "_id": "M1quqKad5f98KnDx",
@@ -12402,30 +12330,7 @@
         }
       },
       "img": "systems/dnd5e/icons/spells/fire-arrows-magenta-1.jpg",
-      "effects": [],
-      "labels": {
-        "level": "1st Level",
-        "school": "Evocation",
-        "components": [
-          "V",
-          "S"
-        ],
-        "materials": "",
-        "activation": "1 Action",
-        "target": "1 Creature",
-        "range": "120 Feet",
-        "duration": "Instantaneous",
-        "recharge": "Recharge [undefined]",
-        "damage": "1d4 + 1",
-        "damageTypes": "Force",
-        "activationAbbrev": "1 A"
-      },
-      "isStack": false,
-      "hasUses": false,
-      "hasTarget": true,
-      "toggleClass": "",
-      "toggleTitle": "Unprepared",
-      "hasDamage": true
+      "effects": []
     },
     {
       "_id": "NJFWbwl4JqfoB3wR",
@@ -12667,29 +12572,7 @@
           "tint": "",
           "transfer": true
         }
-      ],
-      "labels": {
-        "level": "1st Level",
-        "school": "Abjuration",
-        "components": [
-          "V",
-          "S"
-        ],
-        "materials": "",
-        "activation": "1 Reaction",
-        "target": "Self",
-        "range": "Self",
-        "duration": "1 Rounds",
-        "recharge": "Recharge [undefined]",
-        "damage": "",
-        "damageTypes": "",
-        "activationAbbrev": "1 R"
-      },
-      "isStack": false,
-      "hasUses": false,
-      "hasTarget": true,
-      "toggleClass": "",
-      "toggleTitle": "Unprepared"
+      ]
     },
     {
       "_id": "MV1kVPkQQWpShrZc",
@@ -12783,32 +12666,7 @@
         }
       },
       "img": "systems/dnd5e/icons/spells/air-burst-magenta-2.jpg",
-      "effects": [],
-      "labels": {
-        "level": "2nd Level",
-        "school": "Enchantment",
-        "components": [
-          "V",
-          "M",
-          "C"
-        ],
-        "materials": "A snake's tongue and either a bit of honeycomb or a drop of sweet oil",
-        "activation": "1 Action",
-        "target": "1 Creature",
-        "range": "30 Feet",
-        "duration": "8 Hours",
-        "recharge": "Recharge [undefined]",
-        "save": "DC 15 Wisdom",
-        "damage": "",
-        "damageTypes": "",
-        "activationAbbrev": "1 A",
-        "concentration": "concentration"
-      },
-      "isStack": false,
-      "hasUses": false,
-      "hasTarget": true,
-      "toggleClass": "",
-      "toggleTitle": "Unprepared"
+      "effects": []
     },
     {
       "_id": "R1r08KS6TmGZRDmS",
@@ -12903,28 +12761,7 @@
         }
       },
       "img": "systems/dnd5e/icons/spells/wind-grasp-air-1.jpg",
-      "effects": [],
-      "labels": {
-        "level": "2nd Level",
-        "school": "Conjuration",
-        "components": [
-          "V"
-        ],
-        "materials": "",
-        "activation": "1 Bonus Action",
-        "target": "30 Feet Space",
-        "range": "Self",
-        "duration": "Instantaneous",
-        "recharge": "Recharge [undefined]",
-        "damage": "",
-        "damageTypes": "",
-        "activationAbbrev": "1 B A"
-      },
-      "isStack": false,
-      "hasUses": false,
-      "hasTarget": true,
-      "toggleClass": "",
-      "toggleTitle": "Unprepared"
+      "effects": []
     },
     {
       "_id": "I18dI7JTqqWV354Q",
@@ -13019,28 +12856,7 @@
         }
       },
       "img": "systems/dnd5e/icons/spells/slice-orange-3.jpg",
-      "effects": [],
-      "labels": {
-        "level": "3rd Level",
-        "school": "Abjuration",
-        "components": [
-          "S"
-        ],
-        "materials": "",
-        "activation": "1 Reaction",
-        "target": "1 Creature",
-        "range": "60 Feet",
-        "duration": "Instantaneous",
-        "recharge": "Recharge [undefined]",
-        "damage": "",
-        "damageTypes": "",
-        "activationAbbrev": "1 R"
-      },
-      "isStack": false,
-      "hasUses": false,
-      "hasTarget": true,
-      "toggleClass": "",
-      "toggleTitle": "Unprepared"
+      "effects": []
     },
     {
       "_id": "JaoCObIloqMc1fck",
@@ -13135,32 +12951,7 @@
         }
       },
       "img": "systems/dnd5e/icons/spells/link-spirit-1.jpg",
-      "effects": [],
-      "labels": {
-        "level": "3rd Level",
-        "school": "Transmutation",
-        "components": [
-          "V",
-          "S",
-          "M",
-          "C"
-        ],
-        "materials": "A wing feather from any bird",
-        "activation": "1 Action",
-        "target": "1 Creature",
-        "range": "Touch",
-        "duration": "10 Minutes",
-        "recharge": "Recharge [undefined]",
-        "damage": "",
-        "damageTypes": "",
-        "activationAbbrev": "1 A",
-        "concentration": "concentration"
-      },
-      "isStack": false,
-      "hasUses": false,
-      "hasTarget": true,
-      "toggleClass": "",
-      "toggleTitle": "Unprepared"
+      "effects": []
     },
     {
       "_id": "QKdWM05B9Ly2tZMY",
@@ -13258,32 +13049,7 @@
         }
       },
       "img": "systems/dnd5e/icons/spells/fireball-red-2.jpg",
-      "effects": [],
-      "labels": {
-        "level": "3rd Level",
-        "school": "Evocation",
-        "components": [
-          "V",
-          "S",
-          "M"
-        ],
-        "materials": "A tiny ball of bat guano and sulfur",
-        "activation": "1 Action",
-        "target": "20 Feet Sphere",
-        "range": "150 Feet",
-        "duration": "Instantaneous",
-        "recharge": "Recharge [undefined]",
-        "save": "DC 15 Dexterity",
-        "damage": "8d6",
-        "damageTypes": "Fire",
-        "activationAbbrev": "1 A"
-      },
-      "isStack": false,
-      "hasUses": false,
-      "hasTarget": true,
-      "toggleClass": "",
-      "toggleTitle": "Unprepared",
-      "hasDamage": true
+      "effects": []
     },
     {
       "_id": "mgaD1fmc64oxSCLN",
@@ -13378,31 +13144,7 @@
         }
       },
       "img": "systems/dnd5e/icons/spells/fog-water-air-3.jpg",
-      "effects": [],
-      "labels": {
-        "level": "4th Level",
-        "school": "Illusion",
-        "components": [
-          "V",
-          "S",
-          "C"
-        ],
-        "materials": "",
-        "activation": "1 Action",
-        "target": "1 Creature",
-        "range": "Touch",
-        "duration": "1 Minutes",
-        "recharge": "Recharge [undefined]",
-        "damage": "",
-        "damageTypes": "",
-        "activationAbbrev": "1 A",
-        "concentration": "concentration"
-      },
-      "isStack": false,
-      "hasUses": false,
-      "hasTarget": true,
-      "toggleClass": "",
-      "toggleTitle": "Unprepared"
+      "effects": []
     },
     {
       "_id": "8j6jkazePywuzJ0b",
@@ -13504,32 +13246,7 @@
         }
       },
       "img": "systems/dnd5e/icons/spells/ice-blue-3.jpg",
-      "effects": [],
-      "labels": {
-        "level": "4th Level",
-        "school": "Evocation",
-        "components": [
-          "V",
-          "S",
-          "M"
-        ],
-        "materials": "A pinch of dust and a few drops of water",
-        "activation": "1 Action",
-        "target": "20 Feet Cylinder",
-        "range": "300 Feet",
-        "duration": "Instantaneous",
-        "recharge": "Recharge [undefined]",
-        "save": "DC 15 Dexterity",
-        "damage": "2d8 + 4d6",
-        "damageTypes": "Bludgeoning, Cold",
-        "activationAbbrev": "1 A"
-      },
-      "isStack": false,
-      "hasUses": false,
-      "hasTarget": true,
-      "toggleClass": "",
-      "toggleTitle": "Unprepared",
-      "hasDamage": true
+      "effects": []
     },
     {
       "_id": "YBoBroj4XrXGeuQd",
@@ -13624,6 +13341,1395 @@
         },
         "spell-better": {
           "category": "15m1e8u"
+        }
+      },
+      "img": "systems/dnd5e/icons/spells/ice-blue-3.jpg",
+      "effects": []
+    },
+    {
+      "_id": "ZXWniOhuQs7FisCI",
+      "name": "Detect Magic",
+      "type": "spell",
+      "data": {
+        "description": {
+          "value": "<p>For the duration, you sense the presence of magic within 30 feet of you. If you sense magic in this way, you can use your action to see a faint aura around any visible creature or object in the area that bears magic, and you learn its school of magic, if any.</p><p>The spell can penetrate most barriers, but it is blocked by 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt.</p>",
+          "chat": "",
+          "unidentified": ""
+        },
+        "source": "PHB pg. 231",
+        "activation": {
+          "type": "action",
+          "cost": 1,
+          "condition": ""
+        },
+        "duration": {
+          "value": 10,
+          "units": "minute"
+        },
+        "target": {
+          "value": 30,
+          "width": null,
+          "units": "ft",
+          "type": "radius"
+        },
+        "range": {
+          "value": null,
+          "long": null,
+          "units": "self"
+        },
+        "uses": {
+          "value": 0,
+          "max": "0",
+          "per": ""
+        },
+        "consume": {
+          "type": "",
+          "target": "",
+          "amount": null
+        },
+        "ability": "",
+        "actionType": "util",
+        "attackBonus": 0,
+        "chatFlavor": "",
+        "critical": null,
+        "damage": {
+          "parts": [],
+          "versatile": "",
+          "value": ""
+        },
+        "formula": "",
+        "save": {
+          "ability": "",
+          "dc": null,
+          "scaling": "spell",
+          "value": ""
+        },
+        "level": 1,
+        "school": "div",
+        "components": {
+          "value": "",
+          "vocal": true,
+          "somatic": true,
+          "material": false,
+          "ritual": true,
+          "concentration": true
+        },
+        "materials": {
+          "value": "",
+          "consumed": false,
+          "cost": 0,
+          "supply": 0
+        },
+        "preparation": {
+          "mode": "prepared",
+          "prepared": false
+        },
+        "scaling": {
+          "mode": "none",
+          "formula": ""
+        }
+      },
+      "sort": 11700001,
+      "flags": {
+        "core": {
+          "sourceId": "Item.2cTTMJB1OQx9X8UA"
+        },
+        "spell-better": {
+          "category": [
+            "4i20cnm"
+          ]
+        }
+      },
+      "img": "systems/dnd5e/icons/spells/runes-royal-3.jpg",
+      "effects": []
+    },
+    {
+      "_id": "tHhraOwIQec5ieMW",
+      "name": "Mage Armor",
+      "type": "spell",
+      "data": {
+        "description": {
+          "value": "<p>You touch a willing creature who isn't wearing armor, and a protective magical force surrounds it until the spell ends. The target's base AC becomes 13 + its Dexterity modifier. The spell ends if the target dons armor or if you dismiss the spell as an action.</p>",
+          "chat": "",
+          "unidentified": ""
+        },
+        "source": "PHB pg. 256",
+        "activation": {
+          "type": "action",
+          "cost": 1,
+          "condition": ""
+        },
+        "duration": {
+          "value": 8,
+          "units": "hour"
+        },
+        "target": {
+          "value": 1,
+          "width": null,
+          "units": "",
+          "type": "creature"
+        },
+        "range": {
+          "value": null,
+          "long": null,
+          "units": "touch"
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null
+        },
+        "consume": {
+          "type": "",
+          "target": null,
+          "amount": null
+        },
+        "ability": "",
+        "actionType": "util",
+        "attackBonus": 0,
+        "chatFlavor": "",
+        "critical": null,
+        "damage": {
+          "parts": [],
+          "versatile": "",
+          "value": ""
+        },
+        "formula": "",
+        "save": {
+          "ability": "",
+          "dc": null,
+          "scaling": "spell",
+          "value": ""
+        },
+        "level": 1,
+        "school": "abj",
+        "components": {
+          "value": "",
+          "vocal": true,
+          "somatic": true,
+          "material": true,
+          "ritual": false,
+          "concentration": false
+        },
+        "materials": {
+          "value": "A piece of cured leather",
+          "consumed": false,
+          "cost": 0,
+          "supply": 0
+        },
+        "preparation": {
+          "mode": "prepared",
+          "prepared": false
+        },
+        "scaling": {
+          "mode": "none",
+          "formula": ""
+        }
+      },
+      "sort": 26800001,
+      "flags": {
+        "core": {
+          "sourceId": "Item.WdUX7V7YXc4vqrVD"
+        },
+        "spell-better": {
+          "category": [
+            "4i20cnm"
+          ]
+        }
+      },
+      "img": "systems/dnd5e/icons/spells/protect-blue-1.jpg",
+      "effects": []
+    },
+    {
+      "_id": "9DSMHZyP5gHNcRPu",
+      "name": "Magic Missile",
+      "type": "spell",
+      "data": {
+        "description": {
+          "value": "<p>You create three glowing darts of magical force. Each dart hits a creature of your choice that you can see within range. A dart deals 1d4 + 1 force damage to its target. The darts all strike simultaneously, and you can direct them to hit one creature or several.</p><p><strong>Higher Levels.&nbsp;</strong>When you cast this spell using a spell slot of 2nd level or higher, the spell creates one more dart for each slot level above 1st.</p>",
+          "chat": "",
+          "unidentified": ""
+        },
+        "source": "PHB pg. 257",
+        "activation": {
+          "type": "action",
+          "cost": 1,
+          "condition": ""
+        },
+        "duration": {
+          "value": null,
+          "units": "inst"
+        },
+        "target": {
+          "value": 1,
+          "width": null,
+          "units": "",
+          "type": "creature"
+        },
+        "range": {
+          "value": 120,
+          "long": 0,
+          "units": "ft"
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null
+        },
+        "consume": {
+          "type": "",
+          "target": null,
+          "amount": null
+        },
+        "ability": "",
+        "actionType": "other",
+        "attackBonus": 0,
+        "chatFlavor": "",
+        "critical": null,
+        "damage": {
+          "parts": [
+            [
+              "1d4 + 1",
+              "force"
+            ]
+          ],
+          "versatile": ""
+        },
+        "formula": "",
+        "save": {
+          "ability": "",
+          "dc": null,
+          "scaling": "spell",
+          "value": ""
+        },
+        "level": 1,
+        "school": "evo",
+        "components": {
+          "value": "",
+          "vocal": true,
+          "somatic": true,
+          "material": false,
+          "ritual": false,
+          "concentration": false
+        },
+        "materials": {
+          "value": "",
+          "consumed": false,
+          "cost": 0,
+          "supply": 0
+        },
+        "preparation": {
+          "mode": "prepared",
+          "prepared": false
+        },
+        "scaling": {
+          "mode": "level",
+          "formula": ""
+        }
+      },
+      "sort": 27300001,
+      "flags": {
+        "core": {
+          "sourceId": "Item.7Y1YjMCPdAePKbO8"
+        },
+        "spell-better": {
+          "category": [
+            "4i20cnm"
+          ]
+        }
+      },
+      "img": "systems/dnd5e/icons/spells/fire-arrows-magenta-1.jpg",
+      "effects": []
+    },
+    {
+      "_id": "0r4Nfqh8dwJVtFIX",
+      "name": "Shield",
+      "type": "spell",
+      "data": {
+        "description": {
+          "value": "<p>An invisible barrier of magical force appears and protects you. Until the start of your next turn, you have a +5 bonus to AC, including against the triggering attack, and you take no damage from magic missile.</p>",
+          "chat": "",
+          "unidentified": ""
+        },
+        "source": "PHB pg. 275",
+        "activation": {
+          "type": "reaction",
+          "cost": 1,
+          "condition": "Which you take when you are hit by an attack or targeted by the magic missile spell"
+        },
+        "duration": {
+          "value": 1,
+          "units": "round"
+        },
+        "target": {
+          "value": null,
+          "width": null,
+          "units": null,
+          "type": "self"
+        },
+        "range": {
+          "value": null,
+          "long": null,
+          "units": "self"
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null
+        },
+        "consume": {
+          "type": "",
+          "target": null,
+          "amount": null
+        },
+        "ability": "",
+        "actionType": "util",
+        "attackBonus": 0,
+        "chatFlavor": "",
+        "critical": null,
+        "damage": {
+          "parts": [],
+          "versatile": "",
+          "value": ""
+        },
+        "formula": "",
+        "save": {
+          "ability": "",
+          "dc": null,
+          "scaling": "spell",
+          "value": ""
+        },
+        "level": 1,
+        "school": "abj",
+        "components": {
+          "value": "",
+          "vocal": true,
+          "somatic": true,
+          "material": false,
+          "ritual": false,
+          "concentration": false
+        },
+        "materials": {
+          "value": "",
+          "consumed": false,
+          "cost": 0,
+          "supply": 0
+        },
+        "preparation": {
+          "mode": "prepared",
+          "prepared": false
+        },
+        "scaling": {
+          "mode": "none",
+          "formula": ""
+        }
+      },
+      "sort": 27050001,
+      "flags": {
+        "core": {
+          "sourceId": "Item.VQMKMnQDw5rzL0zp"
+        },
+        "exportSource": {
+          "world": "kobold-cauldron",
+          "system": "dnd5e",
+          "coreVersion": "0.7.7",
+          "systemVersion": "1.1.1"
+        },
+        "spell-better": {
+          "category": [
+            "4i20cnm",
+            "4i20cnm"
+          ]
+        }
+      },
+      "img": "systems/dnd5e/icons/spells/protect-magenta-1.jpg",
+      "effects": [
+        {
+          "_id": "6pbotGIvqQkraPva",
+          "flags": {},
+          "changes": [
+            {
+              "key": "data.attributes.ac.value",
+              "value": 5,
+              "mode": 2
+            }
+          ],
+          "disabled": true,
+          "duration": {
+            "startTime": null,
+            "seconds": null,
+            "rounds": 1,
+            "turns": null,
+            "startRound": null,
+            "startTurn": null
+          },
+          "icon": "systems/dnd5e/icons/spells/protect-magenta-1.jpg",
+          "label": "Shield",
+          "origin": "Item.FlLKKv7bQBlIAs11",
+          "tint": "",
+          "transfer": true
+        }
+      ],
+      "labels": {
+        "level": "1st Level",
+        "school": "Abjuration",
+        "components": [
+          "V",
+          "S"
+        ],
+        "materials": "",
+        "activation": "1 Reaction",
+        "target": "Self",
+        "range": "Self",
+        "duration": "1 Rounds",
+        "recharge": "Recharge [undefined]",
+        "damage": "",
+        "damageTypes": "",
+        "activationAbbrev": "1 R"
+      },
+      "isStack": false,
+      "hasUses": false,
+      "hasTarget": true,
+      "toggleClass": "",
+      "toggleTitle": "Unprepared"
+    },
+    {
+      "_id": "338A9ztxwGgfldQ9",
+      "name": "Misty Step",
+      "type": "spell",
+      "data": {
+        "description": {
+          "value": "<p>Briefly surrounded by silvery mist, you teleport up to 30 feet to an unoccupied space that you can see.</p>",
+          "chat": "",
+          "unidentified": ""
+        },
+        "source": "PHB pg. 260",
+        "activation": {
+          "type": "bonus",
+          "cost": 1,
+          "condition": ""
+        },
+        "duration": {
+          "value": null,
+          "units": "inst"
+        },
+        "target": {
+          "value": 30,
+          "width": null,
+          "units": "ft",
+          "type": "space"
+        },
+        "range": {
+          "value": null,
+          "long": null,
+          "units": "self"
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null
+        },
+        "consume": {
+          "type": "",
+          "target": null,
+          "amount": null
+        },
+        "ability": "",
+        "actionType": "util",
+        "attackBonus": 0,
+        "chatFlavor": "",
+        "critical": null,
+        "damage": {
+          "parts": [],
+          "versatile": "",
+          "value": ""
+        },
+        "formula": "",
+        "save": {
+          "ability": "",
+          "dc": null,
+          "scaling": "spell",
+          "value": ""
+        },
+        "level": 2,
+        "school": "con",
+        "components": {
+          "value": "",
+          "vocal": true,
+          "somatic": false,
+          "material": false,
+          "ritual": false,
+          "concentration": false
+        },
+        "materials": {
+          "value": "",
+          "consumed": false,
+          "cost": 0,
+          "supply": 0
+        },
+        "preparation": {
+          "mode": "prepared",
+          "prepared": false
+        },
+        "scaling": {
+          "mode": "none",
+          "formula": ""
+        }
+      },
+      "sort": 30000001,
+      "flags": {
+        "core": {
+          "sourceId": "Item.2Uocy9UaiH3b4oUj"
+        },
+        "spell-better": {
+          "category": [
+            "4i20cnm"
+          ]
+        }
+      },
+      "img": "systems/dnd5e/icons/spells/wind-grasp-air-1.jpg",
+      "effects": []
+    },
+    {
+      "_id": "G3K9WKCsn8kWJVFK",
+      "name": "Suggestion",
+      "type": "spell",
+      "data": {
+        "description": {
+          "value": "<p>You suggest a course of activity (limited to a sentence or two) and magically influence a creature you can see within range that can hear and understand you. Creatures that can't be charmed are immune to this effect. The suggestion must be worded in such a manner as to make the course of action sound reasonable. Asking the creature to stab itself, throw itself onto a spear, immolate itself, or do some other obviously harmful act ends the spell.</p><p>The target must make a Wisdom saving throw. On a failed save, it pursues the course of action you described to the best of its ability. The suggested course of action can continue for the entire duration. If the suggested activity can be completed in a shorter time, the spell ends when the subject finishes what it was asked to do.</p><p>You can also specify conditions that will trigger a special activity during the duration. For example, you might suggest that a knight give her warhorse to the first beggar she meets. If the condition isn't met before the spell expires, the activity isn't performed.</p><p>If you or any of your companions damage the target, the spell ends.</p>",
+          "chat": "",
+          "unidentified": ""
+        },
+        "source": "PHB pg. 279",
+        "activation": {
+          "type": "action",
+          "cost": 1,
+          "condition": ""
+        },
+        "duration": {
+          "value": 8,
+          "units": "hour"
+        },
+        "target": {
+          "value": 1,
+          "width": null,
+          "units": "",
+          "type": "creature"
+        },
+        "range": {
+          "value": 30,
+          "long": 0,
+          "units": "ft"
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null
+        },
+        "consume": {
+          "type": "",
+          "target": null,
+          "amount": null
+        },
+        "ability": "",
+        "actionType": "save",
+        "attackBonus": 0,
+        "chatFlavor": "",
+        "critical": null,
+        "damage": {
+          "parts": [],
+          "versatile": "",
+          "value": ""
+        },
+        "formula": "",
+        "save": {
+          "ability": "wis",
+          "dc": 15,
+          "scaling": "spell"
+        },
+        "level": 2,
+        "school": "enc",
+        "components": {
+          "value": "",
+          "vocal": true,
+          "somatic": false,
+          "material": true,
+          "ritual": false,
+          "concentration": true
+        },
+        "materials": {
+          "value": "A snake's tongue and either a bit of honeycomb or a drop of sweet oil",
+          "consumed": false,
+          "cost": 0,
+          "supply": 0
+        },
+        "preparation": {
+          "mode": "prepared",
+          "prepared": false
+        },
+        "scaling": {
+          "mode": "none",
+          "formula": ""
+        }
+      },
+      "sort": 36475001,
+      "flags": {
+        "core": {
+          "sourceId": "Item.q2owhh0N1xFAZVwm"
+        },
+        "spell-better": {
+          "category": [
+            "4i20cnm",
+            "4i20cnm"
+          ]
+        }
+      },
+      "img": "systems/dnd5e/icons/spells/air-burst-magenta-2.jpg",
+      "effects": [],
+      "labels": {
+        "level": "2nd Level",
+        "school": "Enchantment",
+        "components": [
+          "V",
+          "M",
+          "C"
+        ],
+        "materials": "A snake's tongue and either a bit of honeycomb or a drop of sweet oil",
+        "activation": "1 Action",
+        "target": "1 Creature",
+        "range": "30 Feet",
+        "duration": "8 Hours",
+        "recharge": "Recharge [undefined]",
+        "save": "DC 15 Wisdom",
+        "damage": "",
+        "damageTypes": "",
+        "activationAbbrev": "1 A",
+        "concentration": "concentration"
+      },
+      "isStack": false,
+      "hasUses": false,
+      "hasTarget": true,
+      "toggleClass": "",
+      "toggleTitle": "Unprepared"
+    },
+    {
+      "_id": "a4vNexWNOZbEAHi5",
+      "name": "Counterspell",
+      "type": "spell",
+      "data": {
+        "description": {
+          "value": "<p>You attempt to interrupt a creature in the process of casting a spell. If the creature is casting a spell of 3rd level or lower, its spell fails and has no effect. If it is casting a spell of 4th level or higher, make an ability check using your spellcasting ability. The DC equals 10 + the spell’s level. On a success, the creature’s spell fails and has no effect.</p><p><strong>Higher Levels.&nbsp;</strong>When you cast this spell using a spell slot of 4th level or higher, the interrupted spell has no effect if its level is less than or equal to the level of the spell slot you used.</p>",
+          "chat": "",
+          "unidentified": ""
+        },
+        "source": "PHB pg. 228",
+        "activation": {
+          "type": "reaction",
+          "cost": 1,
+          "condition": "which you take when you see a creature within 60 feet of you casting a spell"
+        },
+        "duration": {
+          "value": null,
+          "units": "inst"
+        },
+        "target": {
+          "value": 1,
+          "width": null,
+          "units": "",
+          "type": "creature"
+        },
+        "range": {
+          "value": 60,
+          "long": 0,
+          "units": "ft"
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null
+        },
+        "consume": {
+          "type": "",
+          "target": null,
+          "amount": null
+        },
+        "ability": "",
+        "actionType": "util",
+        "attackBonus": 0,
+        "chatFlavor": "",
+        "critical": null,
+        "damage": {
+          "parts": [],
+          "versatile": "",
+          "value": ""
+        },
+        "formula": "1d20 + @mod",
+        "save": {
+          "ability": "",
+          "dc": null,
+          "scaling": "spell",
+          "value": ""
+        },
+        "level": 3,
+        "school": "abj",
+        "components": {
+          "value": "",
+          "vocal": false,
+          "somatic": true,
+          "material": false,
+          "ritual": false,
+          "concentration": false
+        },
+        "materials": {
+          "value": "",
+          "consumed": false,
+          "cost": 0,
+          "supply": 0
+        },
+        "preparation": {
+          "mode": "prepared",
+          "prepared": false
+        },
+        "scaling": {
+          "mode": "level",
+          "formula": ""
+        }
+      },
+      "sort": 38087501,
+      "flags": {
+        "core": {
+          "sourceId": "Item.9iwnqZE7g3yyz0pN"
+        },
+        "spell-better": {
+          "category": [
+            "4i20cnm",
+            "4i20cnm"
+          ]
+        }
+      },
+      "img": "systems/dnd5e/icons/spells/slice-orange-3.jpg",
+      "effects": [],
+      "labels": {
+        "level": "3rd Level",
+        "school": "Abjuration",
+        "components": [
+          "S"
+        ],
+        "materials": "",
+        "activation": "1 Reaction",
+        "target": "1 Creature",
+        "range": "60 Feet",
+        "duration": "Instantaneous",
+        "recharge": "Recharge [undefined]",
+        "damage": "",
+        "damageTypes": "",
+        "activationAbbrev": "1 R"
+      },
+      "isStack": false,
+      "hasUses": false,
+      "hasTarget": true,
+      "toggleClass": "",
+      "toggleTitle": "Unprepared"
+    },
+    {
+      "_id": "L9Gv4prudWD2KYQe",
+      "name": "Fireball",
+      "type": "spell",
+      "data": {
+        "description": {
+          "value": "<p>A bright streak flashes from your pointing finger to a point you choose within range and then blossoms with a low roar into an explosion of flame. Each creature in a 20-foot-radius sphere centered on that point must make a Dexterity saving throw. A target takes 8d6 fire damage on a failed save, or half as much damage on a successful one.</p><p>The fire spreads around corners. It ignites flammable objects in the area that aren’t being worn or carried.</p><p><strong>Higher Levels.</strong> When you cast this spell using a spell slot of 4th level or higher, the damage increases by 1d6 for each slot level above 3rd.</p>",
+          "chat": "",
+          "unidentified": ""
+        },
+        "source": "PHB pg. 241",
+        "activation": {
+          "type": "action",
+          "cost": 1,
+          "condition": ""
+        },
+        "duration": {
+          "value": null,
+          "units": "inst"
+        },
+        "target": {
+          "value": 20,
+          "width": null,
+          "units": "ft",
+          "type": "sphere"
+        },
+        "range": {
+          "value": 150,
+          "long": 0,
+          "units": "ft"
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null
+        },
+        "consume": {
+          "type": "",
+          "target": null,
+          "amount": null
+        },
+        "ability": "",
+        "actionType": "save",
+        "attackBonus": 0,
+        "chatFlavor": "",
+        "critical": null,
+        "damage": {
+          "parts": [
+            [
+              "8d6",
+              "fire"
+            ]
+          ],
+          "versatile": ""
+        },
+        "formula": "",
+        "save": {
+          "ability": "dex",
+          "dc": 15,
+          "scaling": "spell"
+        },
+        "level": 3,
+        "school": "evo",
+        "components": {
+          "value": "",
+          "vocal": true,
+          "somatic": true,
+          "material": true,
+          "ritual": false,
+          "concentration": false
+        },
+        "materials": {
+          "value": "A tiny ball of bat guano and sulfur",
+          "consumed": false,
+          "cost": 0,
+          "supply": 0
+        },
+        "preparation": {
+          "mode": "prepared",
+          "prepared": false
+        },
+        "scaling": {
+          "mode": "level",
+          "formula": "1d6"
+        }
+      },
+      "sort": 38475001,
+      "flags": {
+        "core": {
+          "sourceId": "Item.0oGGAeV7uJkqeaNK"
+        },
+        "spell-better": {
+          "category": [
+            "4i20cnm",
+            "4i20cnm"
+          ]
+        }
+      },
+      "img": "systems/dnd5e/icons/spells/fireball-red-2.jpg",
+      "effects": [],
+      "labels": {
+        "level": "3rd Level",
+        "school": "Evocation",
+        "components": [
+          "V",
+          "S",
+          "M"
+        ],
+        "materials": "A tiny ball of bat guano and sulfur",
+        "activation": "1 Action",
+        "target": "20 Feet Sphere",
+        "range": "150 Feet",
+        "duration": "Instantaneous",
+        "recharge": "Recharge [undefined]",
+        "save": "DC 15 Dexterity",
+        "damage": "8d6",
+        "damageTypes": "Fire",
+        "activationAbbrev": "1 A"
+      },
+      "isStack": false,
+      "hasUses": false,
+      "hasTarget": true,
+      "toggleClass": "",
+      "toggleTitle": "Unprepared",
+      "hasDamage": true
+    },
+    {
+      "_id": "IwsvRzJQWzCrjr16",
+      "name": "Fly",
+      "type": "spell",
+      "data": {
+        "description": {
+          "value": "<p>You touch a willing creature. The target gains a flying speed of 60 feet for the Duration. When the spell ends, the target falls if it is still aloft, unless it can stop the fall.</p><p><strong>At Higher Levels.</strong> When you cast this spell using a spell slot of 4th level or higher, you can target one additional creature for each slot level above 3rd.</p>",
+          "chat": "",
+          "unidentified": ""
+        },
+        "source": "PHB pg. 243",
+        "activation": {
+          "type": "action",
+          "cost": 1,
+          "condition": ""
+        },
+        "duration": {
+          "value": 10,
+          "units": "minute"
+        },
+        "target": {
+          "value": 1,
+          "width": null,
+          "units": "",
+          "type": "creature"
+        },
+        "range": {
+          "value": null,
+          "long": null,
+          "units": "touch"
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null
+        },
+        "consume": {
+          "type": "",
+          "target": null,
+          "amount": null
+        },
+        "ability": "",
+        "actionType": "util",
+        "attackBonus": 0,
+        "chatFlavor": "",
+        "critical": null,
+        "damage": {
+          "parts": [],
+          "versatile": "",
+          "value": ""
+        },
+        "formula": "",
+        "save": {
+          "ability": "",
+          "dc": null,
+          "scaling": "spell",
+          "value": ""
+        },
+        "level": 3,
+        "school": "trs",
+        "components": {
+          "value": "",
+          "vocal": true,
+          "somatic": true,
+          "material": true,
+          "ritual": false,
+          "concentration": true
+        },
+        "materials": {
+          "value": "A wing feather from any bird",
+          "consumed": false,
+          "cost": 0,
+          "supply": 0
+        },
+        "preparation": {
+          "mode": "prepared",
+          "prepared": false
+        },
+        "scaling": {
+          "mode": "level",
+          "formula": ""
+        }
+      },
+      "sort": 38668751,
+      "flags": {
+        "core": {
+          "sourceId": "Item.U0HklCmOC2occTyN"
+        },
+        "spell-better": {
+          "category": [
+            "4i20cnm",
+            "4i20cnm",
+            "4i20cnm"
+          ]
+        }
+      },
+      "img": "systems/dnd5e/icons/spells/link-spirit-1.jpg",
+      "effects": [],
+      "labels": {
+        "level": "3rd Level",
+        "school": "Transmutation",
+        "components": [
+          "V",
+          "S",
+          "M",
+          "C"
+        ],
+        "materials": "A wing feather from any bird",
+        "activation": "1 Action",
+        "target": "1 Creature",
+        "range": "Touch",
+        "duration": "10 Minutes",
+        "recharge": "Recharge [undefined]",
+        "damage": "",
+        "damageTypes": "",
+        "activationAbbrev": "1 A",
+        "concentration": "concentration"
+      },
+      "isStack": false,
+      "hasUses": false,
+      "hasTarget": true,
+      "toggleClass": "",
+      "toggleTitle": "Unprepared"
+    },
+    {
+      "_id": "3IgcLilJUDFJ40t5",
+      "name": "Greater Invisibility",
+      "type": "spell",
+      "data": {
+        "description": {
+          "value": "<p>You or a creature you touch becomes Invisible until the spell ends. Anything the target is wearing or carrying is Invisible as long as it is on the target’s person.</p>",
+          "chat": "",
+          "unidentified": ""
+        },
+        "source": "PHB pg. 246",
+        "activation": {
+          "type": "action",
+          "cost": 1,
+          "condition": ""
+        },
+        "duration": {
+          "value": 1,
+          "units": "minute"
+        },
+        "target": {
+          "value": 1,
+          "width": null,
+          "units": "",
+          "type": "creature"
+        },
+        "range": {
+          "value": null,
+          "long": null,
+          "units": "touch"
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null
+        },
+        "consume": {
+          "type": "",
+          "target": null,
+          "amount": null
+        },
+        "ability": "",
+        "actionType": "util",
+        "attackBonus": 0,
+        "chatFlavor": "",
+        "critical": null,
+        "damage": {
+          "parts": [],
+          "versatile": "",
+          "value": ""
+        },
+        "formula": "",
+        "save": {
+          "ability": "",
+          "dc": null,
+          "scaling": "spell",
+          "value": ""
+        },
+        "level": 4,
+        "school": "ill",
+        "components": {
+          "value": "",
+          "vocal": true,
+          "somatic": true,
+          "material": false,
+          "ritual": false,
+          "concentration": true
+        },
+        "materials": {
+          "value": "",
+          "consumed": false,
+          "cost": 0,
+          "supply": 0
+        },
+        "preparation": {
+          "mode": "prepared",
+          "prepared": false
+        },
+        "scaling": {
+          "mode": "none",
+          "formula": ""
+        }
+      },
+      "sort": 38789845,
+      "flags": {
+        "core": {
+          "sourceId": "Item.iI8zKGdmazej1ce9"
+        },
+        "spell-better": {
+          "category": [
+            "4i20cnm",
+            "4i20cnm",
+            "4i20cnm"
+          ]
+        }
+      },
+      "img": "systems/dnd5e/icons/spells/fog-water-air-3.jpg",
+      "effects": [],
+      "labels": {
+        "level": "4th Level",
+        "school": "Illusion",
+        "components": [
+          "V",
+          "S",
+          "C"
+        ],
+        "materials": "",
+        "activation": "1 Action",
+        "target": "1 Creature",
+        "range": "Touch",
+        "duration": "1 Minutes",
+        "recharge": "Recharge [undefined]",
+        "damage": "",
+        "damageTypes": "",
+        "activationAbbrev": "1 A",
+        "concentration": "concentration"
+      },
+      "isStack": false,
+      "hasUses": false,
+      "hasTarget": true,
+      "toggleClass": "",
+      "toggleTitle": "Unprepared"
+    },
+    {
+      "_id": "k3YYVU37eZyA01wK",
+      "name": "Ice Storm",
+      "type": "spell",
+      "data": {
+        "description": {
+          "value": "<p>A hail of rock-hard ice pounds to the ground in a 20-foot-radius, 40-foot-high Cylinder centered on a point within range. Each creature in the cylind⁠er must make a Dexterity saving throw. A creature takes 2d8 bludgeoning damage and 4d6 cold damage on a failed save, or half as much damage on a successful one.</p><p>Hailstones turn the storm’s area of effect into difficult terrain until the end of your next turn.</p><p><strong>At Higher Levels.</strong> When you cast this spell using a spell slot of 5th level or higher, the bludgeoning damage increases by 1d8 for each slot level above 4th.</p>",
+          "chat": "",
+          "unidentified": ""
+        },
+        "source": "PHB pg. 252",
+        "activation": {
+          "type": "action",
+          "cost": 1,
+          "condition": ""
+        },
+        "duration": {
+          "value": null,
+          "units": "inst"
+        },
+        "target": {
+          "value": 20,
+          "width": null,
+          "units": "ft",
+          "type": "cylinder"
+        },
+        "range": {
+          "value": 300,
+          "long": 0,
+          "units": "ft"
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null
+        },
+        "consume": {
+          "type": "",
+          "target": null,
+          "amount": null
+        },
+        "ability": "",
+        "actionType": "save",
+        "attackBonus": 0,
+        "chatFlavor": "",
+        "critical": null,
+        "damage": {
+          "parts": [
+            [
+              "2d8",
+              "bludgeoning"
+            ],
+            [
+              "4d6",
+              "cold"
+            ]
+          ],
+          "versatile": ""
+        },
+        "formula": "",
+        "save": {
+          "ability": "dex",
+          "dc": 15,
+          "scaling": "spell"
+        },
+        "level": 4,
+        "school": "evo",
+        "components": {
+          "value": "",
+          "vocal": true,
+          "somatic": true,
+          "material": true,
+          "ritual": false,
+          "concentration": false
+        },
+        "materials": {
+          "value": "A pinch of dust and a few drops of water",
+          "consumed": false,
+          "cost": 0,
+          "supply": 0
+        },
+        "preparation": {
+          "mode": "prepared",
+          "prepared": false
+        },
+        "scaling": {
+          "mode": "level",
+          "formula": "1d8"
+        }
+      },
+      "sort": 38765626,
+      "flags": {
+        "core": {
+          "sourceId": "Item.0nPvBSzBPneQOkQ8"
+        },
+        "spell-better": {
+          "category": [
+            "4i20cnm",
+            "4i20cnm"
+          ]
+        }
+      },
+      "img": "systems/dnd5e/icons/spells/ice-blue-3.jpg",
+      "effects": [],
+      "labels": {
+        "level": "4th Level",
+        "school": "Evocation",
+        "components": [
+          "V",
+          "S",
+          "M"
+        ],
+        "materials": "A pinch of dust and a few drops of water",
+        "activation": "1 Action",
+        "target": "20 Feet Cylinder",
+        "range": "300 Feet",
+        "duration": "Instantaneous",
+        "recharge": "Recharge [undefined]",
+        "save": "DC 15 Dexterity",
+        "damage": "2d8 + 4d6",
+        "damageTypes": "Bludgeoning, Cold",
+        "activationAbbrev": "1 A"
+      },
+      "isStack": false,
+      "hasUses": false,
+      "hasTarget": true,
+      "toggleClass": "",
+      "toggleTitle": "Unprepared",
+      "hasDamage": true
+    },
+    {
+      "_id": "enVe6COzj4rM0GN9",
+      "name": "Cone of Cold",
+      "type": "spell",
+      "data": {
+        "description": {
+          "value": "<p>A blast of cold air erupts from your hands. Each creature in a 60-foot cone must make a Constitution saving throw. A creature takes 8d8 cold damage on a failed save, or half as much damage on a successful one.</p><p>A creature killed by this spell becomes a frozen statue until it thaws.</p><p><strong>Higher Levels.&nbsp;</strong>When you cast this spell using a spell slot of 6th level or higher, the damage increases by 1d8 for each slot level above 5th.</p>",
+          "chat": "",
+          "unidentified": ""
+        },
+        "source": "PHB pg. 224",
+        "activation": {
+          "type": "action",
+          "cost": 1,
+          "condition": ""
+        },
+        "duration": {
+          "value": null,
+          "units": "inst"
+        },
+        "target": {
+          "value": 60,
+          "width": null,
+          "units": "ft",
+          "type": "cone"
+        },
+        "range": {
+          "value": null,
+          "long": null,
+          "units": "self"
+        },
+        "uses": {
+          "value": 0,
+          "max": 0,
+          "per": null
+        },
+        "consume": {
+          "type": "",
+          "target": null,
+          "amount": null
+        },
+        "ability": "",
+        "actionType": "save",
+        "attackBonus": 0,
+        "chatFlavor": "",
+        "critical": null,
+        "damage": {
+          "parts": [
+            [
+              "8d8",
+              "cold"
+            ]
+          ],
+          "versatile": ""
+        },
+        "formula": "",
+        "save": {
+          "ability": "con",
+          "dc": 15,
+          "scaling": "spell"
+        },
+        "level": 5,
+        "school": "evo",
+        "components": {
+          "value": "",
+          "vocal": true,
+          "somatic": true,
+          "material": true,
+          "ritual": false,
+          "concentration": false
+        },
+        "materials": {
+          "value": "A small crystal or glass cone",
+          "consumed": false,
+          "cost": 0,
+          "supply": 0
+        },
+        "preparation": {
+          "mode": "prepared",
+          "prepared": false
+        },
+        "scaling": {
+          "mode": "level",
+          "formula": "1d8"
+        }
+      },
+      "sort": 38814064,
+      "flags": {
+        "core": {
+          "sourceId": "Item.0XnrYGK1RTsVbwZa"
+        },
+        "spell-better": {
+          "category": [
+            "4i20cnm",
+            "4i20cnm"
+          ]
         }
       },
       "img": "systems/dnd5e/icons/spells/ice-blue-3.jpg",
@@ -13726,6 +14832,30 @@
       "icon": "systems/dnd5e/icons/spells/protect-magenta-1.jpg",
       "label": "Shield",
       "origin": "Actor.ZgqlsgVxEClvbf1C.OwnedItem.6xE7hwBYC92VbBiW",
+      "tint": ""
+    },
+    {
+      "_id": "xhvlUhEyLprn6Cna",
+      "flags": {},
+      "changes": [
+        {
+          "key": "data.attributes.ac.value",
+          "value": 5,
+          "mode": 2
+        }
+      ],
+      "disabled": true,
+      "duration": {
+        "startTime": 0,
+        "seconds": null,
+        "rounds": 1,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "icon": "systems/dnd5e/icons/spells/protect-magenta-1.jpg",
+      "label": "Shield",
+      "origin": "Actor.ZgqlsgVxEClvbf1C.OwnedItem.0r4Nfqh8dwJVtFIX",
       "tint": ""
     }
   ]

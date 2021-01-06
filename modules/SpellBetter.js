@@ -157,11 +157,12 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
             //0.5.3: Remove any of the spell's spellbook type categories
             let spellCategories = itemData.flags[MODULE_ID] ? itemData.flags[MODULE_ID]["category"] : null;
             if (spellCategories) {
-                spellCategories = spellCategories.filter(sc => (this.inventoryPlusForSpells?.allCategories[spellCategory] !== "spellbook"));
+                spellCategories = spellCategories.filter(sc => (this.inventoryPlusForSpells?.allCategories[sc] !== "spellbook"));
             }
             //Add any new templateFlags
-            if (templateFlags) spellCategories = spellCategories.concat(templateFlags["category"]);
-            itemData.flags[MODULE_ID] = spellCategories;  //turn undefined into null
+            if (templateFlags) spellCategories = (spellCategories ?? []).concat(templateFlags["category"]);
+            if (!itemData.flags[MODULE_ID]) {itemData.flags[MODULE_ID] = {}}
+            itemData.flags[MODULE_ID]["category"] = spellCategories;  //turn undefined into null
             await this.actor.updateEmbeddedEntity("OwnedItem", itemData);
         }
 
