@@ -14,6 +14,8 @@
                 sortCategories(): Add isFirst, isLast (for not displaying move controls)
 3-Jan-2021      0.5.2a: Switch categorizeSpells() and filterSPells() to property-oriented labelFilterSets  
                 0.5.2c: Use foundry.js#randomID() to replace built-in getCategoryId which was producing single character id's
+5-Jan-2021      0.5.3: filterSpells: Refactored to use new arguments, and no longer apply flagFilterSets
+                0.5.3i: Check .filter().length > 0 (otherwise you get a truthy result of 1 which isn't working downstream)
 */
 
 import {Category} from "./Category.js";
@@ -104,7 +106,7 @@ export class InventoryPlusForSpells {
                     includedInCategory = spellFlags && spellFlags.includes(categoryKey);
                 } else if (categoryType === "filter") {
                     //Include anything without a category, as well as spells with a category that is a View
-                    includedInCategory = !spellFlags || spellFlags.filter(sf => viewCategories.includes(sf)).length;
+                    includedInCategory = !spellFlags || (spellFlags.filter(sf => viewCategories.includes(sf)).length > 0);
                 }
 
                 includeSpell = includeSpell && includedInCategory;

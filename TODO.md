@@ -1,7 +1,7 @@
 # BUGS
 - Performance on show/hide a category is terrible
     - Can we speed it up or convert to simple show/hide on the HTML and record the setting
-
+- New Categories get added at the end, even with the Order being -1 from All
 
 # FEATURES
 - Move the Print features into a separate Class
