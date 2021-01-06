@@ -3,7 +3,7 @@
 	"title": "Spetzel's Spell Better",
 	"description": "The ultimate detachable spellbook for Wizards and other lesser prepared-spell casters (Druids, Clerics, Paladins). All the flexibility you as a Wizard need with your Spellbook!<ul><li>Filter your spell list by level, school, usage, duration, concentration, and ritual</ul>",
 	"systems": ["dnd5e"],
-	"version": "0.5.3",
+	"version": "0.7.0",
 	"author": "Spetzel#0103",
 	"authors": [
 		{
