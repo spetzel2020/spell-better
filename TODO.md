@@ -1,7 +1,8 @@
 # BUGS
 - Performance on show/hide a category is terrible
     - Can we speed it up or convert to simple show/hide on the HTML and record the setting
-- New Categories get added at the end, even with the Order being -1 from All
+    - Seems to be calling categorize spells twice
+- Need to sort when we first load categories    
 
 # FEATURES
 - Move the Print features into a separate Class
@@ -36,6 +37,8 @@ FIXED Need Edit for custom catgeories
 FIXED- Either remove Print in border, or get it working (does a PopOut and then a print)
     - will need to check that PopOut! is enabled
 FIXED 0.5.3g When you first open the Spellbook, it dies with spells = null    
+FIXED - New Categories get added at the end, even with the Order being -1 from All - need to sort immediately?
+
 # COMPLETED FEATURES
 0.5.1r:  Need to store version in the flags so that we know whether they need to be upgraded in place    
 - Dialog to create a new category with filters and templates

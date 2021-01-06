@@ -7,6 +7,7 @@
                 0.5.1ae findFilterSet(): Quick hack to check the constructed choice field too    
 3-Jan-2021      0.5.2a: Switch to SPELL_BETTER.labelFilterSets format more consistent with selectOPtions
 5-Jan-2021      0.5.3e: Change to a simple View or Spellbook selector
+                0.5.3k: Sort after adding a new category and before saving
 */
 
 import { MODULE_ID, SPELL_BETTER } from './constants.js';
@@ -116,6 +117,8 @@ export class Category extends FormApplication {
         //Don't have set filterFlags because we use the categoryType setting
         if (this.inventoryPlusForSpells) {
             this.inventoryPlusForSpells.allCategories[categoryKey] = newCategory;
+            //0.5.3k: Sort after adding a new category and before saving
+            this.inventoryPlusForSpells.sortCategories();
             this.inventoryPlusForSpells.saveCategories();
         }
     }

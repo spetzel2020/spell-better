@@ -157,6 +157,8 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
             //0.5.3: Remove any of the spell's spellbook type categories
             let spellCategories = itemData.flags[MODULE_ID] ? itemData.flags[MODULE_ID]["category"] : null;
             if (spellCategories) {
+                //If not an array, turn it into one
+                if (!Array.isArray(spellCategories)) {spellCategories = [spellCategories];}
                 spellCategories = spellCategories.filter(sc => (this.inventoryPlusForSpells?.allCategories[sc] !== "spellbook"));
             }
             //Add any new templateFlags
@@ -743,6 +745,7 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     }
 
     //0.5.1: Now that spells have been appropriately filtered and munged, add categories
+    //0.5.3j: Now an array of {key, value}
     sheetData.categories = this.inventoryPlusForSpells.categorizeSpells(sheetData?.spellbook);
     sheetData.filtersIsCollapsed = this.actor.filtersIsCollapsed ?? false;
 
