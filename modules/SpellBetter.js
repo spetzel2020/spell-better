@@ -18,6 +18,7 @@
 4-Jan-2021      0.5.3: Standalone version that will pop up from Spellbook tab      
                 0.5.3c: Remove header from popup spellbook
                 0.5.3d: Basic working pop-up spell sheet from other Character Sheets
+5-Jan-2021      0.5.3f: Add/remove categories when you drop a spell in a new place                
 
 */
 
@@ -151,7 +152,15 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
         //(This allows the default sorting to work if we are dropping from within)
         if ((itemData.flags && itemData.flags[MODULE_ID]) || templateFlags) {
             if (!itemData.flags) {itemData.flags = {}}
-            itemData.flags[MODULE_ID] = templateFlags ?? null;  //turn undefined into null
+
+            //0.5.3: Remove any of the spell's spellbook type categories
+            let spellCategories = itemData.flags[MODULE_ID] ? itemData.flags[MODULE_ID]["category"] : null;
+            if (spellCategories) {
+                spellCategories = spellCategories.filter(sc => (this.inventoryPlusForSpells?.allCategories[spellCategory] !== "spellbook"));
+            }
+            //Add any new templateFlags
+            if (templateFlags) spellCategories = spellCategories.concat(templateFlags["category"]);
+            itemData.flags[MODULE_ID] = spellCategories;  //turn undefined into null
             await this.actor.updateEmbeddedEntity("OwnedItem", itemData);
         }
 
@@ -531,7 +540,7 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
         }
         sheetData?.spellbook.forEach((sbi, index) => {
             //Not really InventoryPlus, but fits the filtering and categorization
-            sheetData.spellbook[index].spells = InventoryPlusForSpells.filterSpells(sbi.spells, appliedFilterSets);
+            sheetData.spellbook[index].spells = this.inventoryPlusForSpells?.filterSpells(sbi.spells, null, appliedFilterSets);
         
         });
     } catch (e) {

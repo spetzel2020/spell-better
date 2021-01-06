@@ -16,7 +16,6 @@
                 0.5.2c: Use foundry.js#randomID() to replace built-in getCategoryId which was producing single character id's
 */
 
-import {SpellBetterCharacterSheet} from "./SpellBetter.js";
 import {Category} from "./Category.js";
 import { MODULE_ID, SPELL_BETTER } from './constants.js';
 
@@ -71,34 +70,44 @@ export class InventoryPlusForSpells {
         this.allCategories = sortedCategories;
     }
 
-    static filterSpells(spells, labelFilterSets, flagFilterSets={}) {
+    filterSpells(spells, categoryKey, userLabelFilterSets=[]) {
+        //Called with either categoryKey=none, in which case we use the manual set of filters
+        const category = categoryKey ? this.allCategories?.[categoryKey] : null;
+        const labelFilterSets = !categoryKey ? userLabelFilterSets : category?.labelFilterSets;
+        const categoryType = category?.categoryType ?? "filter";
+        const viewCategories = this.allCategories ? Object.keys(this.allCategories)?.filter(key => this.allCategories[key].categoryType === "view") : [];
         return spells.filter(spell => {
             let includeSpell = true;
             //0.5.1i: Instead of working off SPELL_BETTER.filters, just use the available filterSets
             //LabelFilters are against standard things (levels, schools...) that are in the labels
-            for (const [filterSetKey, filters] of Object.entries(labelFilterSets)) {
-                if (!Object.keys(SPELL_BETTER.labelFilterSets).includes(filterSetKey)) continue;
-                const isInSpellLabels = filters?.filter(f =>  Object.values(spell.labels).includes(f));
-                includeSpell = includeSpell && (isInSpellLabels?.length > 0);
-                if (!includeSpell) break;
-            }//end for labelFilters
+            if (labelFilterSets) {
+                for (const [filterSetKey, filters] of Object.entries(labelFilterSets)) {
+                    if (!Object.keys(SPELL_BETTER.labelFilterSets).includes(filterSetKey)) continue;
+                    const isInSpellLabels = filters?.filter(f =>  Object.values(spell.labels).includes(f));
+                    includeSpell = includeSpell && (isInSpellLabels?.length > 0);
+                    if (!includeSpell) break;
+                }//end for labelFilters
+            }
 
-            //Apply the flagFilters only if the spell is already included
-            if (includeSpell) {
+            //Apply the flagFilters only if the spell is already included - if it's categoryType=all we ignore flags
+            if (includeSpell && (categoryType !== "all")) {
+                //0.5.3f: A spell could have more than one category flag, so we need to check back against the category definition
+                //If a spell has {category: ["view1", "view2"]}, then it will be shown in View1 and View2, any Filter category, and All
                 //If we have flagFilterSets, but no flags, might be an exclude (indicated by empty filter list)
                 //so we have to process
-                for (const [filterSetKey, filters] of Object.entries(flagFilterSets)) {
-                    //0.5.1: Just a single flag per flag label for now
-                    const flagForFilterSet =  (spell.flags && spell.flags[MODULE_ID]) ? spell.flags[MODULE_ID][filterSetKey] : null;
-                    //Possibilities:
-                    //flagForFilterSet is null AND afs.filters is [] => INCLUDE
-                    //flagForFilterSet exists and is included in afs.filters => INCLUDE
-                    //flagForFilterSet exists and afs.filters doesn't include the flag => EXCLUDE
-                    const includedInFilterSet = (!flagForFilterSet && !filters?.length) 
-                                                || (flagForFilterSet && filters?.includes(flagForFilterSet))
-                    includeSpell = includeSpell && includedInFilterSet;
-                    if (!includeSpell) break;
-                }//end for flagFilters
+                //0.5.3f: Replace flagFilterSets with categoryType of "filter","view","spellbook","all" (filter and all are not available for custom categories)
+                let spellFlags =  (spell.flags && spell.flags[MODULE_ID]) ? spell.flags[MODULE_ID]["category"] : null;
+                //0.5.3f Prior to 0.5.3f spellFlags were single values; if so, convert to an array
+                if (spellFlags && !Array.isArray(spellFlags)) spellFlags = [spellFlags];
+                let includedInCategory = false;
+                if ((categoryType === "spellbook") || (categoryType === "view")) {
+                    includedInCategory = spellFlags && spellFlags.includes(categoryKey);
+                } else if (categoryType === "filter") {
+                    //Include anything without a category, as well as spells with a category that is a View
+                    includedInCategory = !spellFlags || spellFlags.filter(sf => viewCategories.includes(sf)).length;
+                }
+
+                includeSpell = includeSpell && includedInCategory;
             }//end if includeSpell
             return includeSpell;
         });
@@ -113,16 +122,9 @@ export class InventoryPlusForSpells {
             categories[category].spells = [];
             //0.5.1aa: If the showOnlyInCategory flag is set, create a flagFilterSet to represent that
             const labelFilterSets = value.labelFilterSets ? duplicate(value.labelFilterSets) : {};
-            let flagFilterSets = value.flagFilterSets ? duplicate(value.flagFilterSets) : {};
-            if (!value.showAnyCategory) {
-                flagFilterSets["category"] = [];
-            }
-            if (value.viewOrSpellbook === "spellbook") {
-                flagFilterSets["category"] = [category];
-            }
 
             for (const section of spellbook) {
-                const filteredSpells = InventoryPlusForSpells.filterSpells(section.spells, labelFilterSets, flagFilterSets);
+                const filteredSpells = this.filterSpells(section.spells, category, null);
                 categories[category].spells.push(...filteredSpells);
 
                 //Copy the standard level-based stats over

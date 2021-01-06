@@ -62,7 +62,7 @@ export class Category extends FormApplication {
             labelFilterSets : this.choices ,
             selectedFilters: selectedFilters,
             types: types,
-            selectedType: this.object?.viewOrSpellbook
+            selectedType: this.object?.categoryType
         }
         return templateData;
     }
@@ -89,8 +89,8 @@ export class Category extends FormApplication {
             canCreate: false,   //Not the place to create new spells
             canPrepare: true,
             isCollapsed: false,
-            viewOrSpellbook: "view",
-            order: this.inventoryPlusForSpells?.getHighestSortFlag() + 1000
+            categoryType: "view",
+            order: this.inventoryPlusForSpells?.getHighestSortFlag()-1  //Otherwise we would have to sort and decorate the move up/down
         }
 
         for (let [input, value] of Object.entries(formData)) {
@@ -110,10 +110,10 @@ export class Category extends FormApplication {
             }
         }
 
-        //0.5.3e If this is a spellbook, then set appropriate templateFlags
-        if (newCategory.viewOrSpellbook === "spellbook") {
-            newCategory.templateFlags = {category: categoryKey}
-        }
+        //0.5.3e Set appropriate templateFlags (for new or dragged spells)
+        //This is NOT an array - spells can have multiple View categories, but Views and SPellbooks just have/apply one
+        newCategory.templateFlags = {category: categoryKey};
+        //Don't have set filterFlags because we use the categoryType setting
         if (this.inventoryPlusForSpells) {
             this.inventoryPlusForSpells.allCategories[categoryKey] = newCategory;
             this.inventoryPlusForSpells.saveCategories();
