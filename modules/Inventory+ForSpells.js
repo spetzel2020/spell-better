@@ -71,10 +71,10 @@ export class InventoryPlusForSpells {
     }
 
     filterSpells(spells, categoryKey, userLabelFilterSets=[]) {
-        //Called with either categoryKey=none, in which case we use the manual set of filters
+        //Called with either categoryKey=none, in which case we use the manual set of filters and set categoryType="all"
         const category = categoryKey ? this.allCategories?.[categoryKey] : null;
         const labelFilterSets = !categoryKey ? userLabelFilterSets : category?.labelFilterSets;
-        const categoryType = category?.categoryType ?? "filter";
+        const categoryType = category?.categoryType ?? "all";
         const viewCategories = this.allCategories ? Object.keys(this.allCategories)?.filter(key => this.allCategories[key].categoryType === "view") : [];
         return spells.filter(spell => {
             let includeSpell = true;
