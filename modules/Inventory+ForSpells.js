@@ -17,10 +17,11 @@
 5-Jan-2021      0.5.3: filterSpells: Refactored to use new arguments, and no longer apply flagFilterSets
                 0.5.3i: Check .filter().length > 0 (otherwise you get a truthy result of 1 which isn't working downstream)
                 0.5.3j: initCategories(): Remove sortCategories() - sort when you add/remove or change order
+7-Jan-2021      0.7.2: Was not importing MODULE_VERSION for initCategories()                
 */
 
 import {Category} from "./Category.js";
-import { MODULE_ID, SPELL_BETTER } from './constants.js';
+import { MODULE_ID, MODULE_VERSION, SPELL_BETTER } from './constants.js';
 
 export class InventoryPlusForSpells {
     constructor(actor) {

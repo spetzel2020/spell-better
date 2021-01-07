@@ -1,4 +1,6 @@
 # RELEASE NOTES
+## 0.7.2 6-Jan-2021
+- Fixed: Failing completely to open Spell Sheet for new actors (because of missing MODULE_VERSION)
 ## 0.7.0 5-Jan-2021
 - Renumbered to be ahead of ogl sheet
 - Switch to View and Spellbook options for Custom
