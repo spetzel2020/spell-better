@@ -2,7 +2,7 @@
 [![ko-fi](https://img.shields.io/badge/-buy%20me%20a%20coffee-%23FF5E5B)](https://ko-fi.com/spetzel)
 
 # Spetzel's Spell Better
-The ultimate detachable spellbook for Wizards and other lesser prepared-spell casters (Druids, Clerics, Paladins).
+The ultimate detachable spellbook for Wizards and other prepared-spell casters (Druids, Clerics, Paladins).
 
 - Detach the Spell Better Spellbook by clicking the Spellbook tab from any supported character sheet
 - OR switch your character sheet to the Spell Better sheet for a full OGL-5e sheet with Spell Better spellbook
