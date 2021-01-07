@@ -24,7 +24,6 @@ Spell Better is a forked version of https://github.com/ElfFriend-DnD/foundryvtt-
 1. Go to the Add-on Modules tab in Foundry Setup
 2. Click Install Module and search for **Spetzel's Spell Better** OR paste this link: `https://github.com/spetzel2020/spell-better/releases/download/latest/module.json`
 3. Open your world and go to Settings>Manage Modules and enable Spetzel's Spell Better
-Module JSON:
 
 ## Gallery
 [<img src="readme-img/spell-better-filters.png" width="30%"></img>](readme-img/spell-better-filters.png)
