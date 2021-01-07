@@ -14,7 +14,7 @@ The ultimate detachable spellbook for Wizards and other lesser prepared-spell ca
 
 ## Summary
 * **Authors**: Discord: Spetzel#0103, [Calego#0914](https://github.com/ElfFriend-DnD)
-* **Version**: 0.7.0
+* **Version**: 0.7.1
 * **Foundry VTT Compatibility**: 0.7.2-0.7.9
 * **System Compatibility (If applicable)**: dnd5e
 * **Translation Support**: en
@@ -27,7 +27,9 @@ Spell Better is a forked version of https://github.com/ElfFriend-DnD/foundryvtt-
 Module JSON:
 
 ## Gallery
-[<img src="readme-img/spellbook.png" width="30%"></img>](readme-img/spellbook.png)
+[<img src="readme-img/spell-better-filters.png" width="30%"></img>](readme-img/spell-better-filters.png)
+
+[<img src="readme-img/spell-better-custom.png" width="30%"></img>](readme-img/spell-better-custom-spellbook.png)
 
 See the github for the [5e-OGL-Character-Sheet](https://github.com/ElfFriend-DnD/foundryvtt-5eOGLCharacterSheet) for gallery of non-spellbook portions of the sheet.
 
