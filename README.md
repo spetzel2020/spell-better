@@ -29,7 +29,7 @@ Module JSON:
 ## Gallery
 [<img src="readme-img/spell-better-filters.png" width="30%"></img>](readme-img/spell-better-filters.png)
 
-[<img src="readme-img/spell-better-custom.png" width="30%"></img>](readme-img/spell-better-custom.png)
+[<img src="readme-img/spell-better-custom-spellbook.png" width="30%"></img>](readme-img/spell-better-custom-spellbook.png)
 
 See the github for the [5e-OGL-Character-Sheet](https://github.com/ElfFriend-DnD/foundryvtt-5eOGLCharacterSheet) for gallery of non-spellbook portions of the sheet.
 
