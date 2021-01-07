@@ -1,4 +1,4 @@
-![Foundry Core Compatible Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2Fspetzel2020%2Fspell-better%2Fmaster%2Fsrc%2Fmodule.json&label=Foundry%20Version&query=$.compatibleCoreVersion&colorB=orange)
+![Foundry Core Compatible Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2Fspetzel2020%2Fspell-better%2Fmaster%2Fmodule.json&label=Foundry%20Version&query=$.compatibleCoreVersion&colorB=orange)
 [![ko-fi](https://img.shields.io/badge/-buy%20me%20a%20coffee-%23FF5E5B)](https://ko-fi.com/spetzel)
 
 # Spetzel's Spell Better
@@ -29,7 +29,7 @@ Module JSON:
 ## Gallery
 [<img src="readme-img/spell-better-filters.png" width="30%"></img>](readme-img/spell-better-filters.png)
 
-[<img src="readme-img/spell-better-custom.png" width="30%"></img>](readme-img/spell-better-custom-spellbook.png)
+[<img src="readme-img/spell-better-custom.png" width="30%"></img>](readme-img/spell-better-custom.png)
 
 See the github for the [5e-OGL-Character-Sheet](https://github.com/ElfFriend-DnD/foundryvtt-5eOGLCharacterSheet) for gallery of non-spellbook portions of the sheet.
 
