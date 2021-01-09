@@ -17,7 +17,8 @@
 5-Jan-2021      0.5.3: filterSpells: Refactored to use new arguments, and no longer apply flagFilterSets
                 0.5.3i: Check .filter().length > 0 (otherwise you get a truthy result of 1 which isn't working downstream)
                 0.5.3j: initCategories(): Remove sortCategories() - sort when you add/remove or change order
-7-Jan-2021      0.7.2: Was not importing MODULE_VERSION for initCategories()                
+7-Jan-2021      0.7.2: Was not importing MODULE_VERSION for initCategories()   
+9-Jan-2021      0.7.3a: Fixed: Sort categories when you first load them             
 */
 
 import {Category} from "./Category.js";
@@ -52,6 +53,8 @@ export class InventoryPlusForSpells {
                 this.allCategories[category].isCollapsed = savedCategories[category].isCollapsed;
             }
         }
+
+        this.sortCategories();
     }
 
     

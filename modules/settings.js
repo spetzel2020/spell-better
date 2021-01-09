@@ -1,6 +1,6 @@
 /*
 4-Jan-2021  0.5.3: Add substituteForSpellbook (whether we should pop up Spell Better instead of a regular spellbook tab)
-
+9-Jan-2021 0.7.3a: Substitute for spellbook is a client setting so individual players can choose it
 
 */
 
@@ -48,7 +48,7 @@ export const registerSettings = function () {
         name:  "SPELL_BETTER.SubstituteForSpellbook.NAME",
         default: true,
         type: Boolean,
-        scope: 'world',
+        scope: 'client',
         config: true,
         hint:  "SPELL_BETTER.SubstituteForSpellbook.HINT",
      });

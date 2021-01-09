@@ -8,11 +8,12 @@
 4-Jan-2021  0.5.3: Substitute for the regular spellbook tab on supported sheets      
 5-Jan-2021  0.5.3e: Use viewOrSpellbook choice    
 7-Jan-2021  0.7.2: Updated MODULE_VERSION  
+9-Jan-2021  0.7.3: 
 */
 
 
 export const MODULE_ID = 'spell-better';
-export const MODULE_VERSION = "0.7.2";
+export const MODULE_VERSION = "0.7.3";
 
 //SPell Better 0.5.0: The filter lists have to be spelled out to match what is in the internal labels
 export const SPELL_BETTER = {
