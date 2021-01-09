@@ -46,10 +46,12 @@ It's not as familiar for a Roll20 user, but believe me when I say it's improved 
 
 ## Options
 
-| **Name**                      | Description                                                                                             |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------- |
-| **Limit Actions to Cantrips** | Instead of showing all spells that deal damage in the Actions panel, limit it to only cantrips.         |
-| **Add Icons to Inventory**    | Adds icons to all items in the inventory section, might make itemes with limited charges display oddly. |
+| **Name**                           | Description                                                                                             |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| **Limit Actions to Cantrips**      | Instead of showing all spells that deal damage in the Actions panel, limit it to only cantrips.         |
+| **Add Icons to Inventory**         | Adds icons to all items in the inventory section, might make itemes with limited charges display oddly. |
+| **Hide Category with no spells**   | If a category (for example, "7th Level" has no spells in it, hide it)                                   |
+| **Substitute for Spellbook**       | Open a pop-up version of the Spell Better Spellbook by clicking the Spellbook tab on other sheets       |
 
 This sheet respects the 5e System setting: "Disable Experience Tracking"
 
@@ -59,14 +61,4 @@ See Compatibility for https://github.com/ElfFriend-DnD/foundryvtt-5eOGLCharacter
 
 ## Acknowledgements
 
-Forked from https://github.com/ElfFriend-DnD/foundryvtt-5eOGLCharacterSheet . Their Acknowledgements included below:
-
-Obviously almost all of the layout decisions here are pretty directly ripped from the Roll20 OGL Character Sheet, and by proxy the WOTC official 5e Sheet.
-
-Shares a lot of code with my own [Compact DnDBeyond-like 5e Character Sheet](https://github.com/ElfFriend-DnD/foundryvtt-compactBeyond5eSheet). If you like D&D Beyond's layout but want it more compact and foundry-fied, check it out.
-
-Yoinked some expanded Biography tab code directly from [tidy5e-sheet](https://github.com/sdenec/tidy5e-sheet). Also took their localization of the headers in said tab.
-
-Bootstrapped with Nick East's [create-foundry-project](https://gitlab.com/foundry-projects/foundry-pc/create-foundry-project).
-
-Mad props to the [League of Extraordinary FoundryVTT Developers](https://forums.forge-vtt.com/c/package-development/11) community which helped me figure out a lot.
+Forked from https://github.com/ElfFriend-DnD/foundryvtt-5eOGLCharacterSheet (refer there for acknowledgements)
