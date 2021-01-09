@@ -5,7 +5,7 @@
 
 # Spetzel's Spell Better
 The ultimate detachable spellbook for Wizards and other prepared-spell casters (Druids, Clerics, Paladins).
-
+- Hover over the spell name for pop-up Attack and Damage controls
 - Detach the Spell Better Spellbook by clicking the Spellbook tab from any supported character sheet
 - OR switch your character sheet to the Spell Better sheet for a full OGL-5e sheet with Spell Better spellbook
 - See a one-line spell-slot summary as well as how many spells you can and have prepared
@@ -16,7 +16,7 @@ The ultimate detachable spellbook for Wizards and other prepared-spell casters (
 
 ## Summary
 * **Authors**: Discord: Spetzel#0103, [Calego#0914](https://github.com/ElfFriend-DnD)
-* **Version**: 0.7.2
+* **Version**: 0.7.3
 * **Foundry VTT Compatibility**: 0.7.2-0.7.9
 * **System Compatibility (If applicable)**: dnd5e
 * **Translation Support**: en
