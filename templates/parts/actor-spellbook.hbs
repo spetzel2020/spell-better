@@ -144,57 +144,55 @@
                 {{/if}}
             </div>
         </li>
-        {{#unless section.isCollapsed}}
-            <ol class="item-list"  data-category="{{@key}}">
-                {{#each section.spells as |item i|}}
-                    <li class="item flexrow" data-item-id="{{item._id}}">
-                    <div class="item-name flexrow rollable">
-                        <div class="item-image" style="background-image: url({{item.img}})"></div>
-                        <div class="item-shortcuts flexrow">
-                            {{#if item.hasAttack}} <span class="tag rollable spellAttack" title="Roll Attack"><i class="fas fa-bullseye"></i></span> {{/if}}
-                            {{#if item.hasDamage}} <span class="tag rollable spellDamage" title="Roll Damage"><i class="fas fa-tint"></i></span> {{/if}}
-                        </div>
-                        <h4>{{item.name}}</h4>
-                        {{#if item.data.uses.per }}
-                        <div class="item-detail spell-uses">Uses {{item.data.uses.value}} / {{item.data.uses.max}}</div>
-                        {{/if}}
+        <ol class="item-list"  data-category="{{@key}}" {{#if section.isCollapsed}}style="display: none;"{{/if}}>
+            {{#each section.spells as |item i|}}
+                <li class="item flexrow" data-item-id="{{item._id}}">
+                <div class="item-name flexrow rollable">
+                    <div class="item-image" style="background-image: url({{item.img}})"></div>
+                    <div class="item-shortcuts flexrow">
+                        {{#if item.hasAttack}} <span class="tag rollable spellAttack" title="Roll Attack"><i class="fas fa-bullseye"></i></span> {{/if}}
+                        {{#if item.hasDamage}} <span class="tag rollable spellDamage" title="Roll Damage"><i class="fas fa-tint"></i></span> {{/if}}
                     </div>
-
-                    <div class="spell-comps">
-                        {{#each labels.components}}
-                        <span class="spell-component {{this}}">{{this}}</span>
-                        {{/each}}
-                    </div>
-
-                    <div class="spell-action">{{labels.activation}}</div>
-
-                    <div class="spell-target" title="{{localize 'DND5E.Range'}}: {{labels.range}}">
-                        <span>{{labels.range}}</span>
-                        {{#if labels.target}}
-                        {{#unless (eq labels.target labels.range)}}
-                        <small>
-                        {{labels.target}}
-                        </small>
-                        {{/unless}}
-                        {{/if}}
-                    </div>
-
-                    <div class="spell-school">{{labels.school}}</div>
-
-
-                    {{#if ../../owner}}
-                        <div class="item-controls">
-                            {{#if section.canPrepare}}
-                            <a class="spell-control item-toggle {{item.toggleClass}}" title="{{item.toggleTitle}}"><i class="fas fa-sun"></i></a>
-                            {{/if}}
-                            <a class="spell-control item-edit" title="{{localize 'SPELL_BETTER.EditSpell'}}"><i class="fas fa-edit"></i></a>
-                            <a class="spell-control item-delete" title="{{localize 'SPELL_BETTER.DeleteSpell'}}"><i class="fas fa-trash"></i></a>
-                        </div>
+                    <h4>{{item.name}}</h4>
+                    {{#if item.data.uses.per }}
+                    <div class="item-detail spell-uses">Uses {{item.data.uses.value}} / {{item.data.uses.max}}</div>
                     {{/if}}
-                    </li>
-                {{/each}}
-            </ol>
-        {{/unless}}
+                </div>
+
+                <div class="spell-comps">
+                    {{#each labels.components}}
+                    <span class="spell-component {{this}}">{{this}}</span>
+                    {{/each}}
+                </div>
+
+                <div class="spell-action">{{labels.activation}}</div>
+
+                <div class="spell-target" title="{{localize 'DND5E.Range'}}: {{labels.range}}">
+                    <span>{{labels.range}}</span>
+                    {{#if labels.target}}
+                    {{#unless (eq labels.target labels.range)}}
+                    <small>
+                    {{labels.target}}
+                    </small>
+                    {{/unless}}
+                    {{/if}}
+                </div>
+
+                <div class="spell-school">{{labels.school}}</div>
+
+
+                {{#if ../../owner}}
+                    <div class="item-controls">
+                        {{#if section.canPrepare}}
+                        <a class="spell-control item-toggle {{item.toggleClass}}" title="{{item.toggleTitle}}"><i class="fas fa-sun"></i></a>
+                        {{/if}}
+                        <a class="spell-control item-edit" title="{{localize 'SPELL_BETTER.EditSpell'}}"><i class="fas fa-edit"></i></a>
+                        <a class="spell-control item-delete" title="{{localize 'SPELL_BETTER.DeleteSpell'}}"><i class="fas fa-trash"></i></a>
+                    </div>
+                {{/if}}
+                </li>
+            {{/each}}
+        </ol>
         {{#if owner}}
             {{#if filters.spellbook.size}}
             <li class="item flexrow">

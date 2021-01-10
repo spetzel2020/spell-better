@@ -1,4 +1,8 @@
 # RELEASE NOTES
+## 0.7.3 9-Jan-2021
+- Fixed: Show/hide a spell category was very slow
+- Fixed: Categories weren't sorted when you first loaded the spellbook
+- Fixed: Substitute for Spellbook setting is now per-client
 ## 0.7.2 6-Jan-2021
 - Fixed: Failing completely to open Spell Sheet for new actors (because of missing MODULE_VERSION)
 ## 0.7.0 5-Jan-2021

@@ -19,7 +19,8 @@
                 0.5.3c: Remove header from popup spellbook
                 0.5.3d: Basic working pop-up spell sheet from other Character Sheets
 5-Jan-2021      0.5.3f: Add/remove categories when you drop a spell in a new place      
-                0.5.3g: getData(): Moved initialization of inventoryPlusForSpells here because we need it for calling filterSpells          
+                0.5.3g: getData(): Moved initialization of inventoryPlusForSpells here because we need it for calling filterSpells         
+9-Jan-2021      0.7.3c: Use show/hide on itemList rather than updating the category status and forcing a re-render                 
 
 */
 
@@ -431,16 +432,38 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     const categoryHeaders = html.find(".sub-header");
 //FIXME: For a brand-new sheet, this may be null; use a singleton call to do this
     const inventoryPlusForSpells = this.inventoryPlusForSpells;
+    const caretRight = document.createElement("i");
+    caretRight.innerHTML = "<i class='fas fa-caret-right'>";
+    const caretDown = document.createElement("i");
+    caretDown.innerHTML = "<i class='fas fa-caret-down'>";
     for (const header of categoryHeaders) {
         const el = $(header);
         const categoryKey = el[0].dataset.category;
         if (categoryKey) {
             //0.5.1s Attach the toggle to the caret, not to the whole line
             const toggle = el.find(".toggle-collapse");
+            const itemList = el.next(`ol.item-list[data-category='${categoryKey}']`);
             if (toggle.length) {
                 toggle.click(async ev => {
-                    inventoryPlusForSpells.allCategories[categoryKey].isCollapsed = !inventoryPlusForSpells.allCategories[categoryKey].isCollapsed;
-                    inventoryPlusForSpells.saveCategories(categoryKey);
+                    const isCollapsed = !inventoryPlusForSpells.allCategories[categoryKey].isCollapsed;
+                    inventoryPlusForSpells.allCategories[categoryKey].isCollapsed = isCollapsed;
+                    //0.7.3 If item-list is available then use show/hide; otherwise fall back to the older saveCategories() methid which triggers an update
+                    if (itemList?.length) {
+                        const caretRight = document.createElement("i");
+                        caretRight.className = "fas fa-caret-right";
+                        const caretDown = document.createElement("i");
+                        caretDown.className = "fas fa-caret-down";
+                        const caret = toggle.children("i.fas*");
+                        if (isCollapsed) {
+                            itemList.hide();
+                            if (caret?.length) {caret[0].parentNode.replaceChild(caretRight, caret[0]);}
+                        } else {
+                            itemList.show();
+                            if (caret?.length) {caret[0].parentNode.replaceChild(caretDown, caret[0]);}
+                        }
+                    } else {
+                        inventoryPlusForSpells.saveCategories(categoryKey);
+                    }
                 });
             }
             //0.5.1ab: Move category
@@ -815,7 +838,7 @@ Hooks.once('init', async function () {
 //   // ready
 // });
 
-//FIXME: Register SpellBetter Sheet - not a real solution, since we will want to pop up Spell Better independent of the Actor Sheet
+//Register SpellBetter Sheet - if you want to use this OGL-5e-based version completely
 Actors.registerSheet('dnd5e', SpellBetterCharacterSheet, {
   label: 'Spell Better Sheet',
   types: ['character'],
