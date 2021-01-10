@@ -18,7 +18,9 @@
                 0.5.3i: Check .filter().length > 0 (otherwise you get a truthy result of 1 which isn't working downstream)
                 0.5.3j: initCategories(): Remove sortCategories() - sort when you add/remove or change order
 7-Jan-2021      0.7.2: Was not importing MODULE_VERSION for initCategories()   
-9-Jan-2021      0.7.3a: Fixed: Sort categories when you first load them             
+9-Jan-2021      0.7.3a: Fixed: Sort categories when you first load them     
+10-Jan-2021     0.7.3d: sortCategories(): Renumber the categories so we don't have categories on the same sort position     
+                Also call saveCateories()
 */
 
 import {Category} from "./Category.js";
@@ -65,14 +67,18 @@ export class InventoryPlusForSpells {
         keys.sort((a, b) => {
             return this.allCategories[a].order - this.allCategories[b].order;
         });
-        for (let key of keys) {
+        //0.7.3d: Renumber the order while sorting
+        for (const [index,key] of keys.entries()) {
             sortedCategories[key] = this.allCategories[key];
             sortedCategories[key].isFirst = false;
             sortedCategories[key].isLast = false;
+            sortedCategories[key].order = 10 * index;
         }
         sortedCategories[keys[0]].isFirst = true;
         sortedCategories[keys[keys.length-1]].isLast = true;
         this.allCategories = sortedCategories;
+
+        this.saveCategories();
     }
 
     filterSpells(spells, categoryKey, userLabelFilterSets=[]) {
@@ -235,12 +241,13 @@ export class InventoryPlusForSpells {
 
             this.allCategories[movedCategory].order = newMovedSortFlag;
             this.allCategories[targetCategory].order = oldMovedSortFlag;
+            //0.7.3d: sort now saves also
             this.sortCategories();
-            this.saveCategories();
         }
     }
 
-
+    //DEPRECATED
+/*    
     getHighestSortFlag() {
         let highest = 0;
 
@@ -266,7 +273,7 @@ export class InventoryPlusForSpells {
 
         return lowest;
     }
-
+*/
     generateCategoryId() {
         let id = '';
         let iterations = 100;

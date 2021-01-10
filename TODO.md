@@ -1,9 +1,5 @@
 # BUGS
->>> Performance on show/hide a category is terrible
-    - Can we speed it up or convert to simple show/hide on the HTML and record the setting
-    - Seems to be calling categorize spells twice
-   
-- The ordering is sometimes wonky and the move up/down don't work for the last and first item
+
 - Don't show the Filters field unless you specify a type of Filter
     - "Create a saved Filter that shows all View or non-Spellbook spells"
 
@@ -12,10 +8,8 @@
     - Try the method mentioned below
     - Can the spell icons be printed, or is that a media print setting
 - Allow creation of Custom Filter (just a way of saving presets)
-- Check whether/how well SB works for Druids, Clerics, and Paladins
+>>> Check whether/how well SB works for Druids, Clerics, and Paladins
 - Automatically populate all available Wizard spells into a temporary compendium for selection, by level
-- Need to sort when we first load categories    
-
 
 - New Category Dialog:
     - Choose either Filter or Spellbook, with appropriate explanations
@@ -48,7 +42,9 @@ FIXED 0.5.3g When you first open the Spellbook, it dies with spells = null
 FIXED - New Categories get added at the end, even with the Order being -1 from All - need to sort immediately?
 0.7.2: Inventory+ForSpells.js#initCategories(): Missing MODULE_VERSION 
 0.7.3a: Need to sort when we first load categories 
-
+0.7.3 Performance on show/hide a category is terrible
+        - Converted to show/hide
+0.7.3: The ordering is sometimes wonky and the move up/down don't work for the last and first item
 
 # COMPLETED FEATURES
 0.5.1r:  Need to store version in the flags so that we know whether they need to be upgraded in place    
@@ -59,7 +55,8 @@ FIXED - New Categories get added at the end, even with the Order being -1 from A
     - Choose either View or Spellbook, with appropriate explanations
     - A View drag specific Spells in as a different View on your Known Spells
     - A Spellbook is a separate list of spells, possibly duplicating your Known spells (like Wanted or The Brown Spellbook)
-0.7.3a: Use Spellbook from other Sheets should be a client setting so everbody has a choices    
+0.7.3a: Use Spellbook from other Sheets should be a client setting so everbody has a choices   
+0.7.3 Need to sort when we first load categories  
 
 # PRINT SOLUTION (from @Sunspots)
 Can't you use CSS only to exclude everything but the desired element? Add a class to the window you want to print and in the print css something like
