@@ -1,11 +1,12 @@
 # BUGS
-
 - Don't show the Filters field unless you specify a type of Filter
     - "Create a saved Filter that shows all View or non-Spellbook spells"
+
 
 REFACTORING
 - Profile
 - Look for recalculations like getHighest/LowestSortFlag()
+- Save just a single changed category(if it would help)
 
 # FEATURES
 - Move the Print features into a separate Class
@@ -49,6 +50,7 @@ FIXED - New Categories get added at the end, even with the Order being -1 from A
 0.7.3 Performance on show/hide a category is terrible
         - Converted to show/hide
 0.7.3: The ordering is sometimes wonky and the move up/down don't work for the last and first item
+0.7.3 Drag a spell from COmpenduim to a standard View -> doesn't show up
 
 # COMPLETED FEATURES
 0.5.1r:  Need to store version in the flags so that we know whether they need to be upgraded in place    

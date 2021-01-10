@@ -8,7 +8,7 @@
 4-Jan-2021  0.5.3: Substitute for the regular spellbook tab on supported sheets      
 5-Jan-2021  0.5.3e: Use viewOrSpellbook choice    
 7-Jan-2021  0.7.2: Updated MODULE_VERSION  
-9-Jan-2021  0.7.3: 
+9-Jan-2021  0.7.3e: Remove Wanted 4th for release version
 */
 
 
@@ -146,14 +146,7 @@ export const SPELL_BETTER = {
                     otherRitual: ["ritual"]
                 },         
                 canCreate: false, canPrepare : false,           
-                order: 900, usesSlots: false, type: "spell",  isCollapsed: true },                 
-        wanted4: { label: "Wanted (4th)", isCustom: true, categoryType: "spellbook", 
-                templateItemData: {level: 9}, templateFlags: {"category": "wanted"},
-                labelFilterSets: {
-                    levels: ["4th Level"]
-                },
-                canCreate: false, canPrepare : false,           
-                order: 999, usesSlots: false, type: "spell",  isCollapsed: true },                                                                                                                                                       
+                order: 900, usesSlots: false, type: "spell",  isCollapsed: true },                                                                                                                                                      
         wanted: { label: "SPELL_BETTER.Category.Wanted", isCustom: true, categoryType: "spellbook", 
                 templateItemData: {level: 9}, templateFlags: {"category": "wanted"},
                 labelFilterSets: {}, 

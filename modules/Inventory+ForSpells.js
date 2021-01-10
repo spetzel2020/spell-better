@@ -173,9 +173,10 @@ export class InventoryPlusForSpells {
         if (templateItemDataData) {
             mergeObject(templateItemData, {data: templateItemDataData});
         }
-        let templateFlags = customCategory?.templateFlags ?? {}
+        let templateFlags = customCategory?.templateFlags;
         //0.5.1aa If the showOnlyInCategory flag is set, then create a pseudo templateFlag
-        if (customCategory.showOnlyInCategory) {
+        if (customCategory.categoryType === "spellbook") {
+            if (!templateFlags) {templateFlags = {}}
             mergeObject(templateFlags, {"category": categoryKey});
         }
         return {templateItemData, templateFlags};

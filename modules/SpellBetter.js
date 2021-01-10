@@ -149,6 +149,7 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
         }
 
         const category = targetLi.dataset?.category;
+        //Don't bring back templateItemData because we're not creating from scratch
         const templateFlags = this.inventoryPlusForSpells.getTemplateItemData(category)?.templateFlags;
         //If the flags are different than current (because we're dropping in a different category) then update them first
         //(This allows the default sorting to work if we are dropping from within)

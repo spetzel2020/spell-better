@@ -8,6 +8,7 @@
 3-Jan-2021      0.5.2a: Switch to SPELL_BETTER.labelFilterSets format more consistent with selectOPtions
 5-Jan-2021      0.5.3e: Change to a simple View or Spellbook selector
                 0.5.3k: Sort after adding a new category and before saving
+10-Jan-2021     0.7.3: _updateObject(): Don't save after sorting (done in sortCategories())                
 */
 
 import { MODULE_ID, SPELL_BETTER } from './constants.js';
@@ -118,8 +119,8 @@ export class Category extends FormApplication {
         if (this.inventoryPlusForSpells) {
             this.inventoryPlusForSpells.allCategories[categoryKey] = newCategory;
             //0.5.3k: Sort after adding a new category and before saving
+            //0.7.3: Also saves
             this.inventoryPlusForSpells.sortCategories();
-            this.inventoryPlusForSpells.saveCategories();
         }
     }
 
