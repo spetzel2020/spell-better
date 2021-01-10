@@ -3,6 +3,10 @@
 - Don't show the Filters field unless you specify a type of Filter
     - "Create a saved Filter that shows all View or non-Spellbook spells"
 
+REFACTORING
+- Profile
+- Look for recalculations like getHighest/LowestSortFlag()
+
 # FEATURES
 - Move the Print features into a separate Class
     - Try the method mentioned below

@@ -246,8 +246,7 @@ export class InventoryPlusForSpells {
         }
     }
 
-    //DEPRECATED
-/*    
+  
     getHighestSortFlag() {
         let highest = 0;
 
@@ -273,7 +272,7 @@ export class InventoryPlusForSpells {
 
         return lowest;
     }
-*/
+
     generateCategoryId() {
         let id = '';
         let iterations = 100;
