@@ -50,7 +50,7 @@ It's not as familiar for a Roll20 user, but believe me when I say it's improved 
 | ---------------------------------- | ------------------------------------------------------------------------------------------------------- |
 | **Limit Actions to Cantrips**      | Instead of showing all spells that deal damage in the Actions panel, limit it to only cantrips.         |
 | **Add Icons to Inventory**         | Adds icons to all items in the inventory section, might make itemes with limited charges display oddly. |
-| **Hide Category with no spells**   | If a category (for example, "7th Level" has no spells in it, hide it)                                   |
+| **Hide Category with no spells**   | If a category (for example, "7th Level") has no spells in it, hide it                                   |
 | **Substitute for Spellbook**       | Open a pop-up version of the Spell Better Spellbook by clicking the Spellbook tab on other sheets       |
 
 This sheet respects the 5e System setting: "Disable Experience Tracking"
