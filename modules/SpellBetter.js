@@ -20,7 +20,8 @@
                 0.5.3d: Basic working pop-up spell sheet from other Character Sheets
 5-Jan-2021      0.5.3f: Add/remove categories when you drop a spell in a new place      
                 0.5.3g: getData(): Moved initialization of inventoryPlusForSpells here because we need it for calling filterSpells         
-9-Jan-2021      0.7.3c: Use show/hide on itemList rather than updating the category status and forcing a re-render                 
+9-Jan-2021      0.7.3c: Use show/hide on itemList rather than updating the category status and forcing a re-render      
+23-Jan-2021     0.7.4a: Add Innate to Other label setting (too hard to extract otherwise)           
 
 */
 
@@ -523,7 +524,8 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
         this.inventoryPlusForSpells = new InventoryPlusForSpells(this.actor);
     }
 
-    //To make filtering easier we decorate each spell with labels here for Activation type and Other (Concentration, Prepared, Ritual)
+    //v0.7.4: Add Other: Innate
+    //To make filtering easier we decorate each spell with labels here for Activation type and Other (Concentration, Prepared, Ritual, Innate)
     try {
       // MUTATES sheetData
       sheetData?.spellbook.forEach(({ spells }) => {
@@ -550,6 +552,8 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
             if (spell.data.level === 0 || ["innate", "always"].includes(spell.data.preparation.mode) || (spell.data.preparation.prepared)) {
                 spell.labels.prepared = "prepared";
             }
+            //0.7.4: Add label for Innate; may want to remove from above flag for Prepared
+            if ("innate" === spell.data.preparation.mode) {spell.labels.innate = "innate";}
         });
       });
     } catch (e) {

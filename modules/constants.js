@@ -9,11 +9,13 @@
 5-Jan-2021  0.5.3e: Use viewOrSpellbook choice    
 7-Jan-2021  0.7.2: Updated MODULE_VERSION  
 9-Jan-2021  0.7.3e: Remove Wanted 4th for release version
+23-Jan-2021 0.7.4a: Add Innate category 
+
 */
 
 
 export const MODULE_ID = 'spell-better';
-export const MODULE_VERSION = "0.7.3";
+export const MODULE_VERSION = "0.7.4";
 
 //SPell Better 0.5.0: The filter lists have to be spelled out to match what is in the internal labels
 export const SPELL_BETTER = {
@@ -33,7 +35,10 @@ export const SPELL_BETTER = {
         },
         otherConcentration : {concentration: {label: "concentration",name: "DND5E.Concentration"}},
         otherRitual : {ritual: {label: "ritual",name: "DND5E.Ritual"}},
-        otherPrepared : {prepared: {label: "prepared",name: "DND5E.Prepared"}},
+        otherPrepared : {
+            prepared: {label: "prepared",name: "DND5E.Prepared"},
+            innate: {label: "innate", name: "SPELL_BETTER.Innate"}
+        },
         durations : {
             instantaneous: {label: "Instantaneous", name: "DND5E.TimeInst"},                         
             _1_Round: {label: "1 Rounds",name: "SPELL_BETTER._1Round"},
@@ -69,6 +74,15 @@ export const SPELL_BETTER = {
     categories_key : "categories",
     standardCategories : { 
         //.prop is needed for now for display     
+//FIXME: "label" is overloaded; call it categoryName instead        
+        innate: { label: "SPELL_BETTER.Innate", categoryType: "filter", 
+                templateItemData: {level: 0},
+                labelFilterSets: {
+                    otherPrepared: ["innate"]
+                }, 
+                /* Will be overridden by actual spell level stats */
+                prop: "innate", canCreate: true, canPrepare: false, slots: "&infin;", uses: "&infin;", usesSlots: false,
+                order: -10, type: "spell",  isCollapsed: true },
         spell0: { label: "DND5E.SpellLevel0", categoryType: "filter", 
                 templateItemData: {level: 0},
                 labelFilterSets: {

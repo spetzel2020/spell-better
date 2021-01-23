@@ -27,6 +27,7 @@
   "SPELL_BETTER._1Minute" : "1 Minute",
     "SPELL_BETTER._10Minutes" : "10 Minutes",
   "SPELL_BETTER._1Hour" : "1 Hour",
+  "SPELL_BETTER.Innate" : "Innate",
   "SPELL_BETTER.SpellLevel1" : "1st",  
   "SPELL_BETTER.SpellLevel2" : "2nd",
   "SPELL_BETTER.SpellLevel3" : "3rd",

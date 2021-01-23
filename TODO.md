@@ -3,7 +3,9 @@
     - "Create a saved Filter that shows all View or non-Spellbook spells"
 
 
-REFACTORING
+# REFACTORING
+>>> Look at Issues on GitHub page`
+>>> Merge any changes to the OGL sheet
 - Profile
 - Look for recalculations like getHighest/LowestSortFlag()
 - Save just a single changed category(if it would help)
