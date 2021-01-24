@@ -1,10 +1,13 @@
 # BUGS
 - Don't show the Filters field unless you specify a type of Filter
     - "Create a saved Filter that shows all View or non-Spellbook spells"
-
+-
+- v0.7.4: The new sortCategories() call in categorizeSpells() is sending the sheet into a terrible render loop
+    - Need to hide categories with no spells (if desired) using a flag (show/hide in addition is isCollapsed)
+    - and in addition when move up/down, have to skip categories that are hidden
 
 # REFACTORING
->>> Look at Issues on GitHub page`
+
 >>> Merge any changes to the OGL sheet
 - Profile
 - Look for recalculations like getHighest/LowestSortFlag()
@@ -55,6 +58,10 @@ FIXED - New Categories get added at the end, even with the Order being -1 from A
 0.7.3: The ordering is sometimes wonky and the move up/down don't work for the last and first item
 0.7.3 Drag a spell from COmpenduim to a standard View -> doesn't show up
 0.7.4: Displays Innate spells correctly, including related bug with showing number of uses/slots
+0.7.4: If you're using InventoryPlus, getData() spins because of a failure on sheetdata.inventory.find (which is no longer an array)
+    - fixed by adding an Array.from() which will convert the object or leave the array in place
+0.7.4: (#13) If a category is hidden (because of the setting to not show categories with 0 spells) it will still get considered for the Move Up/Down flags
+    - Sometimes the second-to-top category cannot be moved up    
 
 # COMPLETED FEATURES
 0.5.1r:  Need to store version in the flags so that we know whether they need to be upgraded in place    

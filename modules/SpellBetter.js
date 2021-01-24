@@ -23,6 +23,7 @@
 9-Jan-2021      0.7.3c: Use show/hide on itemList rather than updating the category status and forcing a re-render      
 23-Jan-2021     0.7.4a: Add Innate to Other label setting (too hard to extract otherwise)  
                 Compute uses and slots and decorate sheetData.filters.choices.levels
+24-Jan-2021     0.7.4: : If you're using Inventory+ then sheetData.inventory is now an object.                
 
 */
 
@@ -594,7 +595,9 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
 
     try {
       // digest all weapons equipped populate the actionsData appropriate categories
-      const weapons = sheetData?.inventory.find(({ label }) => label.includes('Weapon'))?.items; // brittle?
+      //0.7.4: If you're using Inventory+ then sheetData.inventory is now an object. However regardless, label is an i18n tag so maybe should be compared as such
+      const inventory = Object.values(sheetData?.inventory);
+      const weapons = inventory?.find(({ label }) => label.includes('Weapon'))?.items; // brittle?
 
       const equippedWeapons = weapons.filter(({ data }) => data.equipped) || [];
 
@@ -773,7 +776,9 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     }
 
     //0.5.1: Now that spells have been appropriately filtered and munged, add categories
-    sheetData.categories = this.inventoryPlusForSpells.categorizeSpells(sheetData?.spellbook);
+    //0.7.4c: Actually categorize allCategories rather than making a copy
+    this.inventoryPlusForSpells.categorizeSpells(sheetData?.spellbook);
+    sheetData.categories = this.inventoryPlusForSpells.allCategories;
 
     //Decorate the filters to show how many uses and spell slots we have at each level
     for (const [categoryKey, category] of Object.entries(sheetData.categories)) {

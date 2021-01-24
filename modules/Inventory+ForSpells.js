@@ -20,7 +20,11 @@
 7-Jan-2021      0.7.2: Was not importing MODULE_VERSION for initCategories()   
 9-Jan-2021      0.7.3a: Fixed: Sort categories when you first load them     
 10-Jan-2021     0.7.3d: sortCategories(): Renumber the categories so we don't have categories on the same sort position     
-                Also call saveCateories()
+                Also call saveCategories()
+23-Jan-2021     0.7.4: Have to sort after categorizing, because filters could have removed a category from view which would change the first/last   
+24-Jan-2021     0.7.4c: Don't sort after categorizing; in sortCategories() just show/hide rather than removing
+                setFirstAndLast(): Moved to call from categorizeSpells(); Ignore hidden categories for the purposes of isFirst and isLast   
+                Potentially brekaing change: categorizeSpells() is mutating on allCategories; before was just passing back a categorized version for display          
 */
 
 import {Category} from "./Category.js";
@@ -63,22 +67,38 @@ export class InventoryPlusForSpells {
     sortCategories() {
         let sortedCategories = {};
 
-        let keys = Object.keys(this.allCategories);
-        keys.sort((a, b) => {
+        let sortedKeys = Object.keys(this.allCategories);
+        sortedKeys.sort((a, b) => {
             return this.allCategories[a].order - this.allCategories[b].order;
         });
         //0.7.3d: Renumber the order while sorting
-        for (const [index,key] of keys.entries()) {
+        for (const [index,key] of sortedKeys.entries()) {
             sortedCategories[key] = this.allCategories[key];
-            sortedCategories[key].isFirst = false;
-            sortedCategories[key].isLast = false;
             sortedCategories[key].order = 10 * index;
         }
-        sortedCategories[keys[0]].isFirst = true;
-        sortedCategories[keys[keys.length-1]].isLast = true;
         this.allCategories = sortedCategories;
 
         this.saveCategories();
+    }
+
+    setFirstAndLast() {
+        //0.7.4: Ignore hidden categories for the purposes of isFirst and isLast
+        let firstShownKey = null;
+        let lastShownKey = null;
+        for (const [key, category] of Object.entries(this.allCategories)) {
+            if (category.isShown) {
+                this.allCategories[key].isLast = false;
+                lastShownKey = key;
+                if (!firstShownKey) {
+                    this.allCategories[key].isFirst = true;
+                    firstShownKey = key;
+                } else {
+                    this.allCategories[key].isFirst = false;
+                }
+            }
+        }
+        //For last key, we don't set it until the last one found
+        if (lastShownKey) {this.allCategories[lastShownKey].isLast = true;}
     }
 
     filterSpells(spells, categoryKey, userLabelFilterSets=[]) {
@@ -150,20 +170,20 @@ export class InventoryPlusForSpells {
                     mergeObject(categories[category], levelStats);
                 }
             }
-            //0.5.1x: If (default) hide standard categories with no spells, remove them for display
-            if (game.settings.get(MODULE_ID, SPELL_BETTER.hideCategoryWithNoSpells)) {
-                if (!value.isCustom && !value.spells?.length) {
-                    delete categories[category];
-                    continue;
-                }
-            }
             //Now sort spells within categories - should make this configurable
             categories[category].spells.sort((a, b) => {
                 return a.sort - b.sort;
             });
+
+            //0.5.1x: If (default) hide standard categories with no spells, remove them for display
+            //0.7.4: We don't remove them, just mark them to not be displayed
+            categories[category].isShown = !game.settings.get(MODULE_ID, SPELL_BETTER.hideCategoryWithNoSpells)
+                                            || value.isCustom || value.spells?.length;
         }
 
-        return categories;
+        //0.7.4 Now set first/last for display
+        this.allCategories = categories;
+        this.setFirstAndLast();
     }
 
     getTemplateItemData(categoryKey) {
