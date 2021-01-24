@@ -21,7 +21,8 @@
 5-Jan-2021      0.5.3f: Add/remove categories when you drop a spell in a new place      
                 0.5.3g: getData(): Moved initialization of inventoryPlusForSpells here because we need it for calling filterSpells         
 9-Jan-2021      0.7.3c: Use show/hide on itemList rather than updating the category status and forcing a re-render      
-23-Jan-2021     0.7.4a: Add Innate to Other label setting (too hard to extract otherwise)           
+23-Jan-2021     0.7.4a: Add Innate to Other label setting (too hard to extract otherwise)  
+                Compute uses and slots and decorate sheetData.filters.choices.levels
 
 */
 
@@ -517,7 +518,6 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     //MUTATES spellbook
     
     //This is purely for Handlebars to generate the right output - the filter tags at the top of the page
-    //FIXME: May want to add the list of custom tags
     sheetData.filters.choices = SPELL_BETTER.labelFilterSets;
     //0.5.3g: Moved initialization of inventoryPlusForSpells here because we need it for calling filterSpells
     if (!this.inventoryPlusForSpells) {
@@ -773,10 +773,26 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     }
 
     //0.5.1: Now that spells have been appropriately filtered and munged, add categories
-    //0.5.3j: Now an array of {key, value}
     sheetData.categories = this.inventoryPlusForSpells.categorizeSpells(sheetData?.spellbook);
+
+    //Decorate the filters to show how many uses and spell slots we have at each level
+    for (const [categoryKey, category] of Object.entries(sheetData.categories)) {
+        //Look only at level-related categories with slot information
+        if (category.usesSlots && category.labelFilterSets?.levels?.length) {
+            const level = Object.entries(SPELL_BETTER.labelFilterSets.levels).find(entry => entry[1].label === category.labelFilterSets?.levels[0]);
+            if (level?.[0]) {
+                sheetData.filters.choices.levels[level[0]].uses = sheetData.categories[categoryKey].uses;
+                sheetData.filters.choices.levels[level[0]].slots = sheetData.categories[categoryKey].slots;
+            }
+        }
+    }
+
+
+
+    //This Boolean is for whether the filter list itself shows/hides
     sheetData.filtersIsCollapsed = this.actor.filtersIsCollapsed ?? false;
 
+    
     return sheetData;
   }
 

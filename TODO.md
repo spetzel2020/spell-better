@@ -15,7 +15,8 @@
     - Try the method mentioned below
     - Can the spell icons be printed, or is that a media print setting
 - Allow creation of Custom Filter (just a way of saving presets)
->>> Check whether/how well SB works for Druids, Clerics, and Paladins
+>>> Check whether/how well SB works for Druids and Clerics (full casters)
+    - can look up what the rules are
 - Automatically populate all available Wizard spells into a temporary compendium for selection, by level
 
 - New Category Dialog:
@@ -53,6 +54,7 @@ FIXED - New Categories get added at the end, even with the Order being -1 from A
         - Converted to show/hide
 0.7.3: The ordering is sometimes wonky and the move up/down don't work for the last and first item
 0.7.3 Drag a spell from COmpenduim to a standard View -> doesn't show up
+0.7.4: Displays Innate spells correctly, including related bug with showing number of uses/slots
 
 # COMPLETED FEATURES
 0.5.1r:  Need to store version in the flags so that we know whether they need to be upgraded in place    
