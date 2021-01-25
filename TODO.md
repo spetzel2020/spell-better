@@ -2,12 +2,9 @@
 - Don't show the Filters field unless you specify a type of Filter
     - "Create a saved Filter that shows all View or non-Spellbook spells"
 -
-- v0.7.4: The new sortCategories() call in categorizeSpells() is sending the sheet into a terrible render loop
-    - Need to hide categories with no spells (if desired) using a flag (show/hide in addition is isCollapsed)
-    - and in addition when move up/down, have to skip categories that are hidden
+
 
 # REFACTORING
-
 >>> Merge any changes to the OGL sheet
 - Profile
 - Look for recalculations like getHighest/LowestSortFlag()
@@ -27,6 +24,7 @@
     - A Filter you just Preset some filter combinations, or drag specific Spells in as a different View on your Known Spells
     - A Spellbook is a separate list of spells, possibly duplicating your Known spells (like Wanted or The Brown Spellbook)
     - Filter selection should be multi-select: use tag display like on main page?
+    
 - Need examples of how to use:
     - Wanted Spells: Create a custom category called Wanted, and check the Show Only in Category checkbox
     - Spells in a found Spellbook: Same. When you transfer it to your Spellbook, simply create a new version
@@ -61,7 +59,10 @@ FIXED - New Categories get added at the end, even with the Order being -1 from A
 0.7.4: If you're using InventoryPlus, getData() spins because of a failure on sheetdata.inventory.find (which is no longer an array)
     - fixed by adding an Array.from() which will convert the object or leave the array in place
 0.7.4: (#13) If a category is hidden (because of the setting to not show categories with 0 spells) it will still get considered for the Move Up/Down flags
-    - Sometimes the second-to-top category cannot be moved up    
+    - Sometimes the second-to-top category cannot be moved up   
+0.7.4: The new sortCategories() call in categorizeSpells() is sending the sheet into a terrible render loop
+    - Need to hide categories with no spells (if desired) using a flag (show/hide in addition is isCollapsed)
+    - and in addition when move up/down, have to skip categories that are hidden     
 
 # COMPLETED FEATURES
 0.5.1r:  Need to store version in the flags so that we know whether they need to be upgraded in place    

@@ -1,8 +1,9 @@
 # RELEASE NOTES
 
 ## 0.7.4 23-Jan-2021
-- Fixed: Added Innate spell category and adjust spell uses/slots correctly
-- Fixed: If a category is hidden (because of the setting to not show categories with 0 spells) it will still get considered for the Move Up/Down flags #13
+- Fixed #4: Multiple collapsible groups with saved filters, or draggable groups like Inventory+
+- Fixed #11, #8: Added Innate spell category and adjust spell uses/slots correctly
+- Fixed #13: If a category is hidden (because of the setting to not show categories with 0 spells) it will still get considered for the Move Up/Down flags
 ## 0.7.3 9-Jan-2021
 - Fixed: Show/hide a spell category was very slow
 - Fixed: Categories weren't sorted when you first loaded the spellbook
