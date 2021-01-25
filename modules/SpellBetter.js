@@ -23,7 +23,8 @@
 9-Jan-2021      0.7.3c: Use show/hide on itemList rather than updating the category status and forcing a re-render      
 23-Jan-2021     0.7.4a: Add Innate to Other label setting (too hard to extract otherwise)  
                 Compute uses and slots and decorate sheetData.filters.choices.levels
-24-Jan-2021     0.7.4: : If you're using Inventory+ then sheetData.inventory is now an object.                
+24-Jan-2021     0.7.4: : If you're using Inventory+ then sheetData.inventory is now an object.     
+                0.7.4e: Block favTab for the Plugin because this is only a Spell Sheet           
 
 */
 
@@ -820,6 +821,18 @@ export class SpellBetterPlugin extends SpellBetterCharacterSheet {
         return id;
     }
     
+
+    //0.7.4: Block favTab for the Plugin because this is only a Spell Sheet
+    static get defaultOptions() {
+        const options = super.defaultOptions;
+
+        mergeObject(options, {
+            blockFavTab: true
+        });
+
+        return options;
+    }
+
     get template() {
         return `modules/${MODULE_ID}/templates/spellbook-sheet-holder.hbs`;
     }
