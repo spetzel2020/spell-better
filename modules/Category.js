@@ -53,20 +53,36 @@ export class Category extends FormApplication {
             }
         }
         const types = {
-            view:  "SPELL_BETTER.NewCategory.ViewOrSpellbook.VIEW",
-            spellbook: "SPELL_BETTER.NewCategory.ViewOrSpellbook.SPELLBOOK"
+            view:  "SPELL_BETTER.NewCategory.Type.VIEW",
+            filter: "SPELL_BETTER.NewCategory.Type.FILTER",            
+            spellbook: "SPELL_BETTER.NewCategory.Type.SPELLBOOK"
         }
 
         const templateData = {
             categoryKey : this.categoryKey,
             isCustom: this.object?.isCustom,
             label: this.object?.label,
-            labelFilterSets : this.choices ,
-            selectedFilters: selectedFilters,
             types: types,
-            selectedType: this.object?.categoryType
+            selectedType: this.object?.categoryType,
+            showFilters: this.showFilters,      //trigger this from the type
+            labelFilterSets : this.choices ,
+            selectedFilters: selectedFilters
         }
         return templateData;
+    }
+
+    activateListeners(html) {
+        super.activateListeners(html);
+
+        //Disable the filters unless you pick "Filters"
+        html.find("select#categoryType").change(ev => {
+            const categoryType = ev.currentTarget.value;
+            if (categoryType === "filter" ) {
+                html.find("select#filter").prop("disabled",false);
+            } else {                
+                html.find("select#filter").prop("disabled",true);
+            }
+        });
     }
 
     async _updateObject(event, formData) {

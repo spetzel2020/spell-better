@@ -24,7 +24,8 @@
 23-Jan-2021     0.7.4: Have to sort after categorizing, because filters could have removed a category from view which would change the first/last   
 24-Jan-2021     0.7.4c: Don't sort after categorizing; in sortCategories() just show/hide rather than removing
                 setFirstAndLast(): Moved to call from categorizeSpells(); Ignore hidden categories for the purposes of isFirst and isLast   
-                Potentially brekaing change: categorizeSpells() is mutating on allCategories; before was just passing back a categorized version for display          
+                Potentially brekaing change: categorizeSpells() is mutating on allCategories; before was just passing back a categorized version for display 
+25-Jan-2021     v0.7.5: Reverse order of merge so that changes to standard, custom categories (Rituals, Wanted) are saved                         
 */
 
 import {Category} from "./Category.js";
@@ -52,7 +53,8 @@ export class InventoryPlusForSpells {
             }
         }
         //Merge standard and custom categories
-        this.allCategories = mergeObject(customCategories, SPELL_BETTER.standardCategories);
+        //v0.7.5: Reverse order of merge so that changes to standard, custom categories (Rituals, Wanted) are saved
+        this.allCategories = mergeObject(SPELL_BETTER.standardCategories, customCategories);
         //And now apply info about collapsed/shown (the only reason we saved)
         for (const category of Object.keys(this.allCategories)) {
             if (savedCategories && savedCategories[category]) {

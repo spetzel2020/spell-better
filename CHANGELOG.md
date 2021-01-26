@@ -1,5 +1,9 @@
 # RELEASE NOTES
 
+## 0.7.5 25-Jan-2021
+- Fixed: Was showing the Filters dropdown for View and Spellbook
+- Fixed: Weren't able to actually create a Filter category replicating the standard ones
+
 ## 0.7.4 23-Jan-2021
 - Fixed #4: Multiple collapsible groups with saved filters, or draggable groups like Inventory+
 - Fixed #11, #8: Added Innate spell category and adjust spell uses/slots correctly

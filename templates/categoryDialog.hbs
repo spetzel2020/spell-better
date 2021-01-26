@@ -6,19 +6,19 @@
     </div>
 
     <div class="form-group">
-        <label for="categoryType">{{localize "SPELL_BETTER.NewCategory.ViewOrSpellbook.NAME"}}</label>
+        <label for="categoryType">{{localize "SPELL_BETTER.NewCategory.Type.NAME"}}</label>
         <div class="form-fields">
-            <select name="categoryType">
+            <select id="categoryType" name="categoryType">
                 {{selectOptions types selected=selectedType localize=true}}
             </select>
         </div>    
-        <p class="notes">{{{localize "SPELL_BETTER.NewCategory.ViewOrSpellbook.HINT"}}}</p>
+        <p class="notes">{{{localize "SPELL_BETTER.NewCategory.Type.HINT"}}}</p>
     </div>
     
     <div class="form-group">
         <label for="filter">{{localize "SPELL_BETTER.NewCategory.Filter.LABEL"}}</label>
         <div class="form-fields">
-            <select name="filter">
+            <select id="filter" name="filter">
                 <option value="">None</option>
                 {{#each labelFilterSets}}
                 <optgroup label="{{@key}}">

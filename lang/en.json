@@ -52,11 +52,13 @@
   "SPELL_BETTER.NewCategory.TITLE" : "Add Custom View or Spellbook",
   "SPELL_BETTER.NewCategory.NAME" : "Name",
     "SPELL_BETTER.NewCategory.Filter.LABEL" : "Filter",  
-    "SPELL_BETTER.NewCategory.Filter.HINT" : "Instead of dragging spells, you can filter available spells (for example, Concentration spells)",
-  "SPELL_BETTER.NewCategory.ViewOrSpellbook.NAME" : "View or Spellbook",
-  "SPELL_BETTER.NewCategory.ViewOrSpellbook.HINT" : "View: Create a custom view (for example, <strong>Utility</strong>) and drag spells here. They will still show in other views.<br>Spellbook: Create a custom spellbook (for example, <strong>From dead mage</strong>). Spells you create or drag here will not show anywhere else except <strong>All</strong>",
-  "SPELL_BETTER.NewCategory.ViewOrSpellbook.VIEW" : "View",
-    "SPELL_BETTER.NewCategory.ViewOrSpellbook.SPELLBOOK" : "Spellbook",
+    "SPELL_BETTER.NewCategory.Filter.HINT" : "Pick one filter (like the ones in the Spellbook header) to define your category",
+  "SPELL_BETTER.NewCategory.Type.NAME" : "Category Type",
+  "SPELL_BETTER.NewCategory.Type.HINT" : "View: Drag spells from your standard spellbook to create a custom view (for example, <strong>Utility</strong>). They will still show in other views.<br>Filter: Filter spells from your standard spellbook (for example, Rituals or One Round)<br>Spellbook: Create a custom spellbook (for example, <strong>From dead mage</strong>). Spells you create or drag here will not show anywhere else except <strong>All</strong>",
+  "SPELL_BETTER.NewCategory.Type.VIEW" : "View",
+    "SPELL_BETTER.NewCategory.Type.FILTER" : "Filter",
+    "SPELL_BETTER.NewCategory.Type.SPELLBOOK" : "Spellbook",
+    "SPELL_BETTER.AddSpell" : "Spell",
   "SPELL_BETTER.EditSpell" : "Edit Spell",
   "SPELL_BETTER.DeleteSpell" : "Delete Spell"
 }

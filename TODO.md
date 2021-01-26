@@ -1,10 +1,9 @@
 # BUGS
-- Don't show the Filters field unless you specify a type of Filter
-    - "Create a saved Filter that shows all View or non-Spellbook spells"
--
+- Can't delete standard, custom categories - can rename them though
 
 
 # REFACTORING
+- Performance poor in areas
 >>> Merge any changes to the OGL sheet
 - Profile
 - Look for recalculations like getHighest/LowestSortFlag()
@@ -19,12 +18,12 @@
     - can look up what the rules are
 - Automatically populate all available Wizard spells into a temporary compendium for selection, by level
 
-- New Category Dialog:
-    - Choose either Filter or Spellbook, with appropriate explanations
+>>> New Category Dialog:
+    - Choose View, Filter, or Spellbook, with appropriate explanations
     - A Filter you just Preset some filter combinations, or drag specific Spells in as a different View on your Known Spells
-    - A Spellbook is a separate list of spells, possibly duplicating your Known spells (like Wanted or The Brown Spellbook)
+    - A Spellbook is a separate list of spells, not duplicating your Known list (like Wanted or The Brown Spellbook)
     - Filter selection should be multi-select: use tag display like on main page?
-    
+
 - Need examples of how to use:
     - Wanted Spells: Create a custom category called Wanted, and check the Show Only in Category checkbox
     - Spells in a found Spellbook: Same. When you transfer it to your Spellbook, simply create a new version
@@ -63,6 +62,11 @@ FIXED - New Categories get added at the end, even with the Order being -1 from A
 0.7.4: The new sortCategories() call in categorizeSpells() is sending the sheet into a terrible render loop
     - Need to hide categories with no spells (if desired) using a flag (show/hide in addition is isCollapsed)
     - and in addition when move up/down, have to skip categories that are hidden     
+0.7.5: Changes to standard, custom categories are not sticking (change Ritual or delete Wanted)    
+0.7.5 Don't show the Filters field unless you specify a type of Filter
+    - "Create a saved Filter that shows all View or non-Spellbook spells"
+0.7.5 - What's the difference between a MyRitual View and the standard one?
+
 
 # COMPLETED FEATURES
 0.5.1r:  Need to store version in the flags so that we know whether they need to be upgraded in place    
@@ -74,7 +78,8 @@ FIXED - New Categories get added at the end, even with the Order being -1 from A
     - A View drag specific Spells in as a different View on your Known Spells
     - A Spellbook is a separate list of spells, possibly duplicating your Known spells (like Wanted or The Brown Spellbook)
 0.7.3a: Use Spellbook from other Sheets should be a client setting so everbody has a choices   
-0.7.3 Need to sort when we first load categories  
+0.7.3 Need to sort when we first load categories 
+0.7.5 Change +Add to +Spell 
 
 # PRINT SOLUTION (from @Sunspots)
 Can't you use CSS only to exclude everything but the desired element? Add a class to the window you want to print and in the print css something like
