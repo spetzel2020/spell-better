@@ -8,7 +8,8 @@
 3-Jan-2021      0.5.2a: Switch to SPELL_BETTER.labelFilterSets format more consistent with selectOPtions
 5-Jan-2021      0.5.3e: Change to a simple View or Spellbook selector
                 0.5.3k: Sort after adding a new category and before saving
-10-Jan-2021     0.7.3: _updateObject(): Don't save after sorting (done in sortCategories())                
+10-Jan-2021     0.7.3: _updateObject(): Don't save after sorting (done in sortCategories())       
+25-Jan-2021     0.7.5: activateListeners(): Add on select.change() so that we enable/disable Filters depending on whether it's a Filter type         
 */
 
 import { MODULE_ID, SPELL_BETTER } from './constants.js';
@@ -57,14 +58,14 @@ export class Category extends FormApplication {
             filter: "SPELL_BETTER.NewCategory.Type.FILTER",            
             spellbook: "SPELL_BETTER.NewCategory.Type.SPELLBOOK"
         }
-
+        const hideFilters = (this.object?.categoryType !== "filter");
         const templateData = {
             categoryKey : this.categoryKey,
             isCustom: this.object?.isCustom,
             label: this.object?.label,
             types: types,
             selectedType: this.object?.categoryType,
-            showFilters: this.showFilters,      //trigger this from the type
+            hideFilters: hideFilters,      //trigger this from the type
             labelFilterSets : this.choices ,
             selectedFilters: selectedFilters
         }
@@ -77,11 +78,7 @@ export class Category extends FormApplication {
         //Disable the filters unless you pick "Filters"
         html.find("select#categoryType").change(ev => {
             const categoryType = ev.currentTarget.value;
-            if (categoryType === "filter" ) {
-                html.find("select#filter").prop("disabled",false);
-            } else {                
-                html.find("select#filter").prop("disabled",true);
-            }
+            html.find("select#filter").prop("disabled",(categoryType !== "filter"));
         });
     }
 

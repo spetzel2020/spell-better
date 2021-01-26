@@ -1,6 +1,6 @@
 # BUGS
 - Can't delete standard, custom categories - can rename them though
-
+>>> If you add a spell to a Custom View and then delete the View, the Spell may disappear
 
 # REFACTORING
 - Performance poor in areas

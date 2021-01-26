@@ -18,7 +18,7 @@
     <div class="form-group">
         <label for="filter">{{localize "SPELL_BETTER.NewCategory.Filter.LABEL"}}</label>
         <div class="form-fields">
-            <select id="filter" name="filter">
+            <select id="filter" name="filter" {{#if hideFilters}}disabled{{/if}}>
                 <option value="">None</option>
                 {{#each labelFilterSets}}
                 <optgroup label="{{@key}}">
