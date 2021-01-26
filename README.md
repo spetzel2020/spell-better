@@ -16,7 +16,7 @@ The ultimate detachable spellbook for Wizards and other full prepared-spell cast
 
 ## Summary
 * **Authors**: Discord: Spetzel#0103, [Calego#0914](https://github.com/ElfFriend-DnD)
-* **Version**: 0.7.4
+* **Version**: 0.8.0
 * **Foundry VTT Compatibility**: 0.7.2-0.7.9
 * **System Compatibility (If applicable)**: dnd5e
 * **Translation Support**: en

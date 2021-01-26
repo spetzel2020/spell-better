@@ -1,6 +1,11 @@
 # BUGS
 - Can't delete standard, custom categories - can rename them though
->>> If you add a spell to a Custom View and then delete the View, the Spell may disappear
+>>> 0.7.5b If you add a spell to a Custom View and then delete the View, the Spell may disappear
+    - test that when a Category is changed, the spells are correctly migrated
+    - probably needs a warning
+    - From Filter -> View nothing, from View -> Filter just remove the category from the spells
+    >>> Or perhaps we should switch to recording the spells in the category so there are not lingering problems
+- Provide some conversion of old Spellbook or View    
 
 # REFACTORING
 - Performance poor in areas
@@ -18,13 +23,9 @@
     - can look up what the rules are
 - Automatically populate all available Wizard spells into a temporary compendium for selection, by level
 
->>> New Category Dialog:
-    - Choose View, Filter, or Spellbook, with appropriate explanations
-    - A Filter you just Preset some filter combinations, or drag specific Spells in as a different View on your Known Spells
-    - A Spellbook is a separate list of spells, not duplicating your Known list (like Wanted or The Brown Spellbook)
-    - Filter selection should be multi-select: use tag display like on main page?
+>>> Filter selection should be multi-select: use tag display like on main page?
 
-- Need examples of how to use:
+- README.md:  Need examples of how to use:
     - Wanted Spells: Create a custom category called Wanted, and check the Show Only in Category checkbox
     - Spells in a found Spellbook: Same. When you transfer it to your Spellbook, simply create a new version
     - Show all Rituals: Filter on Ritual
@@ -80,6 +81,11 @@ FIXED - New Categories get added at the end, even with the Order being -1 from A
 0.7.3a: Use Spellbook from other Sheets should be a client setting so everbody has a choices   
 0.7.3 Need to sort when we first load categories 
 0.7.5 Change +Add to +Spell 
+0.7.5 New Category Dialog:
+        - Choose View, Filter, or Spellbook, with appropriate explanations
+        - A Filter you just Preset some filter combination
+        - a View you drag in specific Spells in as a different View on your Known Spells
+        - A Spellbook is a separate list of spells, not duplicating your Known list (like **Wanted** or **The Brown Spellbook**)
 
 # PRINT SOLUTION (from @Sunspots)
 Can't you use CSS only to exclude everything but the desired element? Add a class to the window you want to print and in the print css something like

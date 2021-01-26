@@ -10,6 +10,9 @@
                 0.5.3k: Sort after adding a new category and before saving
 10-Jan-2021     0.7.3: _updateObject(): Don't save after sorting (done in sortCategories())       
 25-Jan-2021     0.7.5: activateListeners(): Add on select.change() so that we enable/disable Filters depending on whether it's a Filter type         
+26-Jan-2021     0.8.0: Switch to referencing spells in category rather than category in spells
+                Filter: No effect (automatic)
+                Spellbook: 
 */
 
 import { MODULE_ID, SPELL_BETTER } from './constants.js';

@@ -3,7 +3,7 @@ Last tested with v0.x.x
 # NEW/EDIT/DELETE CATEGORY
 - View: Enable Filter
 - Spellbook: What does Filter do
-- Change name/type
+- Change Category type - what happens to the contained spells
 - Delete category - contained Spellbook spells should be left in overall?
     - Need a dialog saying what will happen
 # ADD/MOVE SPELLS TO CATEGORY
