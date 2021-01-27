@@ -247,13 +247,13 @@ export class InventoryPlusForSpells {
         }
     }
 
-    removeSpell(spellId) {
-        if (!spellId) {return;}
-        //0.8.0 Remove spell from existing categories if they are Spellbook type
-//FIXME: What if you move a spell from a View to a Spellbook? It should disappear? - For now it will be a copy
-        for (const category of Object.values(this.allCategories)) {
-            category.spellIds?.delete(spellId);
-        }        
+    removeSpell(categoryKey, spellId) {
+        if (!categoryKey || !spellId) {return;}
+        //0.8.0 Remove spell from the existing category if it's a Spellbook or View
+        const categoryData = this.allCategories[categoryKey];
+        if (categoryData && ["spellbook","view"].includes(categoryData.categoryType)) {
+            categoryData.spellIds?.delete(spellId);
+        }      
     }
 
     async newCategory() {
@@ -268,6 +268,7 @@ export class InventoryPlusForSpells {
         let changedItems = [];
         //Remove the categoryKey off the contained spells
         for (let spell of this.actor.data.items.filter(i => i.type === "spell")) {
+//FIXME: No longer necessary in 0.8.0 because we're not storing category on spells            
             let type = InventoryPlusForSpells.getSpellCategory(spell);
             if (type === categoryKey) {
                 const unsetFlag =  `-=flags.${MODULE_ID}`;

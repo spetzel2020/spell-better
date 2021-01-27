@@ -10,12 +10,13 @@
 7-Jan-2021  0.7.2: Updated MODULE_VERSION  
 9-Jan-2021  0.7.3e: Remove Wanted 4th for release version
 23-Jan-2021 0.7.4a: Add Innate category 
+27-Jan-2021: 0.8.1: Make Ritual fully standard (can't change its name); remove template_flags
 
 */
 
 
 export const MODULE_ID = 'spell-better';
-export const MODULE_VERSION = "0.8.0";
+export const MODULE_VERSION = "0.8.1";
 
 //SPell Better 0.5.0: The filter lists have to be spelled out to match what is in the internal labels
 export const SPELL_BETTER = {
@@ -154,7 +155,7 @@ export const SPELL_BETTER = {
                 },                
                 prop: "spell9", canCreate: true, canPrepare: true, slots: "1", uses: "1", usesSlots: true,                
                 order: 90,  type: "spell",  isCollapsed: false },
-        rituals: { label: "SPELL_BETTER.Rituals", isCustom: true, categoryType: "filter", 
+        rituals: { label: "SPELL_BETTER.Rituals", categoryType: "filter", 
                 templateItemData: {level: 1},
                 labelFilterSets: {
                     otherRitual: ["ritual"]
@@ -162,11 +163,11 @@ export const SPELL_BETTER = {
                 canCreate: false, canPrepare : false,           
                 order: 900, usesSlots: false, type: "spell",  isCollapsed: true },                                                                                                                                                      
         wanted: { label: "SPELL_BETTER.Category.Wanted", isCustom: true, categoryType: "spellbook", 
-                templateItemData: {level: 9}, templateFlags: {"category": "wanted"},
+                templateItemData: {level: 9}, 
                 labelFilterSets: {}, 
                 canCreate: true, canPrepare : false,           
                 order: 1000, usesSlots: false, type: "spell",  isCollapsed: true },
-        //ALL category to make sure setting a flag doesn't hide a spell completely                
+        //ALL category to make sure all spells are accessible              
         all:    {label: "SPELL_BETTER.Category.All", categoryType: "all", 
                 templateItemData: {level: 9},
                 labelFilterSets: {},    

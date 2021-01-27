@@ -13,6 +13,7 @@
 26-Jan-2021     0.8.0: Switch to referencing spells in category rather than category in spells
                 Filter: No effect (automatic)
                 Spellbook/View: For now don't change the list of spells and see what happens
+27-Jan-2021     0.8.1: Copy spellIds from old to new category (even if you change just the name)                
 */
 
 import { MODULE_ID, SPELL_BETTER } from './constants.js';
@@ -99,7 +100,7 @@ export class CategorySheet extends FormApplication {
             categoryKey = this.inventoryPlusForSpells?.generateCategoryId();
         } 
 
-        let newCategory = {
+        let newCategoryData = {
             label: formData.label,
             labelFilterSets: {},
             type: "spell",
@@ -113,17 +114,17 @@ export class CategorySheet extends FormApplication {
 
         for (let [input, value] of Object.entries(formData)) {
             if (value === null || value === undefined || value === "") {
-                delete newCategory[input];
+                delete newCategoryData[input];
             } else {
                 //If this is (one or more) filters, then recover the filterSets (because we use those to correctly apply)
                 if (input === "filter") {
                     const {filterSetKey,label} = CategorySheet.findFilterSet(value);
                     if (filterSetKey) {
-                        if (!newCategory.labelFilterSets[filterSetKey]) newCategory.labelFilterSets[filterSetKey] = [];
-                        newCategory.labelFilterSets[filterSetKey].push(label);
+                        if (!newCategoryData.labelFilterSets[filterSetKey]) newCategoryData.labelFilterSets[filterSetKey] = [];
+                        newCategoryData.labelFilterSets[filterSetKey].push(label);
                     }
                 } else {
-                    newCategory[input] = value;
+                    newCategoryData[input] = value;
                 }
             }
         }
@@ -134,14 +135,17 @@ export class CategorySheet extends FormApplication {
         //newCategory.templateFlags = {category: categoryKey};
         //Don't have set filterFlags because we use the categoryType setting
         if (this.inventoryPlusForSpells) {
-            //0.8.0 If type is now "filter" there should be no saved spells
-            if (newCategory.categoryType === "filter") {
-                delete newCategory.spells;
+            //0.8.0 If type is now "filter" there should be no saved spells (shouldn't be anyway since we're building from scratch)
+            if (newCategoryData.categoryType === "filter") {
+                delete newCategoryData.spellIds;
             } else {
+                //Make sure we don't silently keep old filters
+                newCategoryData.labelFilterSets = {};
+                newCategoryData.spellIds = this.inventoryPlusForSpells.allCategories[categoryKey]?.spellIds;
                 //If you switched from View->Spellbook, then those spells will be removed from other Views
                 //If you switch from Spellbook -> View, then those spells are now part of your Known spells
             }
-            this.inventoryPlusForSpells.allCategories[categoryKey] = newCategory;
+            this.inventoryPlusForSpells.allCategories[categoryKey] = newCategoryData;
             //0.5.3k: Sort after adding a new category and before saving
             //0.7.3: Also saves
             this.inventoryPlusForSpells.sortCategories();

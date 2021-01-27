@@ -25,7 +25,8 @@
                 Compute uses and slots and decorate sheetData.filters.choices.levels
 24-Jan-2021     0.7.4: : If you're using Inventory+ then sheetData.inventory is now an object.     
                 0.7.4e: Block favTab for the Plugin because this is only a Spell Sheet         
-26-Jan-2021     0.8.0a: Handle moving spell into View or Spellbook; we now handle that in the Category rather than the spell                  
+26-Jan-2021     0.8.0a: Handle moving spell into View or Spellbook; we now handle that in the Category rather than the spell    
+27-Jan-2021     0.8.1: _onDragStart(): override to hijack dragData to pass fromCategory              
 
 */
 
@@ -129,6 +130,24 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
 
         this.inventoryPlusForSpells?.addSpell(categoryKey, newSpellData?._id);
     }   
+
+    _onDragStart(event) {
+        //0.8.0 Have to override this to find the category we dragged it from 
+        super._onDragStart(event);
+
+        //0.8.0 To pass the fromCategory we unfortunately cannot intercept the generic _onDrop() so have to piggyback on the text/plain data
+        const fromCategory = event.target?.parentElement?.dataset?.category;
+        if (fromCategory) {
+            let dragData;
+            try {
+                dragData = JSON.parse(event.dataTransfer.getData('text/plain'));
+            } catch (err) {
+                return false;
+            }
+            dragData.fromCategory = fromCategory;
+            event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+        }
+    }
     
     /**
      * @override
@@ -138,6 +157,7 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
         //Copied from core _onDropItem()
         if ( !this.actor.owner ) return false;
         const item = await Item.fromDropData(data);
+        const fromCategoryKey = data.fromCategory;
         const itemData = duplicate(item.data);
 
         //Check if you dropped it on the header, or on the list inside the header
@@ -148,10 +168,10 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
             return super._onDropItem(event, data);
         }
 
-        const categoryKey = targetLi.dataset?.category;
+        const toCategoryKey = targetLi.dataset?.category;
 
         //v0.8.0: Refactored to store spellIds in category rather than category in spell
-        //We assume migration has been done in the first categorizeSpells()
+        //We assume migration has been done in the first initCategories()
 
         // Handle item sorting within the same Actor
         const actor = this.actor;
@@ -159,14 +179,14 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
         let created;
         if (sameActor) {
             created = this._onSortItem(event, itemData);
-            //Check existing categories to remove it if they are Spellbook-type
-            this.inventoryPlusForSpells?.removeSpell(itemData._id);
+            //Remove the spell from its old category       
+            this.inventoryPlusForSpells?.removeSpell(fromCategoryKey, itemData._id);
         } else {
             // Create the owned item (was dragged from outside, a Compendium or an Actor folder)
             created = this._onDropItemCreate(itemData);
         }
         //In both cases, we add to the category if it doesn't exist
-        this.inventoryPlusForSpells?.addSpell(categoryKey, itemData._id);
+        this.inventoryPlusForSpells?.addSpell(toCategoryKey, itemData._id);
     }
 
     /** @override */       

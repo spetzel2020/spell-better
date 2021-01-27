@@ -1,13 +1,18 @@
 # BUGS
-- Can't delete standard, custom categories - can rename them though
 >>> 0.7.5b If you add a spell to a Custom View and then delete the View, the Spell may disappear
     - test that when a Category is changed, the spells are correctly migrated
     - probably needs a warning
     - From Filter -> View nothing, from View -> Filter just remove the category from the spells
-    >>> Or perhaps we should switch to recording the spells in the category so there are not lingering problems
-- Provide some conversion of old Spellbook or View    
+0.8.0: Not actually removing the flags from the spells (need to use the -= form)  
+0.8.0: Order of spells in Filter and View will always match (because order is stored on the spell)
+0.8.0: May be fixed: A spell cannot be in multiple Views
 
 # REFACTORING
+- Instead of hijacking the onDrop, we could store the displayedCategory on every item in a View or Spellbook
+    - (would only be for display and not in the actual item)
+- Category.js: Should encapsulate existing Category better
+    - reference this.object
+- Remove +Spell on every standard filter - just have in one place (top of the sheet, maybe with the "pick from available spells")
 - Performance poor in areas
 >>> Merge any changes to the OGL sheet
 - Profile
@@ -18,12 +23,13 @@
 - Move the Print features into a separate Class
     - Try the method mentioned below
     - Can the spell icons be printed, or is that a media print setting
-- Allow creation of Custom Filter (just a way of saving presets)
+- One button creation of Custom Filter using whatever filters are selected
+    - Or Filter selection should be multi-select: use tag display like on main page?
 >>> Check whether/how well SB works for Druids and Clerics (full casters)
     - can look up what the rules are
 - Automatically populate all available Wizard spells into a temporary compendium for selection, by level
 
->>> Filter selection should be multi-select: use tag display like on main page?
+
 
 - README.md:  Need examples of how to use:
     - Wanted Spells: Create a custom category called Wanted, and check the Show Only in Category checkbox
@@ -67,7 +73,7 @@ FIXED - New Categories get added at the end, even with the Order being -1 from A
 0.7.5 Don't show the Filters field unless you specify a type of Filter
     - "Create a saved Filter that shows all View or non-Spellbook spells"
 0.7.5 - What's the difference between a MyRitual View and the standard one?
-
+0.8.0: Can no longer delete or rename standard categories
 
 # COMPLETED FEATURES
 0.5.1r:  Need to store version in the flags so that we know whether they need to be upgraded in place    
@@ -86,6 +92,8 @@ FIXED - New Categories get added at the end, even with the Order being -1 from A
         - A Filter you just Preset some filter combination
         - a View you drag in specific Spells in as a different View on your Known Spells
         - A Spellbook is a separate list of spells, not duplicating your Known list (like **Wanted** or **The Brown Spellbook**)
+0.8.0 Switch to recording the spells in the category so there are not lingering problems
+    - Migrates old spells (removes flags and records them in the category)
 
 # PRINT SOLUTION (from @Sunspots)
 Can't you use CSS only to exclude everything but the desired element? Add a class to the window you want to print and in the print css something like
