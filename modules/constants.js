@@ -16,7 +16,7 @@
 
 
 export const MODULE_ID = 'spell-better';
-export const MODULE_VERSION = "0.8.1";
+export const MODULE_VERSION = "0.8.2";
 
 //SPell Better 0.5.0: The filter lists have to be spelled out to match what is in the internal labels
 export const SPELL_BETTER = {

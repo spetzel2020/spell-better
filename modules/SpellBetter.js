@@ -26,7 +26,8 @@
 24-Jan-2021     0.7.4: : If you're using Inventory+ then sheetData.inventory is now an object.     
                 0.7.4e: Block favTab for the Plugin because this is only a Spell Sheet         
 26-Jan-2021     0.8.0a: Handle moving spell into View or Spellbook; we now handle that in the Category rather than the spell    
-27-Jan-2021     0.8.1: _onDragStart(): override to hijack dragData to pass fromCategory              
+27-Jan-2021     0.8.1: _onDragStart(): override to hijack dragData to pass fromCategory 
+                0.8.2: Only remove from category and re-add if we are changing category; save when done             
 
 */
 
@@ -179,14 +180,18 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
         let created;
         if (sameActor) {
             created = this._onSortItem(event, itemData);
-            //Remove the spell from its old category       
-            this.inventoryPlusForSpells?.removeSpell(fromCategoryKey, itemData._id);
+            //Remove the spell from its old category if different       
+            if (fromCategoryKey && (fromCategoryKey !== toCategoryKey)) {this.inventoryPlusForSpells?.removeSpell(fromCategoryKey, itemData._id);}
         } else {
             // Create the owned item (was dragged from outside, a Compendium or an Actor folder)
             created = this._onDropItemCreate(itemData);
         }
         //In both cases, we add to the category if it doesn't exist
-        this.inventoryPlusForSpells?.addSpell(toCategoryKey, itemData._id);
+        if (fromCategoryKey !== toCategoryKey) {
+            this.inventoryPlusForSpells?.addSpell(toCategoryKey, itemData._id);
+            //0.8.2 Also saveCategories
+            this.inventoryPlusForSpells?.saveCategories();
+        }
     }
 
     /** @override */       

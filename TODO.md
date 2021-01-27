@@ -5,6 +5,7 @@
     - From Filter -> View nothing, from View -> Filter just remove the category from the spells
 0.8.0: Not actually removing the flags from the spells (need to use the -= form)  
 0.8.0: Order of spells in Filter and View will always match (because order is stored on the spell)
+    - Could store order along with the list - woudl actually make sorting easier
 0.8.0: May be fixed: A spell cannot be in multiple Views
 
 # REFACTORING
@@ -29,12 +30,11 @@
     - can look up what the rules are
 - Automatically populate all available Wizard spells into a temporary compendium for selection, by level
 
-
-
 - README.md:  Need examples of how to use:
     - Wanted Spells: Create a custom category called Wanted, and check the Show Only in Category checkbox
     - Spells in a found Spellbook: Same. When you transfer it to your Spellbook, simply create a new version
     - Show all Rituals: Filter on Ritual
+
 
 # FIXED BUGS
 - The custom categories are remarkably persistent when when I think i've deleted them

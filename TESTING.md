@@ -1,20 +1,20 @@
 Last tested with v0.8.0
 
 # STANDARD CATEGORIES
-1.  Innate, Cantrip...9th, Ritual, All			0.8.0
-2. Can't change name of standard filters			*Rituals can be changed			
+1.  Innate, Cantrip...9th, Ritual, All			0.8.1
+2. Can't change name of standard filters			0.8.1			
 
 
 # NEW/EDIT/DELETE CATEGORY
 1. Filter: Duplicate behavior of standard categories		0.8.0
 2. View - populate using dragging 			0.8.0
 3. Change Category type
-	- Filter to View/Spellbook leaves no spells
-	- View to Filter removes spells
-	- Spellbook <-> View moves spells to Known
+	- Filter to View/Spellbook leaves no spells		0.8.0
+	- View to Filter removes spells			0.8.0
+	- Spellbook to VIew/Filter moves spells to Known	0.8.0
 4.  Delete category - contained Spellbook spells should be left in overall?
     - Need a dialog saying what will happen
-5. Can change name of standard Custom: Wanted		*Changing the name dumped all the spells out
+5. Can change name of standard Custom: Wanted		Fixed in 0.8.1
 
 # ADD/MOVE SPELLS TO CATEGORY
 1.  Drag spell from Compendium to:
@@ -22,7 +22,7 @@ Last tested with v0.8.0
     - Custom View
     - Standard View (Filter)
 2. Drag spell within a category reorders				0.8.0
-3. Drag spell from standard Filter to Spellbook deletes from Known	Doesn't stick
+3. Drag spell from standard Filter to Spellbook deletes from Known	Works, but not persistent
 
 # MOVE CATEGORY
 1. Move category up	/down					0.8.0
