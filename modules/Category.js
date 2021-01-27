@@ -12,12 +12,12 @@
 25-Jan-2021     0.7.5: activateListeners(): Add on select.change() so that we enable/disable Filters depending on whether it's a Filter type         
 26-Jan-2021     0.8.0: Switch to referencing spells in category rather than category in spells
                 Filter: No effect (automatic)
-                Spellbook: 
+                Spellbook/View: For now don't change the list of spells and see what happens
 */
 
 import { MODULE_ID, SPELL_BETTER } from './constants.js';
 
-export class Category extends FormApplication {
+export class CategorySheet extends FormApplication {
     constructor(categoryKey, options, inventoryPlusForSpells) {
         const categoryData = categoryKey ? inventoryPlusForSpells?.allCategories[categoryKey] : null;
         super(categoryData, options);
@@ -117,7 +117,7 @@ export class Category extends FormApplication {
             } else {
                 //If this is (one or more) filters, then recover the filterSets (because we use those to correctly apply)
                 if (input === "filter") {
-                    const {filterSetKey,label} = Category.findFilterSet(value);
+                    const {filterSetKey,label} = CategorySheet.findFilterSet(value);
                     if (filterSetKey) {
                         if (!newCategory.labelFilterSets[filterSetKey]) newCategory.labelFilterSets[filterSetKey] = [];
                         newCategory.labelFilterSets[filterSetKey].push(label);
@@ -128,11 +128,19 @@ export class Category extends FormApplication {
             }
         }
 
-        //0.5.3e Set appropriate templateFlags (for new or dragged spells)
+        //0.5.3e DEPRECATED: Set appropriate templateFlags (for new or dragged spells)
         //This is NOT an array - spells can have multiple View categories, but Views and SPellbooks just have/apply one
-        newCategory.templateFlags = {category: categoryKey};
+        //0.8.0 DEPRECATED: No longer are setting flags on spells so don't need templateFlags
+        //newCategory.templateFlags = {category: categoryKey};
         //Don't have set filterFlags because we use the categoryType setting
         if (this.inventoryPlusForSpells) {
+            //0.8.0 If type is now "filter" there should be no saved spells
+            if (newCategory.categoryType === "filter") {
+                delete newCategory.spells;
+            } else {
+                //If you switched from View->Spellbook, then those spells will be removed from other Views
+                //If you switch from Spellbook -> View, then those spells are now part of your Known spells
+            }
             this.inventoryPlusForSpells.allCategories[categoryKey] = newCategory;
             //0.5.3k: Sort after adding a new category and before saving
             //0.7.3: Also saves
@@ -152,4 +160,4 @@ export class Category extends FormApplication {
     }
 
     
-}//end class Category
+}//end class CategorySheet

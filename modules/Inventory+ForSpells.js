@@ -26,15 +26,20 @@
                 setFirstAndLast(): Moved to call from categorizeSpells(); Ignore hidden categories for the purposes of isFirst and isLast   
                 Potentially brekaing change: categorizeSpells() is mutating on allCategories; before was just passing back a categorized version for display 
 25-Jan-2021     v0.7.5: Reverse order of merge so that changes to standard, custom categories (Rituals, Wanted) are saved                         
+26-Jan-2021     v0.8.0: Add migrateSpells() to remove spell-better category flags and make sure they are in the right category
+                filterSpells(): Exclude from type "filter" if it's in a spellbook
 */
 
-import {Category} from "./Category.js";
+import {CategorySheet} from "./Category.js";
 import { MODULE_ID, MODULE_VERSION, SPELL_BETTER } from './constants.js';
 
 export class InventoryPlusForSpells {
     constructor(actor) {
         this.actor = actor;
+        //0.8 includes migrating from old version
         this.initCategories();
+
+
     }
 
     initCategories() {
@@ -61,8 +66,40 @@ export class InventoryPlusForSpells {
                 this.allCategories[category].isCollapsed = savedCategories[category].isCollapsed;
             }
         }
-
+        //v0.8.0: Move categories off spells; put spells into categories
+        this.migrateSpells();
         this.sortCategories();
+    }
+
+    migrateSpells() {
+        //0.8.0 Migrate existing spells to make sure they don't contain category information
+        const changedItemData = [];
+        for (const item of this.actor.items) {
+            const flagData = item.data?.flags?.[MODULE_ID];
+            if (flagData) {
+                //Add the spell to the category if the category exists (could be multiple)
+                let spellCategories = flagData.category;
+                if (spellCategories) {
+                    //Allow for the historic saving of single categories rather than an array
+                    if (!Array.isArray(spellCategories)) {spellCategories = [spellCategories];}
+                    for (const categoryKey of spellCategories) {
+                        if (this.allCategories[categoryKey]) {
+                            this.addSpell(categoryKey, item.data._id);
+                        }
+                    }
+                }
+
+                //Delete the categories on the spell (could be one or an array)
+                delete item.data.flags[MODULE_ID];
+                changedItemData.push(item.data);
+            }
+        }
+        //Batch update the spells
+        if (changedItemData.length) {
+//FIXME: This does not remove the flag - need a special format
+//Keep it for testing right now            
+           this.actor.updateEmbeddedEntity("OwnedItem", changedItemData);
+        }
     }
 
     
@@ -121,33 +158,29 @@ export class InventoryPlusForSpells {
                     if (!includeSpell) break;
                 }//end for labelFilters
             }
+            if (!includeSpell) {return includeSpell;}
 
-            //Apply the flagFilters only if the spell is already included - if it's categoryType=all we ignore flags
-            if (includeSpell && (categoryType !== "all")) {
-                //0.5.3f: A spell could have more than one category flag, so we need to check back against the category definition
-                //If a spell has {category: ["view1", "view2"]}, then it will be shown in View1 and View2, any Filter category, and All
-                //If we have flagFilterSets, but no flags, might be an exclude (indicated by empty filter list)
-                //so we have to process
-                //0.5.3f: Replace flagFilterSets with categoryType of "filter","view","spellbook","all" (filter and all are not available for custom categories)
-                let spellFlags =  (spell.flags && spell.flags[MODULE_ID]) ? spell.flags[MODULE_ID]["category"] : null;
-                //0.5.3f Prior to 0.5.3f spellFlags were single values; if so, convert to an array
-                if (spellFlags && !Array.isArray(spellFlags)) spellFlags = [spellFlags];
-                let includedInCategory = false;
-                if ((categoryType === "spellbook") || (categoryType === "view")) {
-                    includedInCategory = spellFlags && spellFlags.includes(categoryKey);
-                } else if (categoryType === "filter") {
-                    //Include anything without a category, as well as spells with a category that is a View
-                    includedInCategory = !spellFlags || (spellFlags.filter(sf => viewCategories.includes(sf)).length > 0);
+            //0.8.0: See if the category lists this spell - if it's type "filter" then we dealt with it above
+            //If it's a filter then don't include spells that are in separate spellbooks (you'll have to make another copy)
+            if (categoryType === "filter") {
+                const spellbookCategories = Object.values(this.allCategories).filter(v => (v.categoryType === "spellbook"));
+                for (const category of spellbookCategories) {
+                    //A spellbook has this spell
+                    if (category.spellIds?.has && category?.spellIds?.has(spell._id)) {return false;}
                 }
-
-                includeSpell = includeSpell && includedInCategory;
+                return true;
+            } else if (["view","spellbook"].includes(categoryType)) {
+                return category?.spellIds?.has && category?.spellIds?.has(spell._id)
             }//end if includeSpell
-            return includeSpell;
+            //categoryType===all
+            return true;
         });
     }
 
     categorizeSpells(spellbook) {
-        let categories = duplicate(this.allCategories);
+        //0.8.0 Don't duplicate() because it doesn;t work with Sets
+        let categories = this.allCategories;
+        
 
         //Categorize spells for display; the same spell could appear in MULTIPLE areas
         //TODO: Would probably be more efficient to make the outer loop the spells and the inner loop the categories, since most spells will be in one category        
@@ -204,12 +237,31 @@ export class InventoryPlusForSpells {
         return {templateItemData, templateFlags};
     }
 
+    addSpell(categoryKey, spellId) {
+        if (!categoryKey || !spellId) {return;}
+        //0.8.0: Don't set flags for the spell; instead we record in the category if it's View or Spellbook
+        const categoryData = this.allCategories[categoryKey];
+        if (categoryData && (categoryData.categoryType !== "filter")) {
+            if (!categoryData.spellIds || !categoryData.spellIds.size) {categoryData.spellIds = new Set();}
+            categoryData.spellIds.add(spellId);
+        }
+    }
+
+    removeSpell(spellId) {
+        if (!spellId) {return;}
+        //0.8.0 Remove spell from existing categories if they are Spellbook type
+//FIXME: What if you move a spell from a View to a Spellbook? It should disappear? - For now it will be a copy
+        for (const category of Object.values(this.allCategories)) {
+            category.spellIds?.delete(spellId);
+        }        
+    }
+
     async newCategory() {
-        new Category(null, {}, this).render(true);
+        new CategorySheet(null, {}, this).render(true);
     }
 
     async editCategory(categoryKey) {
-        new Category(categoryKey, {}, this).render(true);
+        new CategorySheet(categoryKey, {}, this).render(true);
     }
 
     async removeCategory(categoryKey) {
@@ -310,7 +362,8 @@ export class InventoryPlusForSpells {
 
     async saveCategories(category=null) {
         //Save all categories, because we want the collapsed/shown status
-        await this.actor.setFlag(MODULE_ID, SPELL_BETTER.categories_key, null);
+        //0.8.0: Don't set categories to null because it forces a re-render with no categories
+        //await this.actor.setFlag(MODULE_ID, SPELL_BETTER.categories_key, null);
         await this.actor.setFlag(MODULE_ID,  SPELL_BETTER.categories_key, this.allCategories);
         //0.5.1s: Save the categoryVersion (which means we need to do any upgrading on read)
         await this.actor.setFlag(MODULE_ID, SPELL_BETTER.categoriesVersion_key, SPELL_BETTER.categoriesVersion);

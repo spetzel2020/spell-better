@@ -24,7 +24,8 @@
 23-Jan-2021     0.7.4a: Add Innate to Other label setting (too hard to extract otherwise)  
                 Compute uses and slots and decorate sheetData.filters.choices.levels
 24-Jan-2021     0.7.4: : If you're using Inventory+ then sheetData.inventory is now an object.     
-                0.7.4e: Block favTab for the Plugin because this is only a Spell Sheet           
+                0.7.4e: Block favTab for the Plugin because this is only a Spell Sheet         
+26-Jan-2021     0.8.0a: Handle moving spell into View or Spellbook; we now handle that in the Category rather than the spell                  
 
 */
 
@@ -122,16 +123,11 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
     async _onSpellCreate(event) {
         event.preventDefault();
         const header = event.currentTarget;
-        const category = header.dataset.category;
+        const categoryKey = header.dataset.category;
         const {templateItemData, templateFlags} = this.inventoryPlusForSpells.getTemplateItemData(category);
         const newSpellData =  await this.actor.createEmbeddedEntity("OwnedItem", templateItemData);
-        const newSpell = this.actor.getOwnedItem(newSpellData?._id);
-//FIXME: Yuck - is there a batched way of doing this with update?
-        if (newSpell && templateFlags) {
-            for (const [flagKey, flagValue] of Object.entries(templateFlags)) {
-                await newSpell.setFlag(MODULE_ID,flagKey, flagValue);
-            }
-        }
+
+        this.inventoryPlusForSpells?.addSpell(categoryKey, newSpellData?._id);
     }   
     
     /**
@@ -152,35 +148,25 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
             return super._onDropItem(event, data);
         }
 
-        const category = targetLi.dataset?.category;
-        //Don't bring back templateItemData because we're not creating from scratch
-        const templateFlags = this.inventoryPlusForSpells.getTemplateItemData(category)?.templateFlags;
-        //If the flags are different than current (because we're dropping in a different category) then update them first
-        //(This allows the default sorting to work if we are dropping from within)
-        if ((itemData.flags && itemData.flags[MODULE_ID]) || templateFlags) {
-            if (!itemData.flags) {itemData.flags = {}}
+        const categoryKey = targetLi.dataset?.category;
 
-            //0.5.3: Remove any of the spell's spellbook type categories
-            let spellCategories = itemData.flags[MODULE_ID] ? itemData.flags[MODULE_ID]["category"] : null;
-            if (spellCategories) {
-                //If not an array, turn it into one
-                if (!Array.isArray(spellCategories)) {spellCategories = [spellCategories];}
-                spellCategories = spellCategories.filter(sc => (this.inventoryPlusForSpells?.allCategories[sc] !== "spellbook"));
-            }
-            //Add any new templateFlags
-            if (templateFlags) spellCategories = (spellCategories ?? []).concat(templateFlags["category"]);
-            if (!itemData.flags[MODULE_ID]) {itemData.flags[MODULE_ID] = {}}
-            itemData.flags[MODULE_ID]["category"] = spellCategories;  //turn undefined into null
-            await this.actor.updateEmbeddedEntity("OwnedItem", itemData);
-        }
+        //v0.8.0: Refactored to store spellIds in category rather than category in spell
+        //We assume migration has been done in the first categorizeSpells()
 
         // Handle item sorting within the same Actor
         const actor = this.actor;
-        let sameActor = (data.actorId === actor._id) || (actor.isToken && (data.tokenId === actor.token.id));
-        if (sameActor) return this._onSortItem(event, itemData);
-
-        // Create the owned item
-        return this._onDropItemCreate(itemData);
+        const sameActor = (data.actorId === actor._id) || (actor.isToken && (data.tokenId === actor.token.id));
+        let created;
+        if (sameActor) {
+            created = this._onSortItem(event, itemData);
+            //Check existing categories to remove it if they are Spellbook-type
+            this.inventoryPlusForSpells?.removeSpell(itemData._id);
+        } else {
+            // Create the owned item (was dragged from outside, a Compendium or an Actor folder)
+            created = this._onDropItemCreate(itemData);
+        }
+        //In both cases, we add to the category if it doesn't exist
+        this.inventoryPlusForSpells?.addSpell(categoryKey, itemData._id);
     }
 
     /** @override */       
