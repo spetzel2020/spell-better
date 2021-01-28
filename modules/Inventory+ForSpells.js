@@ -28,7 +28,8 @@
 25-Jan-2021     v0.7.5: Reverse order of merge so that changes to standard, custom categories (Rituals, Wanted) are saved                         
 26-Jan-2021     v0.8.0: Add migrateSpells() to remove spell-better category flags and make sure they are in the right category
                 filterSpells(): Exclude from type "filter" if it's in a spellbook
-27-Jan-2021     v0.8.2 Convert spellIds to array because saving/retrieving won't work with a Set                
+27-Jan-2021     v0.8.2 Convert spellIds to array because saving/retrieving won't work with a Set    
+                0.8.2b: migrateSpells() Do correct update of flags on spells            
 */
 
 import {CategorySheet} from "./Category.js";
@@ -78,6 +79,7 @@ export class InventoryPlusForSpells {
     migrateSpells() {
         //0.8.0 Migrate existing spells to make sure they don't contain category information
         const changedItemData = [];
+        const unsetFlag =  `-=flags.${MODULE_ID}`;
         for (const item of this.actor.items) {
             const flagData = item.data?.flags?.[MODULE_ID];
             if (flagData) {
@@ -95,34 +97,16 @@ export class InventoryPlusForSpells {
 
                 //Delete the categories on the spell (could be one or an array)
                 delete item.data.flags[MODULE_ID];
-                changedItemData.push(item.data);
+                const changedItem =  {_id:  item.data._id}
+                changedItem[unsetFlag] = null;
+                changedItemData.push(changedItem);
             }
         }
 
         //Batch update the spells
-        if (changedItemData.length) {
-    /*
-            let changedItems = [];
-            //Remove the categoryKey off the contained spells
-            for (let spell of this.actor.data.items.filter(i => i.type === "spell")) {
-    //FIXME: No longer necessary in 0.8.0 because we're not storing category on spells            
-                let type = InventoryPlusForSpells.getSpellCategory(spell);
-                if (type === categoryKey) {
-                    const unsetFlag =  `-=flags.${MODULE_ID}`;
-                    //0.5.3e: Changed spell.id to spell._id, but not clear why this ever worked
-                    const changedItem = {_id: spell._id}
-                    changedItem[unsetFlag] = null;
-                    changedItems.push(changedItem);
-                }
-            }
-            await this.actor.updateEmbeddedEntity('OwnedItem', changedItems);
-*/        
-//FIXME: This does not remove the flag - need a special format
-//Keep it for testing right now            
+        if (changedItemData.length) {           
            this.actor.updateEmbeddedEntity("OwnedItem", changedItemData);
         }
-
-
     }
 
     
@@ -276,7 +260,7 @@ export class InventoryPlusForSpells {
         const categoryData = this.allCategories[categoryKey];
         if (categoryData && ["spellbook","view"].includes(categoryData.categoryType)) {
             const spellIdIndex = categoryData.spellIds?.findIndex(id => id === spellId);
-            if (spellIndex >= 0) {
+            if (spellIdIndex >= 0) {
                 categoryData.spellIds?.splice(spellIdIndex, 1);
             }
         }      

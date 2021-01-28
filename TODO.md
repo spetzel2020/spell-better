@@ -1,12 +1,12 @@
 # BUGS
->>> 0.7.5b If you add a spell to a Custom View and then delete the View, the Spell may disappear
+>>>0.7.5b If you add a spell to a Custom View and then delete the View, the Spell may disappear
     - test that when a Category is changed, the spells are correctly migrated
     - probably needs a warning
     - From Filter -> View nothing, from View -> Filter just remove the category from the spells
-0.8.0: Not actually removing the flags from the spells (need to use the -= form)  
 0.8.0: Order of spells in Filter and View will always match (because order is stored on the spell)
     - Could store order along with the list - woudl actually make sorting easier
-0.8.0: May be fixed: A spell cannot be in multiple Views
+    - Won't fix in 0.8.2
+
 
 # REFACTORING
 - Instead of hijacking the onDrop, we could store the displayedCategory on every item in a View or Spellbook
@@ -21,6 +21,7 @@
 - Save just a single changed category(if it would help)
 
 # FEATURES
+- Need a Book icon on Spellbook categories
 - Move the Print features into a separate Class
     - Try the method mentioned below
     - Can the spell icons be printed, or is that a media print setting
@@ -74,6 +75,8 @@ FIXED - New Categories get added at the end, even with the Order being -1 from A
     - "Create a saved Filter that shows all View or non-Spellbook spells"
 0.7.5 - What's the difference between a MyRitual View and the standard one?
 0.8.0: Can no longer delete or rename standard categories
+0.8.2: Not actually removing the flags from the spells (need to use the -= form)  
+0.8.2 A spell cannot be in multiple Views
 
 # COMPLETED FEATURES
 0.5.1r:  Need to store version in the flags so that we know whether they need to be upgraded in place    

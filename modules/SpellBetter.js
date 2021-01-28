@@ -27,7 +27,8 @@
                 0.7.4e: Block favTab for the Plugin because this is only a Spell Sheet         
 26-Jan-2021     0.8.0a: Handle moving spell into View or Spellbook; we now handle that in the Category rather than the spell    
 27-Jan-2021     0.8.1: _onDragStart(): override to hijack dragData to pass fromCategory 
-                0.8.2: Only remove from category and re-add if we are changing category; save when done             
+                0.8.2: Only remove from category and re-add if we are changing category; save when done       
+                Reference ActorSheet5e and call _onDropItemCreate() from it to bypass the return problem      
 
 */
 
@@ -38,7 +39,7 @@ import { MODULE_ID, MODULE_VERSION, SPELL_BETTER } from './constants.js';
 import {InventoryPlusForSpells} from './Inventory+ForSpells.js';
 
 import ActorSheet5eCharacter from '../../../systems/dnd5e/module/actor/sheets/character.js';
-
+import ActorSheet5e from '../../../systems/dnd5e/module/actor/sheets/base.js';
 
 /* HANDLEBARS HELPERS */
 Handlebars.registerHelper('spell-better-sheet-path', (relativePath) => {
@@ -158,6 +159,8 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
         //Copied from core _onDropItem()
         if ( !this.actor.owner ) return false;
         const item = await Item.fromDropData(data);
+        if (item?.data?.type !== "spell") {return super._onDropItem(event, data);}
+
         const fromCategoryKey = data.fromCategory;
         const itemData = duplicate(item.data);
 
@@ -177,21 +180,30 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
         // Handle item sorting within the same Actor
         const actor = this.actor;
         const sameActor = (data.actorId === actor._id) || (actor.isToken && (data.tokenId === actor.token.id));
-        let created;
+        let createdItemData;
         if (sameActor) {
-            created = this._onSortItem(event, itemData);
+            createdItemData = this._onSortItem(event, itemData);
             //Remove the spell from its old category if different       
             if (fromCategoryKey && (fromCategoryKey !== toCategoryKey)) {this.inventoryPlusForSpells?.removeSpell(fromCategoryKey, itemData._id);}
         } else {
             // Create the owned item (was dragged from outside, a Compendium or an Actor folder)
-            created = this._onDropItemCreate(itemData);
+            //0.8.2 Because ActorSheet5eCharacter doesn't return the Promise, we have to bypass it (ok for the spell case)
+            const parentCreate = ActorSheet5e.prototype._onDropItemCreate.bind(this);
+            createdItemData = parentCreate(itemData);
         }
         //In both cases, we add to the category if it doesn't exist
-        if (fromCategoryKey !== toCategoryKey) {
-            this.inventoryPlusForSpells?.addSpell(toCategoryKey, itemData._id);
-            //0.8.2 Also saveCategories
-            this.inventoryPlusForSpells?.saveCategories();
-        }
+        createdItemData.then((itemData) => {
+            if (fromCategoryKey !== toCategoryKey) {
+                this.inventoryPlusForSpells?.addSpell(toCategoryKey, itemData._id);
+                //0.8.2 Also saveCategories
+                this.inventoryPlusForSpells?.saveCategories();
+            }
+        });
+        createdItemData.catch((err) => {
+            const err1 = err;
+        });
+
+        return createdItemData;
     }
 
     /** @override */       
