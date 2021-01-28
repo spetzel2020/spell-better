@@ -56,7 +56,7 @@
     "readme": "https://github.com/spetzel2020/spell-better/blob/master/README.md",
      "bugs": "https://github.com/spetzel2020/spell-better/issues",
     "changelog": "https://github.com/spetzel2020/quick-encounters/blob/master/CHANGELOG.md",
-	"download": "https://github.com/spetzel2020/spell-better/releases/download/v0.8.2/spell-better.zip",
-	"manifest": "https://github.com/spetzel2020/spell-better/releases/download/v0.8.2/module.json",
+	"download": "https://github.com/spetzel2020/spell-better/releases/download/latest/spell-better.zip",
+	"manifest": "https://github.com/spetzel2020/spell-better/releases/download/latest/module.json",
 	"url": "https://github.com/spetzel2020/spell-better"
 }

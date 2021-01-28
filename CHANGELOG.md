@@ -1,7 +1,11 @@
 # RELEASE NOTES
 
 ## 0.8 26-Jan-2021
-- New Custom Category: Save a filter for your known spells 
+- New "Filter" category: Filter your known spells using one of the same filters as in the Filter list
+- Fixed: Custom categories were being stored/not-stored inconsistently
+- Fixed: Spells in custom Views/Spellbooks sometimes disappeared
+    - NOTE: Your spellbook will be migrated to the new 0.8 format which may result in "missing" spells reappearing
+- Fixed: A spell could not be in multiple Views
 - Fixed Bugs: Below
 ## 0.7.5 25-Jan-2021
 - Fixed: Was showing the Filters dropdown for View and Spellbook
