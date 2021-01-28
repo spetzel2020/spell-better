@@ -29,6 +29,7 @@
 27-Jan-2021     0.8.1: _onDragStart(): override to hijack dragData to pass fromCategory 
                 0.8.2: Only remove from category and re-add if we are changing category; save when done       
                 Reference ActorSheet5e and call _onDropItemCreate() from it to bypass the return problem      
+28-Jan-2021     0.8.2: Add "atwill" label (like innate)                
 
 */
 
@@ -578,7 +579,7 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
                 spell.labels.prepared = "prepared";
             }
             //0.7.4: Add label for Innate; may want to remove from above flag for Prepared
-            if ("innate" === spell.data.preparation.mode) {spell.labels.innate = "innate";}
+            if (["innate","atwill"].includes(spell.data.preparation.mode)) {spell.labels[spell.data.preparation.mode] = spell.data.preparation.mode;}
         });
       });
     } catch (e) {

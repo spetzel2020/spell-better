@@ -29,7 +29,8 @@
 26-Jan-2021     v0.8.0: Add migrateSpells() to remove spell-better category flags and make sure they are in the right category
                 filterSpells(): Exclude from type "filter" if it's in a spellbook
 27-Jan-2021     v0.8.2 Convert spellIds to array because saving/retrieving won't work with a Set    
-                0.8.2b: migrateSpells() Do correct update of flags on spells            
+                0.8.2b: migrateSpells() Do correct update of flags on spells   
+28-Jan-2021     0.8.2c: initCategories(): duplicate(standardCategories) so we don't overwrite it with mergeObject                         
 */
 
 import {CategorySheet} from "./Category.js";
@@ -64,7 +65,8 @@ export class InventoryPlusForSpells {
         }
         //Merge standard and custom categories
         //v0.7.5: Reverse order of merge so that changes to standard, custom categories (Rituals, Wanted) are saved
-        this.allCategories = mergeObject(SPELL_BETTER.standardCategories, customCategories);
+        //v0.8.2: Use duplicate so that we are not altering standardCategories
+        this.allCategories = mergeObject(duplicate(SPELL_BETTER.standardCategories), customCategories);
         //And now apply info about collapsed/shown (the only reason we saved)
         for (const category of Object.keys(this.allCategories)) {
             if (savedCategories && savedCategories[category]) {

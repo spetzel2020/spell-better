@@ -11,6 +11,7 @@
 9-Jan-2021  0.7.3e: Remove Wanted 4th for release version
 23-Jan-2021 0.7.4a: Add Innate category 
 27-Jan-2021: 0.8.1: Make Ritual fully standard (can't change its name); remove template_flags
+28-Jan-2021 0.8.2: Add at-will standard category (like innate)
 
 */
 
@@ -75,7 +76,14 @@ export const SPELL_BETTER = {
     categories_key : "categories",
     standardCategories : { 
         //.prop is needed for now for display     
-//FIXME: "label" is overloaded; call it categoryName instead        
+        atwill: { label: "DND5E.SpellPrepAtWill", categoryType: "filter", 
+                templateItemData: {level: 0},
+                labelFilterSets: {
+                    otherPrepared: ["atwill"]
+                }, 
+                /* Will be overridden by actual spell level stats */
+                prop: "atwill", canCreate: true, canPrepare: false, slots: "&infin;", uses: "&infin;", usesSlots: false,
+                order: -20, type: "spell",  isCollapsed: true },    
         innate: { label: "SPELL_BETTER.Innate", categoryType: "filter", 
                 templateItemData: {level: 0},
                 labelFilterSets: {

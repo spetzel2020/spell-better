@@ -2,8 +2,8 @@ Last tested with v0.8.0
 
 # STANDARD CATEGORIES
 1.  Innate, Cantrip...9th, Ritual, All			0.8.1
-2. Can't change name of standard filters			0.8.1			
-
+2. Can't change name of standard filters			0.8.1	
+3. New Actor with new spellbook			Seems to pick up old categories					
 
 # NEW/EDIT/DELETE CATEGORY
 1. Filter: Duplicate behavior of standard categories		0.8.0

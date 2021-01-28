@@ -6,9 +6,10 @@
 0.8.0: Order of spells in Filter and View will always match (because order is stored on the spell)
     - Could store order along with the list - woudl actually make sorting easier
     - Won't fix in 0.8.2
-
+0.8.2: Prepared, At-Will, and Innate should be OR categories by themselves
 
 # REFACTORING
+- standardCategories: "label" is overloaded; call it categoryName or name instead ; type -> itemType (is is even needed?)
 - Instead of hijacking the onDrop, we could store the displayedCategory on every item in a View or Spellbook
     - (would only be for display and not in the actual item)
 - Category.js: Should encapsulate existing Category better
@@ -77,6 +78,8 @@ FIXED - New Categories get added at the end, even with the Order being -1 from A
 0.8.0: Can no longer delete or rename standard categories
 0.8.2: Not actually removing the flags from the spells (need to use the -= form)  
 0.8.2 A spell cannot be in multiple Views
+0.8.2 bleed-over from one Actor to another in terms of categories
+    - initCategories() can't merge into SPELL_BETTER.standardCategories
 
 # COMPLETED FEATURES
 0.5.1r:  Need to store version in the flags so that we know whether they need to be upgraded in place    
