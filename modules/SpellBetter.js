@@ -29,7 +29,8 @@
 27-Jan-2021     0.8.1: _onDragStart(): override to hijack dragData to pass fromCategory 
                 0.8.2: Only remove from category and re-add if we are changing category; save when done       
                 Reference ActorSheet5e and call _onDropItemCreate() from it to bypass the return problem      
-28-Jan-2021     0.8.2: Add "atwill" label (like innate)                
+28-Jan-2021     0.8.2: Add "atwill" label (like innate)  
+30-Jan-2021     0.8.3: Issue: +Spell isn't working because category isn't found #15              
 
 */
 
@@ -128,7 +129,8 @@ export class SpellBetterCharacterSheet extends ActorSheet5eCharacter {
         event.preventDefault();
         const header = event.currentTarget;
         const categoryKey = header.dataset.category;
-        const {templateItemData, templateFlags} = this.inventoryPlusForSpells.getTemplateItemData(category);
+        //0.8.3 Issue 15: Was passing category instead of categoryKey
+        const {templateItemData, templateFlags} = this.inventoryPlusForSpells?.getTemplateItemData(categoryKey);
         const newSpellData =  await this.actor.createEmbeddedEntity("OwnedItem", templateItemData);
 
         this.inventoryPlusForSpells?.addSpell(categoryKey, newSpellData?._id);

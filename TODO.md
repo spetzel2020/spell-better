@@ -20,6 +20,7 @@
 - Save just a single changed category(if it would help)
 
 # FEATURES
+- Remove templateItemFlags throughout
 - Need a Book icon on Spellbook categories
 - Move the Print features into a separate Class
     - Try the method mentioned below
@@ -80,6 +81,7 @@ FIXED - New Categories get added at the end, even with the Order being -1 from A
     - test that when a Category is changed, the spells are correctly migrated
     - probably needs a warning
     - From Filter -> View nothing, from View -> Filter just remove the category from the spells
+0.8.3: Issue 15: +Spell isn't working because category isn't found #15    
 
 
 # COMPLETED FEATURES

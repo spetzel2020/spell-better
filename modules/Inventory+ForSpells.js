@@ -231,6 +231,7 @@ export class InventoryPlusForSpells {
     }
 
     getTemplateItemData(categoryKey) {
+        if (!categoryKey) {return null;}
         const customCategory = this.allCategories[categoryKey];
         let templateItemData = {name: game.i18n.localize(customCategory?.label), type: "spell" }
         let templateItemDataData = customCategory.templateItemData ? duplicate(customCategory.templateItemData) : null;

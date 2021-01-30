@@ -36,12 +36,12 @@ Last tested with v0.8.2
 2. Save collapsed/shown between sessions			0.8.2
 3. Save new categories (and spells)				0.8.2
 
-BUGS FIXED IN 0.8.2
- 0.7.5b If you add a spell to a Custom View and then delete the View, the Spell may disappear
+# BUGS FIXED IN 0.8.3
+- Can't use +Spell (Issue #15)                  0.8.3
+
+# BUGS FIXED IN 0.8.2
+- 0.7.5b If you add a spell to a Custom View and then delete the View, the Spell may disappear
     - test that when a Category is changed, the spells are correctly migrated
     - probably needs a warning
     - From Filter -> View nothing, from View -> Filter just remove the category from the spells
-0.8.0: Not actually removing the flags from the spells (need to use the -= form)  
-0.8.0: Order of spells in Filter and View will always match (because order is stored on the spell)
-    - Could store order along with the list - woudl actually make sorting easier
-0.8.0: May be fixed: A spell cannot be in multiple Views
+- 0.8.0: Not actually removing the flags from the spells (need to use the -= form)  
